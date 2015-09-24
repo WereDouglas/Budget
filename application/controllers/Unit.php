@@ -70,6 +70,18 @@ class Unit extends CI_Controller {
          redirect('unit/', 'refresh');
         return;
     }
+    public function where()
+{
+        $department=$this->input->post('name');
+       // $department="TECHNOLOGY AND NETWORK SERVICES";
+         $id = $this->Md->query_single("SELECT * FROM department WHERE name='".$department."'");
+                
+        $table='unit';
+        $where=array('departmentID' => $id);
+       $data['name']=$this->Md->get_where_data($table,$where);
+        $sc=json_encode($data['name']);
+        echo $sc;
+}
     public function update() {
 
         $this->load->helper(array('form', 'url'));

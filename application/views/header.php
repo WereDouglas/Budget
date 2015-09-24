@@ -213,6 +213,11 @@
               </a>
             </li>
               <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/all"; ?>">
+                <i class="fa fa-th"></i> <span>Budgets (Advanced)</span> <small class="label pull-right bg-green">Hot</small>
+              </a>
+            </li>
+              <li>
               <a href="../calendar.html">
                 <i class="fa fa-circle-o text-aqua"></i> <span>Organisation profile</span>
                 <small class="label pull-right bg-red">3</small>
