@@ -83,7 +83,18 @@ class Account extends CI_Controller {
        
 
     }
-
+  public function where()
+{
+        $subline=$this->input->post('name');
+       //$category="REVENUE";
+         $id = $this->Md->query_single("SELECT * FROM subline WHERE name='".$subline."'");
+                
+        $table='account';
+        $where=array('sublineID' => $id);
+       $data['name']=$this->Md->get_where_data($table,$where);
+        $sc=json_encode($data['name']);
+        echo $sc;
+}
     public function delete() {
         $this->load->helper(array('form', 'url'));                                    
         

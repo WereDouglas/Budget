@@ -90,13 +90,13 @@ class Initiative extends CI_Controller {
 
     public function where() {
         $code = $this->input->post('name');
-        // $department="TECHNOLOGY AND NETWORK SERVICES";
+        // $code="SO1";
         $id = $this->Md->query_single("SELECT * FROM objective WHERE code='" . $code . "'");
 
         $table = 'initiative';
         $where = array('objectiveID' => $id);
-        $data['details'] = $this->Md->get_where_data($table, $where);
-        $sc = json_encode($data['details']);
+        $data['values'] = $this->Md->get_where_data($table, $where);
+        $sc = json_encode($data['values']);
         echo $sc;
     }
 

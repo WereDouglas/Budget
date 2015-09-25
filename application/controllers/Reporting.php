@@ -81,6 +81,18 @@ class Reporting extends CI_Controller {
        
 
     }
+     public function where()
+{
+        $category=$this->input->post('name');
+       //$category="REVENUE";
+         $id = $this->Md->query_single("SELECT * FROM category WHERE name='".$category."'");
+                
+        $table='reporting';
+        $where=array('categoryID' => $id);
+       $data['name']=$this->Md->get_where_data($table,$where);
+        $sc=json_encode($data['name']);
+        echo $sc;
+}
 
     public function delete() {
         $this->load->helper(array('form', 'url'));                                    

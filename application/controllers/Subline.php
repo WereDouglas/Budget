@@ -81,6 +81,18 @@ class Subline extends CI_Controller {
        
 
     }
+      public function where()
+{
+        $line=$this->input->post('name');
+       //$category="REVENUE";
+         $id = $this->Md->query_single("SELECT * FROM reporting WHERE name='".$line."'");
+                
+        $table='subline';
+        $where=array('reportingID' => $id);
+       $data['name']=$this->Md->get_where_data($table,$where);
+        $sc=json_encode($data['name']);
+        echo $sc;
+}
 
     public function delete() {
         $this->load->helper(array('form', 'url'));                                    

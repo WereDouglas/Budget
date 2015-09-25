@@ -40,10 +40,10 @@
                         <th>Units/Qty</th>
                         <th>Persons</th>
                         <th>Freq</th>
-                        <th>Price(Local)</th>
-                        <th>Total</th>
+                        <th>Unit Price(Local)</th>
+                        <th>Total price</th>
                         <th>Cash flow</th>
-                        <th>Unit price</th>
+                        <th>Total price(Local)</th>
                         <th>Start date</th>
                         <th>End date</th>
                         <th>Variance</th>
@@ -73,6 +73,7 @@
 
                     <tr >
                         <td><select name="department" id="department" class="form-control">
+                                <option></option>
                                 <?php foreach ($departments as $loop) { ?>   
                                     <option><?= $loop->name ?></option>
                                 <?php } ?>
@@ -85,6 +86,7 @@
                         <td> <input name="output" id="output" type="text" class="form-control" placeholder="" /></td>
                         <td>  <input id="outcome" name="outcome" type="text" class="form-control" placeholder="" /></td>
                         <td><select name="objective" id="objective" class="form-control">
+                                <option></option>
                                 <?php foreach ($objectives as $loop) { ?>   
                                     <option><?= $loop->code ?></option>
                                 <?php } ?>
@@ -92,30 +94,25 @@
                             </select></td>
                         <td> <select name="initiative" id="initiative" class="form-control">
                             </select></td>
-                        <td> <input type="text" id="performance measure" name="performance measure" class="form-control" placeholder="Enter ..." /></td>
+                        <td> <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." /></td>
                         <td> <input id="Procurement type" name="Procurement type" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><select name="category" id="category" class="form-control">
+                                <option></option>
                                 <?php foreach ($categories as $loop) { ?>   
                                     <option><?= $loop->name ?></option>
                                 <?php } ?>
 
+                            </select>
+
+                        </td>
+                        <td> <select name="line" id="line" class="form-control">
+                                <option></option>
                             </select></td>
-                        <td> <select name="reporting line" id="reporting line" class="form-control">
-                                <?php foreach ($reports as $loop) { ?>   
-                                    <option><?= $loop->name ?></option>
-                                <?php } ?>
+                        <td><select name="subline" id="subline" class="form-control">
+
 
                             </select></td>
-                        <td><select name="sub line" id="sub line" class="form-control">
-                                <?php foreach ($subs as $loop) { ?>   
-                                    <option><?= $loop->name ?></option>
-                                <?php } ?>
-
-                            </select></td>
-                        <td> <select name="account" id="account" class="form-control">
-                                <?php foreach ($accounts as $loop) { ?>   
-                                    <option><?= $loop->number ?></option>
-                                <?php } ?>
+                        <td> <select name="account" id="account" class="form-control">                               
 
                             </select></td>
                         <td><input type="text" name="account description" id="account description" class="form-control" placeholder="Enter ..." /></td>
@@ -128,38 +125,41 @@
                             <div class="form-group">
 
                                 <select name="currency" id="currency" class="form-control">
+                                    <option>Please select a currency</option>
                                     <?php foreach ($rates as $loop) { ?>   
                                         <option><?= $loop->currency ?></option>
                                     <?php } ?>
 
                                 </select>
                             </div></td>
-                        <td><input id="rate" name="rate" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="unit price" name="unit price" type="text" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input id="rate" name="rate" type="text" class="form-control"  /></td>
+                        <td><input id="price" name="price" type="text" class="form-control" /></td>
                         <td><input name="qty" id="qty" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input id="persons" name="persons" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input type="text" name="freq" id="freq" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input name="price (local)" id="price" type="text" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input name="priceL" id="priceL" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input id="total" name="total" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input name="cash flow" id="cash flow"  type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="unit prices" name="unit prices" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td>  <div class="form-group">
+                        <td><input id="totalL" name="totalL" type="text" class="form-control" placeholder="Enter ..." /></td>
+                        <td> 
+                            <div class="form-group">
 
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input id="start date" name="start date" type="text" class="form-control pull-right" id="reservation" />
-                                </div><!-- /.input group -->
+                                <div class='input-group date' id='start'>
+                                    <input type='text' class="form-control" id="starts" name="starts"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div><!-- /.form group --></td>
-                        <td>  <div class="form-group">
+                        <td>  
+                            <div class="form-group">
 
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input id="end date" name="end date" type="text" class="form-control pull-right" id="reservation" />
-                                </div><!-- /.input group -->
+                                <div class='input-group date' id='end'>
+                                    <input type='text' class="form-control" id="ends" name="ends" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div><!-- /.form group --></td>
                         <td><input id="variance" name="variance" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input type="text" name="cost generation" id="cost generation" class="form-control" placeholder="Enter ..." /></td>
@@ -170,12 +170,12 @@
                             <div class="form-group">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked />
+                                        <input type="radio" name="radio" id="optionsRadios1" value="auto"  />
                                         Auto  </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
+                                        <input type="radio" name="radio" id="optionsRadios2" value="manual" />
                                         Manual 
                                     </label>
                                 </div>
@@ -183,7 +183,10 @@
                             </div>
 
                         </td> 
-                        <td><input id="January" name="January" type="text" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input id="January" name="January" type="text" class="form-control" placeholder="Enter ..." />
+
+
+                        </td>
                         <td><input id="February" name="February" type="text" class="form-control" placeholder="Enter ..." /></td>  
                         <td><input id="March" name="March" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input id="April" name="April" type="text" class="form-control" placeholder="Enter ..." /></td>  
@@ -223,10 +226,14 @@
 <!-- iCheck -->
 
 </body>
+
+<script src="<?php echo base_url(); ?>js/moment-with-locales.js"></script>
+<script src="<?php echo base_url(); ?>js/bootstrap-datetimepicker.js"></script>
+</head>
 <script src='<?= base_url(); ?>js/jquery.dataTables.min.js'></script>
 
 <script src="<?= base_url(); ?>js/jquery.dataTables.js" type="text/javascript"></script>
-<script src="<?= base_url(); ?>js/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="<?= base_url(); ?>plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- Page script -->
 
 
@@ -391,20 +398,182 @@
                     var pc = '';
                     $.each(msg, function (key, val) {
                         sc += '<option value="' + val.details + '">' + val.details + '</option>';
-                        pc += '<input  class="form-control" value="' + val.values + '" />';
+                        pc = val.values;
 
                     });
                     $("#initiative option").remove();
                     $("#initiative").append(sc);
-
-                    $("#performance measure input").remove();
-                    $("#performance measure").append(pc);
+                    $("#performance").val(pc);
 
                 }
             });
         });
 
+        $('#category').change(function () {
+
+            var form_data = {
+                name: $('#category').val()
+            };
+
+            $.ajax({
+                url: "<?php echo base_url() . "index.php/reporting/where"; ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (msg) {
+                    var sc = '';
+
+                    $.each(msg, function (key, val) {
+                        sc += '<option value="' + val.name + '">' + val.name + '</option>';
+
+                    });
+                    $("#line option").remove();
+                    $("#line").append(sc);
+
+
+
+                }
+            });
+        });
+        $('#line').change(function () {
+
+            var form_data = {
+                name: $('#line').val()
+            };
+
+            $.ajax({
+                url: "<?php echo base_url() . "index.php/subline/where"; ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (msg) {
+                    var sc = '';
+
+                    $.each(msg, function (key, val) {
+                        sc += '<option value="' + val.name + '">' + val.name + '</option>';
+
+                    });
+                    $("#subline option").remove();
+                    $("#subline").append(sc);
+
+
+
+                }
+            });
+        });
+        $('#subline').change(function () {
+
+            var form_data = {
+                name: $('#subline').val()
+            };
+
+            $.ajax({
+                url: "<?php echo base_url() . "index.php/account/where"; ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (msg) {
+                    var sc = '';
+
+                    $.each(msg, function (key, val) {
+                        sc += '<option value="' + val.number + '">' + val.name + " " + val.number + '</option>';
+
+                    });
+                    $("#account option").remove();
+                    $("#account").append(sc);
+
+
+
+                }
+            });
+        });
+        $('#currency').change(function () {
+
+            var form_data = {
+                name: $('#currency').val()
+            };
+
+            $.ajax({
+                url: "<?php echo base_url() . "index.php/rate/where"; ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (msg) {
+                    var sc = '';
+
+                    $.each(msg, function (key, val) {
+                        sc = val.rate;
+                    });
+                    // $("#rate").remove();
+                    $("#rate").val(sc);
+
+
+
+                }
+            });
+        });
+
+        $('#price').blur(function () {
+            var priceL = $("#price").val() * $("#rate").val();
+            $("#priceL").val(priceL);
+
+        });
+
+        $('#qty').blur(function () {
+            var total = $("#price").val() * $("#qty").val();
+            $("#total").val(total);
+
+            var totalL = ($("#price").val() * $("#rate").val()) * $("#qty").val();
+            $("#totalL").val(totalL);
+
+        });
+        // optionsRadios2
+        $(':radio').click(function () {
+            // console.log( $(this).val())
+            if ($(this).val() == 'auto') {
+                var each = $("#totalL").val() / 12;
+                $("#January").val(each);
+                $("#February").val(each);
+                $("#March").val(each);
+                $("#April").val(each);
+                $("#May").val(each);
+                $("#June").val(each);
+                $("#July").val(each);
+                $("#August").val(each);
+                $("#September").val(each);
+                $("#October").val(each);
+                $("#November").val(each);
+                $("#December").val(each);
+            }
+
+        });
+ var monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];       
+
+$('#ends').blur(function () {
+            console.log($("#ends").val());
+           
+            var end = new Date($("#ends").val()));
+            console.log(monthNames[end.getMonth()]);
+        });
+        $('#starts').blur(function () {
+            console.log($("#starts").val());
+           
+            var start = new Date($("#starts").val());
+            console.log(monthNames[start.getMonth()]);
+        });
 
     });
 </script>
 
+<script type="text/javascript">
+    $(function () {
+        $('#start').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#end').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
