@@ -6,14 +6,14 @@
             <file>file:/C:/wamp/www/budget/application/controllers/Subline.php</file>
             <file>file:/C:/wamp/www/budget/application/views/footer.php</file>
             <file>file:/C:/wamp/www/budget/application/views/header.php</file>
-            <file>file:/C:/wamp/www/budget/application/controllers/Category.php</file>
+            <file>file:/C:/wamp/www/budget/js/moment-with-locales.js</file>
             <file>file:/C:/wamp/www/budget/application/views/view-category.php</file>
             <file>file:/C:/wamp/www/budget/application/controllers/Rate.php</file>
             <file>file:/C:/wamp/www/budget/application/views/view-report.php</file>
             <file>file:/C:/wamp/www/budget/application/views/view-budget.php</file>
             <file>file:/C:/wamp/www/budget/application/controllers/Main.php</file>
             <file>file:/C:/wamp/www/budget/application/views/add-budget.php</file>
-            <file>file:/C:/wamp/www/budget/css/mine.css</file>
+            <file>file:/C:/wamp/www/budget/application/controllers/Account.php</file>
             <file>file:/C:/wamp/www/budget/application/views/view-unit.php</file>
             <file>file:/C:/wamp/www/budget/application/controllers/Initiative.php</file>
             <file>file:/C:/wamp/www/budget/application/views/view-account.php</file>
@@ -26,6 +26,7 @@
             <file>file:/C:/wamp/www/budget/application/controllers/Unit.php</file>
             <file>file:/C:/wamp/www/budget/application/views/view-subline.php</file>
             <file>file:/C:/wamp/www/budget/application/views/table-budget.php</file>
+            <file>file:/C:/wamp/www/budget/js/bootstrap-datetimepicker.js</file>
             <file>file:/C:/wamp/www/budget/application/views/view-initiative.php</file>
             <file>file:/C:/wamp/www/budget/application/controllers/Objective.php</file>
             <file>file:/C:/wamp/www/budget/application/controllers/Department.php</file>
