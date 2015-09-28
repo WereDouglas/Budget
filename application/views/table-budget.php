@@ -554,7 +554,7 @@
 $('#ends').blur(function () {
             console.log($("#ends").val());
            
-            var end = new Date($("#ends").val()));
+            var end = new Date($("#ends").val());
             console.log(monthNames[end.getMonth()]);
         });
         $('#starts').blur(function () {

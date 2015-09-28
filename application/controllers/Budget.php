@@ -98,19 +98,21 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['inits'] = $query;
         }
+       
         $query = $this->Md->query("SELECT * FROM reporting");
         if ($query) {
             $data['reports'] = $query;
         }
+      
         $query = $this->Md->query("SELECT * FROM subline");
         if ($query) {
             $data['subs'] = $query;
         }
+        
         $query = $this->Md->query("SELECT * FROM account");
         if ($query) {
             $data['accounts'] = $query;
         }
-
         $this->load->view('table-budget', $data);
     }
 
