@@ -202,27 +202,28 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+              <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
+                <i class="fa fa-th"></i> <span>New Budget(Tabular)</span> 
+              </a>
+            </li>
+               <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/all"; ?>">
+                <i class="fa fa-th"></i> <span>Budgets (Advanced)</span> 
+              </a>
+            </li>
             <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/"; ?>">
-                <i class="fa fa-th"></i> <span>New Budget</span> <small class="label pull-right bg-green">Hot</small>
-              </a>
+                <i class="fa fa-th"></i> <span>New Budget</span>              </a>
             </li>
-            <li>
-               <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
-                <i class="fa fa-th"></i> <span>New Budget(Tabular)</span> <small class="label pull-right bg-green">Hot</small>
-              </a>
-            </li>
-              <li>
-               <a target="frame" href="<?php echo base_url() . "index.php/budget/all"; ?>">
-                <i class="fa fa-th"></i> <span>Budgets (Advanced)</span> <small class="label pull-right bg-green">Hot</small>
-              </a>
-            </li>
-              <li>
+          
+           
+<!--              <li>
               <a href="../calendar.html">
                 <i class="fa fa-circle-o text-aqua"></i> <span>Organisation profile</span>
                 <small class="label pull-right bg-red">3</small>
               </a>
-            </li>
+            </li>-->
              <li>
               <a target="frame" href="<?php echo base_url() . "index.php/department/"; ?>">
                 <i class="fa fa-circle-o text-aqua"></i> <span>Departments</span>
@@ -248,11 +249,11 @@
               </a>
             </li>
           
-            <li><a href="../../documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+<!--            <li><a href="../../documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
           </ul>
         </section>
         <!-- /.sidebar -->

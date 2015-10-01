@@ -95,7 +95,12 @@
                         <td> <select name="initiative" id="initiative" class="form-control">
                             </select></td>
                         <td> <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." /></td>
-                        <td> <input id="Procurement type" name="Procurement type" type="text" class="form-control" placeholder="Enter ..." /></td>
+                        <td> <select name="Procurement type" id="Procurement type" class="form-control">
+                                <option>N/A</option>
+                                <option>GOODS</option>
+                                <option>SERVICES</option>
+                                <option>WORKS</option>
+                            </select></td>
                         <td><select name="category" id="category" class="form-control">
                                 <option></option>
                                 <?php foreach ($categories as $loop) { ?>   
@@ -198,10 +203,10 @@
                         <td><input id="October" name="October" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input id="November" name="November" type="text" class="form-control" placeholder="Enter ..." /></td>
                         <td><input id="December" name="December" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter 1" name="Quarter 1" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter 2" name="Quarter 2" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter 3" name="Quarter 3" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter 4" name="Quarter 4" class="form-control" placeholder="Enter ..." /></td>  
+                        <td><input type="text" id="Quarter1" name="Quarter1" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input type="text" id="Quarter2" name="Quarter2" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input type="text" id="Quarter3" name="Quarter3" class="form-control" placeholder="Enter ..." /></td>
+                        <td><input type="text" id="Quarter4" name="Quarter4" class="form-control" placeholder="Enter ..." /></td>  
                         <td><input type="text" id="services" name="services" class="form-control" placeholder="Enter ..." /></td>
                         <td><input type="text" class="form-control" id="activity details" name="activity details" placeholder="Enter ..." /></td>
                         <td><input type="text" id="Year" name="Year" class="form-control" placeholder="Enter ..." /></td>
@@ -403,6 +408,7 @@
                     });
                     $("#initiative option").remove();
                     $("#initiative").append(sc);
+                    $("#performance").val("");
                     $("#performance").val(pc);
 
                 }
@@ -500,12 +506,13 @@
                 data: form_data,
                 success: function (msg) {
                     var sc = '';
-
                     $.each(msg, function (key, val) {
                         sc = val.rate;
                     });
-                    // $("#rate").remove();
+                    console.log(sc);
+                    $("#rate").text("");
                     $("#rate").val(sc);
+
 
 
 
@@ -531,38 +538,71 @@
         $(':radio').click(function () {
             // console.log( $(this).val())
             if ($(this).val() == 'auto') {
-                var each = $("#totalL").val() / 12;
-                $("#January").val(each);
-                $("#February").val(each);
-                $("#March").val(each);
-                $("#April").val(each);
-                $("#May").val(each);
-                $("#June").val(each);
-                $("#July").val(each);
-                $("#August").val(each);
-                $("#September").val(each);
-                $("#October").val(each);
-                $("#November").val(each);
-                $("#December").val(each);
-            }
+
+              //  console.log(startnumber + startmonth);
+               // console.log(endnumber + endmonth);
+                var numbermonths = (endnumber - startnumber);
+              //  console.log("number of months " + (numbermonths+1));
+               // console.log(startnumber);
+                var start = numbermonths;
+                var each = $("#totalL").val() / numbermonths;
+                var quarter = $("#totalL").val() / 4
+                for ( var i = startnumber-1; i <(startnumber + numbermonths); i++) {
+                   // console.log(i);
+                 //   console.log("Counting from" + monthNames[i]);
+                      $("#"+monthNames[i]).val(each);
+                 }  
+              
+                   var quarter1 =($("#January").val()+$("#February").val()+$("#March").val())/3;
+                   var quarter2 = ($("#April").val()+$("#May").val()+$("#June").val())/3;
+                   var quarter3 = ($("#July").val()+$("#August").val()+$("#September").val())/3;
+                   var quarter4 = ($("#October").val()+$("#November").val()+$("#December").val())/3;
+                   
+                if (quarter1>0){
+                  //$("#Quarter1").val(); 
+                   $("#Quarter1").val(quarter1);                   
+                }
+                 if (quarter2>0){ 
+                     //  $("#Quarter2").val(); 
+                   $("#Quarter2").val(quarter2);                   
+                }
+                  if (quarter3>0){ 
+                      //  $("#Quarter3").val(); 
+                   $("#Quarter3").val(quarter3);                   
+                }
+                  if (quarter4>0){
+                    //    $("#Quarter4").val(); 
+                   $("#Quarter4").val(quarter4);
+                }
+           }
 
         });
- var monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];       
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
 
-$('#ends').blur(function () {
-            console.log($("#ends").val());
-           
-            var end = new Date($("#ends").val());
-            console.log(monthNames[end.getMonth()]);
-        });
+
+        var startnumber = 0;
+        var endnumber = 0;
+
+        var startmonth = "";
+        var endmonth = "";
+
         $('#starts').blur(function () {
             console.log($("#starts").val());
-           
+
             var start = new Date($("#starts").val());
             console.log(monthNames[start.getMonth()]);
+            startmonth = monthNames[start.getMonth()];
+            startnumber = (1 + (monthNames.indexOf(monthNames[start.getMonth()])));
         });
+        $('#ends').blur(function () {
+            console.log($("#ends").val());
+            var end = new Date($("#ends").val());
+            console.log(monthNames[end.getMonth()]);
+            endmonth = monthNames[end.getMonth()];
+            endnumber = (1 + (monthNames.indexOf(monthNames[end.getMonth()])));
+        });
+
 
     });
 </script>
@@ -570,10 +610,10 @@ $('#ends').blur(function () {
 <script type="text/javascript">
     $(function () {
         $('#start').datetimepicker({
-            format: 'DD/MM/YYYY'
+            format: 'YYYY-MM-DD'
         });
         $('#end').datetimepicker({
-            format: 'DD/MM/YYYY'
+            format: 'YYYY-MM-DD'
         });
     });
 </script>

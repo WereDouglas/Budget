@@ -70,7 +70,7 @@ class Rate extends CI_Controller {
     public function where()
 {
         $currency=$this->input->post('name'); 
-        $currency="USD"; 
+       // $currency="USD"; 
                 
         $table='rate';
         $where=array('currency' => $currency);
