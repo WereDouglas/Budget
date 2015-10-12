@@ -60,8 +60,15 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-                          </div>
+                              
+                                <?php if($this -> session -> userdata('image')==""){?>                                                    
+                                                      <img class="img-circle" alt="image"  src="<?= base_url(); ?>images/placeholder.jpg">
+						
+                                              <?php  } else { ?>
+                                                   <img src="<?php echo base_url(); ?>uploads/<?php echo $this -> session -> userdata('image'); ?>" class="img-circle" alt="User Image" />
+                    	  <?php  } ?>	
+                              
+                                </div>
                           <h4>
                             Support Team
                             <small><i class="fa fa-clock-o"></i> 5 mins</small>
@@ -129,37 +136,36 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" />
-                  <span class="hidden-xs">Alexander Pierce</span>
+                   <?php if($this -> session -> userdata('image')==""){?>                                                    
+                                                      <img class="user-image" alt="image"  src="<?= base_url(); ?>images/placeholder.jpg">
+						
+                                              <?php  } else { ?>
+                                                   <img src="<?php echo base_url(); ?>uploads/<?php echo $this -> session -> userdata('image'); ?>" class="user-image" alt="Image" />
+                    	  <?php  } ?>	
+                                  <span class="hidden-xs"> <?php echo $this -> session -> userdata('name'); ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-                    <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                   <?php if($this -> session -> userdata('image')==""){?>                                                    
+                                                      <img class="img-circle" alt="image"  src="<?= base_url(); ?>images/placeholder.jpg">
+						
+                                              <?php  } else { ?>
+                                                   <img src="<?php echo base_url(); ?>uploads/<?php echo $this -> session -> userdata('image'); ?>" class="img-circle" alt="Image" />
+                    	  <?php  } ?>   <p>
+                      <?php echo $this -> session -> userdata('role'); ?>
+                      <small> <?php echo $this -> session -> userdata('created'); ?></small>
                     </p>
                   </li>
                   <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>
+                 
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="<?php echo base_url() . "index.php/login/"; ?>" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -182,10 +188,16 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-            </div>
+                 <?php if($this -> session -> userdata('image')==""){?>                                                    
+                                                      <img  alt="image"  src="<?= base_url(); ?>images/placeholder.jpg">
+						
+                                              <?php  } else { ?>
+                                                   <img src="<?php echo base_url(); ?>uploads/<?php echo $this -> session -> userdata('image'); ?>"  alt="Image" />
+                    	  <?php  } ?>
+                
+                  </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>  <?php echo $this -> session -> userdata('name'); ?></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -246,6 +258,16 @@
             <li>
                 <a target="frame" href="<?php echo base_url()."index.php/rate"; ?>">
                 <i class="fa fa-th"></i> <span>Exchange rates</span> <small class="label pull-right bg-green">Hot</small>
+              </a>
+            </li>
+             <li>
+                <a target="frame" href="<?php echo base_url()."index.php/user"; ?>">
+                <i class="fa fa-th"></i> <span>Users</span> <small class="label pull-right bg-green">Users</small>
+              </a>
+            </li>
+             <li>
+                <a target="frame" href="<?php echo base_url()."index.php/role"; ?>">
+                <i class="fa fa-th"></i> <span>Roles</span> <small class="label pull-right bg-green">Roles</small>
               </a>
             </li>
           

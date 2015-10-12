@@ -18,51 +18,10 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable" id="datatable" style=" width: auto;">
                 <thead>
                     <tr>  
-                        <th>Department</th>
-                        <th>Unit</th>                                          
-                        <th>Activity</th>
-                        <th>Output</th>
-                        <th>Outcome</th>
-                        <th>Objective</th>
-                        <th>Strategy/initiatives</th>
-                        <th>Performance measure</th>
-                        <th>Procurement type</th>
-                        <th>Budget Categories</th>
-                        <th>Reporting line</th>
-                        <th>Sub line</th>
-                        <th>Account</th>
-                        <th>Account description</th>
-                        <th>Funding</th>
-                        <th>Unit of measure</th>
-                        <th>Currency</th>
-                        <th>Ex.rate</th>
-                        <th>Unit price</th>
-                        <th>Units/Qty</th>
-                        <th>Persons</th>
-                        <th>Freq</th>
-                        <th>Unit Price(Local)</th>
-                        <th>Total price</th>
-                        <th>Cash flow</th>
-                        <th>Total price(Local)</th>
-                        <th>Start date</th>
-                        <th>End date</th>
-                        <th>Variance</th>
-                        <th>Cost generation</th>
-                        <th>Auto Fill</th>
-                        <th>January</th>
-                        <th>February</th>  <th>March</th>
-                        <th>April</th>
-                        <th>May</th>  <th>June</th>
-                        <th>July</th>  <th>August</th>
-                        <th>September</th>  <th>October</th>
-                        <th>November</th>  <th>December</th>
-                        <th>QUARTER 1</th>
-                        <th>QUARTER 2</th>
-                        <th>QUARTER 3</th>
-                        <th>QUARTER 4</th>
-                        <th>Description of goods/service or works</th>
-                        <th>DETAILED DESCRIPTION OF THE ACTIVITY TO BE UNDERTAKEN</th>
-                        <th>Year</th>
+                        <th></th>                                                             
+                        <th></th>                       
+                        <th></th>
+                        <th></th>                      
                         <th></th>
                         <th></th>
 
@@ -72,63 +31,70 @@
 
 
                     <tr >
-                        <td><select name="department" id="department" class="form-control">
+                        <td>
+                            Department
+                            <select name="department" id="department" class="form-control">
                                 <option></option>
                                 <?php foreach ($departments as $loop) { ?>   
                                     <option><?= $loop->name ?></option>
                                 <?php } ?>
 
-                            </select></td>
-                        <td> <select id="unit" name="unit" class="form-control">
-
-                            </select></td>                                          
-                        <td> <textarea id="activity" name="activity" class="form-control" rows="1" placeholder=""></textarea></td>
-                        <td> <input name="output" id="output" type="text" class="form-control" placeholder="" /></td>
-                        <td>  <input id="outcome" name="outcome" type="text" class="form-control" placeholder="" /></td>
-                        <td><select name="objective" id="objective" class="form-control">
+                            </select>Unit<select id="unit" name="unit" class="form-control">
+                            </select>
+                                  Activity details
+                            <textarea id="activity" name="activity" class="form-control" rows="1" placeholder=""></textarea>
+                            <input name="output" id="output" type="text" class="form-control" placeholder="Ouput" />
+                            <input id="outcome" name="outcome" type="text" class="form-control" placeholder="Outcome" />
+                       Objective <select name="objective" id="objective" class="form-control">
                                 <option></option>
                                 <?php foreach ($objectives as $loop) { ?>   
                                     <option><?= $loop->code ?></option>
                                 <?php } ?>
 
-                            </select></td>
-                        <td> <select name="initiative" id="initiative" class="form-control">
-                            </select></td>
-                        <td> <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." /></td>
-                        <td> <select name="Procurement type" id="Procurement type" class="form-control">
+                            </select>
+                           Strategy/Initiatives
+                            <select name="initiative" id="initiative" class="form-control"> </select>
+                           Performance measure
+                            <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." />
+                      
+                        </td>
+                                                      
+                        <td> 
+                        </td>
+                      
+                        <td> 
+                            <select name="Procurement type" id="Procurement type" class="form-control">
                                 <option>N/A</option>
                                 <option>GOODS</option>
                                 <option>SERVICES</option>
                                 <option>WORKS</option>
-                            </select></td>
-                        <td><select name="category" id="category" class="form-control">
+                            </select>  
+                            Budget Categories
+                            <select name="category" id="category" class="form-control">
                                 <option></option>
                                 <?php foreach ($categories as $loop) { ?>   
                                     <option><?= $loop->name ?></option>
                                 <?php } ?>
-
                             </select>
-
-                        </td>
-                        <td> <select name="line" id="line" class="form-control">
+                            Reporting line
+                            <select name="line" id="line" class="form-control">
                                 <option></option>
-                            </select></td>
-                        <td><select name="subline" id="subline" class="form-control">
-
-
-                            </select></td>
-                        <td> <select name="account" id="account" class="form-control">                               
-
-                            </select></td>
-                        <td><input type="text" name="account description" id="account description" class="form-control" placeholder="Enter ..." /></td>
-                        <td> <select name="funding" id="funding" class="form-control">                                
+                            </select>
+                            Subline
+                            <select name="subline" id="subline" class="form-control"></select>
+                            Account
+                            <select name="account" id="account" class="form-control"> </select>
+                            Funding
+                            <select name="funding" id="funding" class="form-control">                                
                                 <option>Internal</option>
                                 <option>External</option>
-                            </select></td>
-                        <td> <input name="unit of measure" id="unit of measure" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td>   
-                            <div class="form-group">
-
+                            </select>
+                          Accounting description
+                            <input type="text" name="account description" id="account description" class="form-control" placeholder="Enter ..." />
+                       Unit of measure
+                            <input name="unit of measure" id="unit of measure" type="text" class="form-control" placeholder="Enter ..." />
+                        <div class="form-group">
+                       Currency
                                 <select name="currency" id="currency" class="form-control">
                                     <option>Please select a currency</option>
                                     <?php foreach ($rates as $loop) { ?>   
@@ -136,18 +102,30 @@
                                     <?php } ?>
 
                                 </select>
-                            </div></td>
-                        <td><input id="rate" name="rate" type="text" class="form-control"  /></td>
-                        <td><input id="price" name="price" type="text" class="form-control" /></td>
-                        <td><input name="qty" id="qty" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="persons" name="persons" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" name="freq" id="freq" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input name="priceL" id="priceL" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="total" name="total" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input name="cash flow" id="cash flow"  type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="totalL" name="totalL" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td> 
-                            <div class="form-group">
+                            </div> 
+                            Rate
+                            <input id="rate" name="rate" type="text" class="form-control"  />
+                            Price
+                       <input id="price" name="price" type="text" class="form-control" />
+                       Quantity
+                       <input name="qty" id="qty" type="text" class="form-control" placeholder="" />
+                       Persons
+                       <input id="persons" name="persons" type="text" class="form-control" value="1" />
+                       Frequency
+                       <input type="text" name="freq" id="freq" class="form-control" value="1"/>
+                       Local Price
+                       <input name="priceL" id="priceL" type="text" class="form-control" placeholder="" />
+                       Total Price
+                       <input id="total" name="total" type="text" class="form-control" placeholder="" />
+                       Cash Flow
+                       <input name="cash flow" id="cash flow"  type="text" class="form-control" placeholder="" />
+                       Total Local
+                       <input id="totalL" name="totalL" type="text" class="form-control" placeholder="" />
+                        </td>
+                       
+                        <td>
+                            Start date
+                             <div class="form-group">
 
                                 <div class='input-group date' id='start'>
                                     <input type='text' class="form-control" id="starts" name="starts"/>
@@ -155,9 +133,9 @@
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
-                            </div><!-- /.form group --></td>
-                        <td>  
-                            <div class="form-group">
+                            </div>
+                            End date
+                               <div class="form-group">
 
                                 <div class='input-group date' id='end'>
                                     <input type='text' class="form-control" id="ends" name="ends" />
@@ -165,14 +143,9 @@
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
-                            </div><!-- /.form group --></td>
-                        <td><input id="variance" name="variance" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" name="cost generation" id="cost generation" class="form-control" placeholder="Enter ..." /></td>
-
-
-                        <td>
-
-                            <div class="form-group">
+                            </div>
+                            Auto Fill
+                               <div class="form-group">
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="radio" id="optionsRadios1" value="auto"  />
@@ -186,32 +159,56 @@
                                 </div>
 
                             </div>
-
-                        </td> 
-                        <td><input id="January" name="January" type="text" class="form-control" placeholder="Enter ..." />
-
-
+                            Variance
+                            <input id="variance" name="variance" type="text" class="form-control" placeholder="Enter ..." />
+                      Cost generational
+                      <input type="text" name="cost generation" id="cost generation" class="form-control" placeholder="Enter ..." />
                         </td>
-                        <td><input id="February" name="February" type="text" class="form-control" placeholder="Enter ..." /></td>  
-                        <td><input id="March" name="March" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="April" name="April" type="text" class="form-control" placeholder="Enter ..." /></td>  
-                        <td><input id="May" name="May" type="text" class="form-control" placeholder="Enter ..." /></td>  
-                        <td><input id="June" name="June" type="text" class="form-control" placeholder="Enter ..." /></td> 
-                        <td><input id="July" name="July" type="text" class="form-control" placeholder="Enter ..." /></td>  
-                        <td><input id="August" name="August" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="September" name="September" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="October" name="October" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="November" name="November" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input id="December" name="December" type="text" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter1" name="Quarter1" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter2" name="Quarter2" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter3" name="Quarter3" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Quarter4" name="Quarter4" class="form-control" placeholder="Enter ..." /></td>  
-                        <td><input type="text" id="services" name="services" class="form-control" placeholder="Enter ..." /></td>
-                        <td><input type="text" class="form-control" id="activity details" name="activity details" placeholder="Enter ..." /></td>
-                        <td><input type="text" id="Year" name="Year" class="form-control" placeholder="Enter ..." /></td>
-                        <td> <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button></td>      
-                        <td></td>
+                  
+                        <td>
+                            January
+                            <input id="January" name="January" type="text" class="form-control" placeholder="" />
+                           February
+                            <input id="February" name="February" type="text" class="form-control" placeholder="" /> 
+                       March
+                            <input id="March" name="March" type="text" class="form-control" placeholder="" />
+                        April
+                            <input id="April" name="April" type="text" class="form-control" placeholder="" />
+                        May
+                            <input id="May" name="May" type="text" class="form-control" placeholder="" /> 
+                       June
+                            <input id="June" name="June" type="text" class="form-control" placeholder="" /> 
+                     July
+                            <input id="July" name="July" type="text" class="form-control" placeholder="" /> 
+                     August
+                            <input id="August" name="August" type="text" class="form-control" placeholder="" />
+                    September
+                            <input id="September" name="September" type="text" class="form-control" placeholder="" />                       
+                    October
+                            <input id="October" name="October" type="text" class="form-control" placeholder="" />                      
+                    November
+                            <input id="November" name="November" type="text" class="form-control" placeholder="" />                       
+                    December
+                            <input id="December" name="December" type="text" class="form-control" placeholder="" />
+                     Quarter 1
+                            <input type="text" id="Quarter1" name="Quarter1" class="form-control" placeholder="" />
+                     Quarter 2 
+                            <input type="text" id="Quarter2" name="Quarter2" class="form-control" placeholder="" />
+                    Quarter 3   
+                            <input type="text" id="Quarter3" name="Quarter3" class="form-control" placeholder="" />
+                    Quarter 4 
+                            <input type="text" id="Quarter4" name="Quarter4" class="form-control" placeholder="" />  
+                    Services
+                            <input type="text" id="services" name="services" class="form-control" placeholder="" />
+                         
+                    Activity details        
+                            <input type="text" class="form-control" id="activity details" name="activity details" placeholder="" />
+                     <input type="text" id="Year" name="Year" class="form-control" placeholder="Enter ..." />
+                     
+                     <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button>
+                        
+                        </td>
+                        
                     </tr>
 
 
@@ -242,13 +239,6 @@
 <!-- Page script -->
 
 
-<script type="text/javascript">
-    $(function () {
-        $("#datatable").dataTable({bFilter: false, "bPaginate": false, bInfo: false});
-        $("#datatabled").dataTable();
-
-    });
-</script>
 
 <script type="text/javascript">
     $(document).ready(function ()
@@ -529,9 +519,11 @@
         $('#qty').blur(function () {
             var total = $("#price").val() * $("#qty").val();
             $("#total").val(total);
-
-            var totalL = ($("#price").val() * $("#rate").val()) * $("#qty").val();
-            $("#totalL").val(totalL);
+             var f =   $("#Freq").val();
+             var per = $("#persons").val();
+            var totalL = ($("#price").val() * $("#rate").val()) * $("#qty").val()* (f  * per) ;
+           
+        $("#totalL").val(totalL);
 
         });
         // optionsRadios2
