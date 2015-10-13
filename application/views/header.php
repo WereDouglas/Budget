@@ -214,6 +214,12 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            
+              <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/period"; ?>">
+                <i class="fa fa-th"></i> <span>New Budget Period</span>              </a>
+            </li>
+          
               <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget(Tabular)</span> 
@@ -228,6 +234,7 @@
                <a target="frame" href="<?php echo base_url() . "index.php/budget/"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget</span>              </a>
             </li>
+            
           
            
 <!--              <li>

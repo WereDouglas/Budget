@@ -12,14 +12,14 @@
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
     <div style=" overflow-x:scroll">
-        <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">            
+        <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">        
 
 
             <table class="table table-striped table-bordered bootstrap-datatable datatable" id="datatable" style=" width: auto;">
                 <thead>
                     <tr>  
                         <th></th>                                                             
-                        <th></th>                       
+                                          
                         <th></th>
                         <th></th>                      
                         <th></th>
@@ -32,6 +32,17 @@
 
                     <tr >
                         <td>
+                              Budget year/period
+                                <select name="period" id="period" class="form-control">
+                                    <option>Please select a period</option>
+                                    <?php foreach ($periods as $loop) { ?>   
+                                        <option><?= $loop->year ?></option>
+                                    <?php } ?>
+
+                                </select>
+                             Start <input type="text"  disabled class="form-control" name="startp" id="startp" placeholder="start date" />
+                               End      <input type="text" disabled class="form-control" name="endp" id="endp" placeholder="End date" /> 
+                                   
                             Department
                             <select name="department" id="department" class="form-control">
                                 <option></option>
@@ -56,11 +67,28 @@
                             <select name="initiative" id="initiative" class="form-control"> </select>
                            Performance measure
                             <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." />
-                      
-                        </td>
-                                                      
-                        <td> 
-                        </td>
+                             Start date
+                          
+
+                                <div class='input-group date' id='start'>
+                                    <input type='text' class="form-control" id="starts" name="starts"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                          
+                            End date
+                               <div class="form-group">
+
+                                <div class='input-group date' id='end'>
+                                    <input type='text' class="form-control" id="ends" name="ends" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                   
+                        </td>  
                       
                         <td> 
                             <select name="Procurement type" id="Procurement type" class="form-control">
@@ -124,27 +152,7 @@
                         </td>
                        
                         <td>
-                            Start date
-                             <div class="form-group">
-
-                                <div class='input-group date' id='start'>
-                                    <input type='text' class="form-control" id="starts" name="starts"/>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            End date
-                               <div class="form-group">
-
-                                <div class='input-group date' id='end'>
-                                    <input type='text' class="form-control" id="ends" name="ends" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            Auto Fill
+                                     Auto Fill
                                <div class="form-group">
                                 <div class="radio">
                                     <label>
@@ -163,7 +171,8 @@
                             <input id="variance" name="variance" type="text" class="form-control" placeholder="Enter ..." />
                       Cost generational
                       <input type="text" name="cost generation" id="cost generation" class="form-control" placeholder="Enter ..." />
-                        </td>
+                            
+                       </td>
                   
                         <td>
                             January
@@ -317,31 +326,42 @@
             $(".editbox").hide();
             $(".text").show();
         });
-
-
-
-
-    });
-
-    $('#loading').hide();
+        
+         $('#loading').hide();
     $("#budget-form").submit(function (e) {
         e.preventDefault();
-        // console.log($(this).serializeArray());
+         console.log($(this).serializeArray());
         $('#loading').show();
         var posts = $(this).serializeArray();
-
+       
+        var period = $("#period").val();
+        var department = $("#department").val();
+        var unit = $("#unit").val();
+        var initiative = $("#initiative").val();
+        var startdate = $("#starts").val();
+        var enddate = $("#ends").val();
+        var account = $("#account").val();
+           var total = $("#totalL").val();
+         console.log(account);
 
         if (posts.length > 0) {
-
-            $.post("<?php echo base_url() ?>index.php/budget/create", {posts: posts}
+             console.log("Period of use "+period);
+             
+                      
+             
+            $.post("<?php echo base_url() ?>index.php/budget/create", {posts: posts,period:period,department:department,unit:unit,initiative:initiative,startdate:startdate,enddate:enddate,account:account,total:total}
             , function (response) {
                 //#emailInfo is a span which will show you message
+               
                 $('#loading').hide();
                 setTimeout(finishAjax('loading', escape(response)), 200);
 
+            }).fail(function(e){
+                console.log(e);
             }); //end change
         } else {
             alert("Please insert missing information");
+             console.log("missing information");
             $('#loading').hide();
         }
 
@@ -350,6 +370,13 @@
             $('#' + id).fadeIn();
         }
     })
+
+
+
+
+    });
+
+   
 
 </script>
 <script>
@@ -502,10 +529,6 @@
                     console.log(sc);
                     $("#rate").text("");
                     $("#rate").val(sc);
-
-
-
-
                 }
             });
         });
@@ -519,12 +542,11 @@
         $('#qty').blur(function () {
             var total = $("#price").val() * $("#qty").val();
             $("#total").val(total);
-             var f =   $("#Freq").val();
-             var per = $("#persons").val();
-            var totalL = ($("#price").val() * $("#rate").val()) * $("#qty").val()* (f  * per) ;
+             var f =   parseInt($("#freq").val());
+             var per = parseInt($("#persons").val());
+            var totalL = ($("#price").val() * $("#rate").val()) * $("#qty").val()*(f*per) ;
            
         $("#totalL").val(totalL);
-
         });
         // optionsRadios2
         $(':radio').click(function () {
@@ -593,6 +615,32 @@
             console.log(monthNames[end.getMonth()]);
             endmonth = monthNames[end.getMonth()];
             endnumber = (1 + (monthNames.indexOf(monthNames[end.getMonth()])));
+        });
+        
+        
+              $('#period').change(function () {
+
+            var form_data = {
+                period: $('#period').val()
+            };
+
+            $.ajax({
+                url: "<?php echo base_url() . "index.php/period/where"; ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (msg) {
+                    var startp = '';
+                     var endp = '';
+                    $.each(msg, function (key, val) {
+                        startp = val.start;
+                         endp = val.end;
+                    });
+                  
+                   $("#endp").val(endp);
+                    $("#startp").val(startp);
+                }
+            });
         });
 
 

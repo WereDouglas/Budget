@@ -60,6 +60,10 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['accounts'] = $query;
         }
+         $query = $this->Md->query("SELECT * FROM period");
+        if ($query) {
+            $data['periods'] = $query;
+        }
 
         $this->load->view('add-budget', $data);
     }
@@ -113,6 +117,11 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['accounts'] = $query;
         }
+         $query = $this->Md->query("SELECT * FROM period");
+        if ($query) {
+            $data['periods'] = $query;
+        }
+        
         $this->load->view('table-budget', $data);
     }
 
@@ -128,9 +137,21 @@ class Budget extends CI_Controller {
     }
 
     public function create() {
+       
         $this->load->helper(array('form', 'url'));
-
+        
         $posts = $this->input->post('posts');
+        $period = $this->input->post('period');
+        $department = $this->input->post('department');
+        $unit = $this->input->post('unit');
+        $initiative = $this->input->post('initiative');
+        $startdate = $this->input->post('startdate');
+        $enddate = $this->input->post('enddate');
+        $account = $this->input->post('account');
+        $budget = $this->input->post('budget');
+        $total = $this->input->post('total');
+   // {posts: posts,period:period,department:department,unit:unit,initiative:initiative,startdate:startdate,enddate:enddate,account:account}
+         
         $budget = new stdClass();
 
         foreach ($posts as $key => $value) {
@@ -138,7 +159,8 @@ class Budget extends CI_Controller {
             $budget->$value['name'] = $value['value'];
         }
         $budget = json_encode($budget);
-        $instance = array('orgID' => '', 'content' => $budget, 'by' => 'user', 'created' => date('Y-m-d H:i:s'));
+        
+        $instance = array('account' =>$account,'total' =>$total,'enddate' =>$enddate,'startdate' => $startdate,'initiative' => $initiative,'unit' => $unit,'department' => $department,'period' => $period,'orgID' => '', 'content' => $budget, 'by' => $this->session -> userdata('email'), 'created' => date('Y-m-d H:i:s'));
         $id = $this->Md->save($instance, 'instance');
         if ($id) {
             if (!$this->session->userdata('session')) {
