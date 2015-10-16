@@ -69,6 +69,7 @@ class Budget extends CI_Controller {
     }
 
     public function tabular() {
+        
         $data['departments'] = array();
         $data['units'] = array();
         $data['categories'] = array();
@@ -135,8 +136,19 @@ class Budget extends CI_Controller {
         }
         $this->load->view('view-all', $data);
     }
+    public function summary() {
+        $data['budgets'] = array();
+
+        $query = $this->Md->query("SELECT * FROM instance");
+
+        if ($query) {
+            $data['budgets'] = $query;
+        }
+        $this->load->view('view-summary', $data);
+    }
 
     public function create() {
+       
        
         $this->load->helper(array('form', 'url'));
         
@@ -192,7 +204,8 @@ class Budget extends CI_Controller {
                                          
      <table class="table table-striped table-bordered bootstrap-datatable datatabled" id="datatabled" style=" width: auto;">
                                     <thead>
-                                        <tr>  
+                                        <tr> 
+                                         <th>period</th>   
                                             <th>Department</th>
                                              <th>Unit</th>                                          
                                             <th>Activity</th>
@@ -238,7 +251,8 @@ class Budget extends CI_Controller {
                                                                                                       <th>QUARTER 4</th>
                                                                                                        <th>Description of goods/service or works</th>
                                         <th>DETAILED DESCRIPTION OF THE ACTIVITY TO BE UNDERTAKEN</th>
-                                         <th>Year</th>                                                                                
+                                         <th>Year</th>  
+                                         
                                         </tr>
                                     </thead>   
                                     <tbody>';
@@ -282,7 +296,7 @@ class Budget extends CI_Controller {
     public function delete() {
         $this->load->helper(array('form', 'url'));
         $id = $this->uri->segment(3);
-        $query = $this->Md->delete($id, 'department');
+        $query = $this->Md->delete($id, 'instance');
 
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('msg', '<div class="alert alert-error">
@@ -290,14 +304,14 @@ class Budget extends CI_Controller {
                                                 <strong>
                                                 information deleted	</strong>									
 						</div>');
-            redirect('department', 'refresh');
+            redirect('budget/summary', 'refresh');
         } else {
             $this->session->set_flashdata('msg', '<div class="alert alert-error">
                                                    
                                                 <strong>
                                                 information deleted	</strong>									
 						</div>');
-            redirect('department', 'refresh');
+            redirect('budget/summary', 'refresh');
         }
     }
 

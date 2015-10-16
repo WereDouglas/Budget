@@ -79,6 +79,16 @@ class Md extends CI_Model {
         $query=$this->db->get_where($table,$where);
         return $query->result_array();
 }
+ function tables() {
+
+        return $this->db->list_tables();
+    }
+
+    function fields($table) {
+
+        return $this->db->list_fields($table);
+    }
+
 
 }
 

@@ -46,25 +46,15 @@
 
                                                                     Please select the user privileges
                                                                 </h4>
-                                                                
-                                                                          <span class="lbl"> Create 
-                                                                              <input name="creates" id="creates" value="true" <?php echo ($role->create == 'true') ? "checked" : "null"; ?> class="ace-checkbox-2" type="checkbox" />
-                                                                     </span>
-                                                                
-                                                                
-                                                                        <input name="edits" id="edits" value="true" <?php echo ($role->edit == 'true') ? "checked" : "null"; ?>   class="ace-checkbox-2" type="checkbox" />
-                                                                        <span class="lbl"> Edit</span>
-                                                              
+                                                                 <span class="lbl"> Actions</span>
+                                                                         <input type="text" class="span12" id="edit_actions" name="edit_actions" value="<?= $role->actions ?>"  />
+                                                                       
+                                                                 <span class="lbl"> Views</span>
                                                                   
-                                                                        <input name="reads" id="reads" value="true" <?php echo ($role->edit == 'true') ? "checked" : "null"; ?>  class="ace-checkbox-2" type="checkbox" />
-                                                                        <span class="lbl"> Read</span>
+                                                                         <input type="text" class="span12" id="edit_views" name="edit_views" value="<?= $role->views ?>"  />
                                                                   
-                                                                        <input name="updates" id="updates" value="true" <?php echo ($role->update == 'true') ? "checked" : "null"; ?>  class="ace-checkbox-2" type="checkbox" />
-                                                                        <span class="lbl">Update</span>
                                                                   
-                                                                        <input name="deletes" id="deletes" value="true" <?php echo ($role->delete == 'true') ? "checked" : "null"; ?>  class="ace-checkbox-2" type="checkbox" />
-                                                                        <span class="lbl">Delete</span>
-
+                                                                        
                                                                     <button type="submit" class="width-10  btn btn-small btn-success">
                                                                         Update
 
@@ -105,26 +95,17 @@
                                                          
                                                                
                                                                    <input type="text" class="span3" id="role" name="role" required="" placeholder="Role" />
-                                                                    <span id="Loading" name ="Loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span>  <input name="creates" id="creates" value="true" class="ace-checkbox-2" type="checkbox" />
-                                                                    <span class="lbl"> Create</span>
+                                                                    <span id="Loading" name ="Loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span> 
+                                                                 
+                                                                    
+                                                                  <span class="lbl"> Actions</span>
+                                                                    <input type="text" class="span12" id="actions" name="actions"   />
                                                               
-
-                                                                
-                                                                    <input name="edits" id="edits" value="true" class="ace-checkbox-2" type="checkbox" />
-                                                                    <span class="lbl"> Edit</span>
-                                                           
-                                                         
-                                                             
-                                                                    <input name="reads" id="reads" value="true" class="ace-checkbox-2" type="checkbox" />
-                                                                    <span class="lbl"> Read</span>
-                                                              
-                                                                    <input name="updates" id="updates" value="true" class="ace-checkbox-2" type="checkbox" />
-                                                                    <span class="lbl">Update</span>
-                                                               
-                                                                    <input name="deletes" id="deletes" value="true" class="ace-checkbox-2" type="checkbox" />
-                                                                    <span class="lbl">Delete</span>
+                                                                       <span class="lbl"> Views</span>  
+                                                                    <input type="text" class="span12" id="views" name="views"   />
+                                                                                                                   
                                                         
-               <button type="submit" class="width-10  btn btn-small btn-success">
+                                                                <button type="submit" class="width-10  btn btn-small btn-success">
                                                                     Submit
 
                                                                 </button>
@@ -154,17 +135,9 @@
                                                 </label>
                                             </th>
                                             <th>Role name</th>
-                                            <th>Create</th>
-                                            <th>Edit</th>
-                                            <th>Read</th>
-                                            <th class="hidden-480">Update</th>
-
-                                            <th class="hidden-phone">
-                                                <i class="icon-action"></i>
-                                                Delete
-                                            </th>
-                                            <th class="hidden-480">Action</th>
-                                            <th class="hidden-480">Active</th>
+                                            <th>Actions</th>
+                                            <th>Views</th>                                          
+                                                <th class="hidden-480"> </th>
 
                                           
                                         </tr>
@@ -179,29 +152,18 @@
                                                     <td><input type="checkbox" />
                                                         <span class="lbl"></span></td>
                                                     <td><?= $loop->name ?></td>
-                                                    <td><?= $loop->create ?></td>
-                                                    <td><?= $loop->edit ?></td>
-                                                    <td><?= $loop->read ?></td>
-                                                    <td><?= $loop->update ?></td>
-                                                    <td><?= $loop->delete ?></td>
+                                                    <td><?= $loop->actions ?></td>
+                                                    <td><?= $loop->views ?></td>                                                  
                                                     <td> 
                                                         <a href="<?php echo base_url() . "index.php/Role/edit/" . $loop->id; ?>" class="tooltip-info" data-rel="tooltip" title="View">
-                                                            <span class="blue">
-                                                                <i class="icon-edit bigger-120"></i>
-                                                            </span>
+                                                            Edit
                                                         </a>
                                                         <a href="<?php echo base_url() . "index.php/Role/delete/" . $loop->id; ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                            <span class="red">
-                                                                <i class="icon-trash bigger-120"></i>
-                                                            </span>
+                                                           Delete
                                                         </a>
                                                     </td>
 
-                                                    <td>  <label class="pull-right inline">
-                                                            <small class="muted"></small>
-                                                            <input id="id-button-borders" checked="" type="checkbox" class="ace-switch ace-switch-5" />
-                                                            <span class="lbl"></span>
-                                                        </label></td>
+                                                    
                                                    
                                                 </tr>
                                                 <?php

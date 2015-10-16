@@ -21,94 +21,60 @@
         <table class="table jobs table-striped table-bordered bootstrap-datatable datatable" name="datatable" id="datatable" style=" width: auto;">
             <thead>
                 <tr>  
-                    <th>Period</th>   
                     <th>Department</th>
-                    <th>Unit</th>                                          
-                    <th>Activity</th>
-                    <th>Output</th>
-                    <th>Outcome</th>
-                    
-                    <th>Objective</th>
-                    <th>Strategy/initiatives</th>
-                    <th>Performance measure</th>
-                     <th>Starting</th>   
-                      <th>Ending</th>   
-                    <th>Procurement type</th>
-                    <th>Budget Categories</th>
-                    <th>Reporting line</th>
-                    <th>Sub line</th>
+                    <th>Unit</th>
+                    <th>Strategy/initiatives</th> 
+                    <th>Start date</th>
+                    <th>End date</th>
                     <th>Account</th>
-                     <th>Funding</th>
-                    <th>Account description</th>                   
-                    <th>Unit of measure</th>
-                    <th>Currency</th>
-                    <th>Ex.rate</th>
-                    <th>Unit price</th>
-                    <th>Units/Qty</th>
-                    <th>Persons</th>
-                    <th>Freq</th>
-                    <th>Price(Local)</th>
                     <th>Total</th>
-                    <th>Cash flow</th>
-                      <th>Total local</th>
-                        <th>Generated</th>
-                         <th>Variance</th>
-                           <th>Cost Generation</th>                   
-                    <th>January</th>
-                    <th>February</th> 
-                    <th>March</th>
-                    <th>April</th>
-                    <th>May</th> 
-                    <th>June</th>
-                    <th>July</th> 
-                    <th>August</th>
-                    <th>September</th> 
-                    <th>October</th>
-                    <th>November</th>
-                    <th>December</th>
-                    <th>QUARTER 1</th>
-                    <th>QUARTER 2</th>
-                    <th>QUARTER 3</th>
-                    <th>QUARTER 4</th>
-                    <th>Description of goods/service or works</th>
-                    <th>DETAILED DESCRIPTION OF THE ACTIVITY TO BE UNDERTAKEN</th>
-                    <th>Year</th>   
-                    
-                   
-                      
-                        
-                    
+                      <th>created by</th> 
+                       <th></th> 
+                                                                                              
                 </tr>
-            </thead>   
-            <tbody>
+            </thead>     
+                
+                       <tbody>
 
-                <?php
-                if (is_array($budgets) && count($budgets)) {
-                    foreach ($budgets as $loop) {
-                        $details = $loop->content;
-                        $details = json_decode($details);
-                        ?>  
-                        <tr  class="edit_tr">
-                            <?php
-                            foreach ($details as $key => $value) {
+                                        <?php
+                                       if (is_array($budgets) && count($budgets)) {
+                                                foreach ($budgets as $loop) {                                          
+                                                $period = $loop->period;
+                                                $department = $loop->department; 
+                                                 $unit = $loop->unit; 
+                                                  $initiative = $loop->initiative; 
+                                                   $startdate = $loop->startdate; 
+                                                    $enddate = $loop->enddate; 
+                                                     $account = $loop->account; 
+                                                      $total = $loop->total; 
+                                                       $by = $loop->by; 
+                                                $id = $loop->id;                                              
+                                                $created = $loop->created;
+                                                ?>  
+                                                <tr id="<?php echo $id; ?>" class="edit_tr">
+                                                   
+                                                    <td><?php echo $department; ?></td>
+                                                      <td><?php echo $unit; ?></td>
+                                                        <td><?php echo $initiative; ?></td>
+                                                          <td><?php echo $startdate; ?></td>
+                                                            <td><?php echo $enddate; ?></td>
+                                                              <td><?php echo $account; ?></td>
+                                                                <td><?php echo  number_format($total); ?></td>
+                                                                  <td><?php echo $by; ?></td>
+                                                                       <td class="center">
+                                                         <a class="btn btn-danger" href="<?php echo base_url() . "index.php/budget/delete/" . $id; ?>">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                  </tbody>
 
-                                if (is_numeric($value)) {
-                                    echo ' <td>' . number_format($value) . '</td>';
-                                } else {
-                                    echo ' <td>' . $value . '</td>';
-                                }
-                            }
-                            ?>
-                        </tr>
-                        <?php
-                    }
-                }
-                ?>
 
 
 
 
-            </tbody>
         </table>   
     </div>
 </section>

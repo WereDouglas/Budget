@@ -12,6 +12,7 @@ class Period extends CI_Controller {
         $this->load->library('session');
         $this->load->library('encrypt');
         date_default_timezone_set("Africa/Nairobi");
+        $this->load->library('helper');
     }
 
     public function index() {
@@ -25,6 +26,19 @@ class Period extends CI_Controller {
     }
 
     public function create() {
+        
+       $sessdata=$this->session -> userdata('actions');
+       if (!$this->helper->allowed ($sessdata,'Create')) {
+        
+         $this->session->set_flashdata('msg', '<div class="alert alert-error">
+                                                   
+                                                <strong>
+                                               You do not have permission to execute this task	</strong>									
+						</div>');
+
+              redirect('period/', 'refresh');
+       }
+        
         
         $this->load->helper(array('form', 'url'));    
         $year = $this->input->post('year');

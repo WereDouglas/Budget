@@ -24,6 +24,16 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <?php 
+    
+    function allowed ($sessdata,$action){
+    
+        return (strpos($sessdata,$action) ==TRUE);    
+   }
+     $see = $this -> session -> userdata('views');
+    
+    ?>
   </head>
   <body class="skin-blue sidebar-mini">
     <!-- Site wrapper -->
@@ -61,7 +71,7 @@
                         <a href="#">
                           <div class="pull-left">
                               
-                                <?php if($this -> session -> userdata('image')==""){?>                                                    
+                          <?php if($this -> session -> userdata('image')==""){?>                                                    
                                                       <img class="img-circle" alt="image"  src="<?= base_url(); ?>images/placeholder.jpg">
 						
                                               <?php  } else { ?>
@@ -214,11 +224,51 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            
+            <?php  
+             if (allowed ($see,'management')) {  ?>
               <li>
                <a target="frame" href="<?php echo base_url() . "index.php/period"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget Period</span>              </a>
+              </li>
+             
+      <li>
+              <a target="frame" href="<?php echo base_url() . "index.php/department/"; ?>">
+                <i class="fa fa-circle-o text-aqua"></i> <span>Departments</span>
+                <small class="label pull-right bg-red"><?php echo count($departments);?></small>
+              </a>
             </li>
+              <li>
+              <a target="frame" href="<?php echo base_url() . "index.php/objective"; ?>">
+                <i class="fa fa-circle-o text-aqua"></i> <span>Objectives</span>
+                <small class="label pull-right bg-red"><?php echo count($objectives);?></small>
+              </a>
+            </li>
+            <li>
+              <a target="frame" href="<?php echo base_url()."index.php/category"; ?>">
+                <i class="fa fa-files-o"></i> <span>Budget categories</span>
+                <small class="label pull-right bg-red"><?php echo count($categories);?></small>
+              </a>
+            </li>
+           
+            <li>
+                <a target="frame" href="<?php echo base_url()."index.php/rate"; ?>">
+                <i class="fa fa-th"></i> <span>Exchange rates</span> <small class="label pull-right bg-green"><?php echo count($rates);?></small>
+              </a>
+            </li>
+             <li>
+                <a target="frame" href="<?php echo base_url()."index.php/user"; ?>">
+                <i class="fa fa-th"></i> <span>Users</span> <small class="label pull-right bg-green"><?php echo count($users);?></small>
+              </a>
+            </li>
+             <li>
+                <a target="frame" href="<?php echo base_url()."index.php/role"; ?>">
+                <i class="fa fa-th"></i> <span>Roles</span> <small class="label pull-right bg-green"><?php echo count($roles);?></small>
+              </a>
+            </li>
+
+
+
+             <?php } ?>
           
               <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
@@ -230,10 +280,20 @@
                 <i class="fa fa-th"></i> <span>Budgets (Advanced)</span> 
               </a>
             </li>
+               <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/summary"; ?>">
+                <i class="fa fa-th"></i> <span>Summary</span> 
+              </a>
+            </li>
             <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget</span>              </a>
             </li>
+            <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/consolidate/"; ?>">
+                <i class="fa fa-th"></i> <span>Consolidated reports</span>              </a>
+            </li>
+            
             
           
            
@@ -243,40 +303,7 @@
                 <small class="label pull-right bg-red">3</small>
               </a>
             </li>-->
-             <li>
-              <a target="frame" href="<?php echo base_url() . "index.php/department/"; ?>">
-                <i class="fa fa-circle-o text-aqua"></i> <span>Departments</span>
-                <small class="label pull-right bg-red">3</small>
-              </a>
-            </li>
-              <li>
-              <a target="frame" href="<?php echo base_url() . "index.php/objective"; ?>">
-                <i class="fa fa-circle-o text-aqua"></i> <span>Objectives</span>
-                <small class="label pull-right bg-red">3</small>
-              </a>
-            </li>
-            <li>
-              <a target="frame" href="<?php echo base_url()."index.php/category"; ?>">
-                <i class="fa fa-files-o"></i> <span>Budget categories</span>
-                <small class="label pull-right bg-red">3</small>
-              </a>
-            </li>
-           
-            <li>
-                <a target="frame" href="<?php echo base_url()."index.php/rate"; ?>">
-                <i class="fa fa-th"></i> <span>Exchange rates</span> <small class="label pull-right bg-green">Hot</small>
-              </a>
-            </li>
-             <li>
-                <a target="frame" href="<?php echo base_url()."index.php/user"; ?>">
-                <i class="fa fa-th"></i> <span>Users</span> <small class="label pull-right bg-green">Users</small>
-              </a>
-            </li>
-             <li>
-                <a target="frame" href="<?php echo base_url()."index.php/role"; ?>">
-                <i class="fa fa-th"></i> <span>Roles</span> <small class="label pull-right bg-green">Roles</small>
-              </a>
-            </li>
+       
           
 <!--            <li><a href="../../documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
             <li class="header">LABELS</li>

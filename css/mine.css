@@ -159,4 +159,7 @@ cursor:pointer;
     width: 0%;
     white-space: nowrap;
     vertical-align: middle;
+    display: none;
+    border: 1px solid #CCC;
 }
+

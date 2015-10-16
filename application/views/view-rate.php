@@ -125,7 +125,7 @@
                                                     </td>   
 
                                                     <td class="center">
-                                                         <a class="btn btn-danger" href="<?php echo base_url() . "index.php/rate/delete/" . $id; ?>">Delete</a>
+                                                         <a class="btn btn-danger" href="<?php echo base_url() . "index.php/budget/delete/" . $id; ?>">Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php
