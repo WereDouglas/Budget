@@ -60,6 +60,54 @@ class Consolidate extends CI_Controller {
 
         $this->load->view('main-report', $data);
     }
+        public function graphs() {
+            
+        $this->session->sess_destroy();
+
+        $data['departments'] = array();
+        $data['objectives'] = array();
+        $data['categories'] = array();
+        $data['rates'] = array();
+        $data['users'] = array();
+        $data['roles'] = array();
+        $data['budgets'] = array();
+        $data['periods'] = array();
+
+        $query = $this->Md->query("SELECT * FROM department");
+        if ($query) {
+            $data['departments'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM objective");
+        if ($query) {
+            $data['objectives'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM category");
+        if ($query) {
+            $data['categories'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM rate");
+        if ($query) {
+            $data['rates'] = $query;
+        }
+        $query = $this->Md->show('user');
+        if ($query) {
+            $data['users'] = $query;
+        }
+        $query = $this->Md->show('role');
+        if ($query) {
+            $data['roles'] = $query;
+        }
+        $query = $this->Md->show('instance');
+        if ($query) {
+            $data['budgets'] = $query;
+        }
+        $query = $this->Md->show('period');
+        if ($query) {
+            $data['periods'] = $query;
+        }
+
+        $this->load->view('view-graph', $data);
+    }
 
     public function budgets() {
 

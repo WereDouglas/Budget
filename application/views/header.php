@@ -291,7 +291,11 @@
             </li>
             <li>
                <a target="frame" href="<?php echo base_url() . "index.php/consolidate/"; ?>">
-                <i class="fa fa-th"></i> <span>Consolidated reports</span>              </a>
+                <i class="fa fa-th"></i> <span>Consolidated tabular reports</span>              </a>
+            </li>
+             <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/consolidate/graphs"; ?>">
+                <i class="fa fa-th"></i> <span>Consolidated graphical reports</span>              </a>
             </li>
             
             

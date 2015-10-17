@@ -2,7 +2,7 @@
 <link href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
-    <h1>  Consolidated reports   </h1> 
+    <h1>  Consolidated graphical reports   </h1> 
     <hr>
     <div class="row" >
         <div class="col-xs-4">
@@ -91,23 +91,13 @@
 <section class="content">
 
     <!-- Default box -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Information</h3>
-            <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body">
-            <span id="loading" class="col-lg-12"  name ="loading"><img src="<?= base_url(); ?>images/loading.gif" alt="loading" /></span><br>
-
-        </div><!-- /.box-body -->
-        <div class="box-footer">
-
-        </div><!-- /.box-footer-->
-    </div><!-- /.box -->
-
+ 
+      <div class="row-fluid">
+                       <div id="container" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+<div id="container2" style="height: 300px"></div>
+<div id="container3" style="height: 300px"></div>
+                 
+</div>
                    
 
 </section><!-- /.content -->
@@ -369,3 +359,190 @@
     });
 </script>
 
+<script type="text/javascript" src="<?= base_url(); ?>assets/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Total budgets per month'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: [{
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}million',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Shs/USD',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Number',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value} million',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: 'Number',
+            type: 'column',
+            yAxis: 1,
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            tooltip: {
+                valueSuffix: ' million'
+            }
+
+        }, {
+            name: 'Count',
+            type: 'spline',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+            tooltip: {
+                valueSuffix: 'M'
+            }
+        }]
+    });
+});
+		</script>
+                
+          <script type="text/javascript">
+$(function () {
+    $('#container2').highcharts({
+
+        chart: {
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                viewDistance: 25,
+                depth: 40
+            },
+            marginTop: 80,
+            marginRight: 40
+        },
+
+        title: {
+            text: 'Total budgets per department'
+        },
+
+        xAxis: {
+            categories: ['Technology', 'Revenue', 'accounting', 'Legal', 'Repairs']
+        },
+
+        yAxis: {
+            allowDecimals: false,
+            min: 0,
+            title: {
+                text: 'Amount in shs'
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+        },
+
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                depth: 40
+            }
+        },
+
+        series: [{
+            name: 'ICT',
+            data: [5, 3, 4, 7, 2],
+            stack: 'male'
+        }, {
+            name: 'Legal',
+            data: [3, 4, 4, 2, 5],
+            stack: 'male'
+        }, {
+            name: 'HUMAN_RESOURCES & ADMIN',
+            data: [2, 5, 6, 2, 1],
+            stack: 'female'
+        }, {
+            name: 'INTERNAL AUDIT ',
+            data: [3, 0, 4, 4, 3],
+            stack: 'female'
+        }]
+    });
+});
+
+
+		</script>
+                <script type="text/javascript">
+$(function () {
+    $('#container3').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        title: {
+            text: 'Department expenditure'
+        },
+        subtitle: {
+            text: 'reports per department'
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 100,
+                depth: 45
+            }
+        },
+        series: [{
+            name: 'Department',
+            data: [
+                ['ICT', 8],
+                ['Legal', 3],
+                ['Broadcasting', 10],
+                ['INTERNAL AUDIT ', 6],
+                ['HUMAN_RESOURCES & ADMIN', 8],
+                ['COMPETITION & CONSUMERAFFAIRS ', 4]
+                
+            ]
+        }]
+    });
+});
+		</script>
+                
+<script src="<?= base_url(); ?>/js/highcharts.js"></script>
+<script src="<?= base_url(); ?>js/highcharts-3d.js"></script>
+<script src="<?= base_url(); ?>/js/modules/exporting.js"></script>
