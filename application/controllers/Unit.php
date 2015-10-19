@@ -17,6 +17,7 @@ class Unit extends CI_Controller {
     public function index() {
          $this->load->helper(array('form', 'url'));
          $departmentID = $this->uri->segment(4);
+         
          $departmentName = urldecode( $this->uri->segment(3));
          if($departmentID==""){ $departmentID=$this->session->userdata('departmentID'); }
          if($departmentName==""){$departmentName=$this->session->userdata('departmentName'); }

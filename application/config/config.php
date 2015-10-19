@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | If this is not set then CodeIgniter will try guess the protocol, domain
 | and path to your installation. However, you should always configure this
 | explicitly and never rely on auto-guessing, especially in production
-| environments.
+| environments
 |
 */
 $config['base_url'] = '';
@@ -152,7 +152,7 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-\@\&';
 
 /*
 |--------------------------------------------------------------------------

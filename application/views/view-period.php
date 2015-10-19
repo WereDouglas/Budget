@@ -47,7 +47,7 @@
                             <form id="station-form" name="station-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/period/create'  method="post">            
                              
                                 <div class="row">
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-3">
                                 <div class="form-group has-feedback">
                                     <input type="text" class="form-control" name="year" id="year" placeholder="Budget year" />                                     
                                     
