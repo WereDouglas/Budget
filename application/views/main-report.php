@@ -100,6 +100,7 @@
             </div>
         </div>
         <div class="box-body">
+            <input type="button" name="exportExcel" id="exportExcel" onclick="ExportToExcel('datatable')" value="Export to Excel">
             <span id="loading" class="col-lg-12"  name ="loading"><img src="<?= base_url(); ?>images/loading.gif" alt="loading" /></span><br>
 
         </div><!-- /.box-body -->
@@ -369,3 +370,13 @@
     });
 </script>
 
+<script type="text/javascript">
+function ExportToExcel(datatable){
+       var htmltable= document.getElementById('datatable');
+       var html = htmltable.outerHTML;
+               window.open('data:application/vnd.ms-excel,'+ ';filename=exportData.xlsx;'+ encodeURIComponent(html));
+     var result = "data:application/vnd.ms-excel,"; this.href = result; this.download = "my-custom-filename.xls"; return true;
+    }
+    
+   
+</script>

@@ -162,8 +162,9 @@ class Consolidate extends CI_Controller {
                   
                     echo '</tr>';
 
-                    echo '</tbody>   </table>';
+                 
                 }
+                   echo '</tbody>   </table>';
             } else {
 
                 echo $date . ' no values ';
