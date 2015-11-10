@@ -57,11 +57,11 @@ class Consolidate extends CI_Controller {
         if ($query) {
             $data['periods'] = $query;
         }
-
         $this->load->view('main-report', $data);
     }
-        public function graphs() {
-            
+
+    public function graphs() {
+
         $this->session->sess_destroy();
 
         $data['departments'] = array();
@@ -116,7 +116,8 @@ class Consolidate extends CI_Controller {
         // var_dump($get_result);
         if ($get_result) {
 
-            echo '   <table class="table jobs table-striped table-bordered bootstrap-datatable datatable" name="datatable" id="datatable" style=" width: auto;">
+            echo '<div class="scroll">  
+                <table class="scroll table jobs table-striped table-bordered bootstrap-datatable datatable" name="datatable" id="datatable" style=" width: auto;">
       <thead>
                 <tr>  
                 <th>Period</th>
@@ -127,13 +128,12 @@ class Consolidate extends CI_Controller {
                     <th>End date</th>
                     <th>Account</th>
                     <th>Total</th>
-                      <th>created by</th> 
-                  
+                      <th>created by</th>                
                                                                                               
                 </tr>
             </thead>     
                 
-                       <tbody>';
+                      ';
 
             if (is_array($get_result) && count($get_result)) {
                 foreach ($get_result as $loop) {
@@ -149,7 +149,7 @@ class Consolidate extends CI_Controller {
                     $id = $loop->id;
                     $created = $loop->created;
 
-                    echo '<tr>';
+                    echo ' <tbody><tr>';
                     echo ' <td>' . $period . '</td>';
                     echo ' <td>' . $department . '</td>';
                     echo ' <td>' . $unit . '</td>';
@@ -159,12 +159,10 @@ class Consolidate extends CI_Controller {
                     echo ' <td>' . $account . '</td>';
                     echo ' <td>' . number_format($total) . '</td>';
                     echo '<td>' . $by . '</td>';
-                  
-                    echo '</tr>';
 
-                 
+                    echo '</tr></tbody>';
                 }
-                   echo '</tbody>   </table>';
+                echo '   </table></div>';
             } else {
 
                 echo $date . ' no values ';
@@ -173,57 +171,54 @@ class Consolidate extends CI_Controller {
     }
 
     public function generate() {
-        
+
         /**
          *   var period = $("#period").val();
-        var department = $("#department").val();
-        var unit = $("#unit").val();
-        var initiative = $("#initiative").val();      
-        var account = $("#account").val();
-         * **/
-        
+          var department = $("#department").val();
+          var unit = $("#unit").val();
+          var initiative = $("#initiative").val();
+          var account = $("#account").val();
+         * * */
         $this->load->helper(array('form', 'url'));
-        
+
         $period = $this->input->post('period');
         $department = $this->input->post('department');
         $unit = $this->input->post('unit');
         $account = $this->input->post('account');
-       $by = urldecode( $this->input->post('by'));
-        
+        $by = urldecode($this->input->post('by'));
+
         unset($sql);
 
-if ($period) {
-    $sql[] = "period = '$period' ";
-}
-if ($department) {
-    $sql[] = " department = '$department' ";
-}
-if ($unit) {
-    $sql[] = " unit = '$unit' ";
-}
-if ($account) {
-    $sql[] = " account = '$account' ";
-}
-if ($by) {
-    $sql[] = "by = '$by' ";
-}
+        if ($period) {
+            $sql[] = "period = '$period' ";
+        }
+        if ($department) {
+            $sql[] = " department = '$department' ";
+        }
+        if ($unit) {
+            $sql[] = " unit = '$unit' ";
+        }
+        if ($account) {
+            $sql[] = " account = '$account' ";
+        }
+        if ($by) {
+            $sql[] = "by = '$by' ";
+        }
 
-$query = "SELECT * FROM instance";
+        $query = "SELECT * FROM instance";
 
-if (!empty($sql)) {
-    $query .= ' WHERE ' . implode(' AND ', $sql);
-}
+        if (!empty($sql)) {
+            $query .= ' WHERE ' . implode(' AND ', $sql);
+        }
 
 //echo $query;
-        
-        
-
-       //get_where_data($table,$where)
+        //get_where_data($table,$where)
         $get_result = $this->Md->query($query);
         // var_dump($get_result);
         if ($get_result) {
 
-            echo '<table class="table jobs table-striped table-bordered bootstrap-datatable datatable" name="datatable" id="datatable" style=" width: auto;">
+         echo  '<div class="scroll">  
+                <table class="scroll table jobs table-striped table-bordered bootstrap-datatable datatable" name="datatable" id="datatable" style=" width: auto;">
              <thead>
                 <tr>  
                 <th>Period</th>
@@ -234,13 +229,9 @@ if (!empty($sql)) {
                     <th>End date</th>
                     <th>Account</th>
                     <th>Total</th>
-                    <th>created by</th> 
-                   
-                                                                                              
+                    <th>created by</th>                                                       
                 </tr>
-            </thead>     
-                
-                       <tbody>';
+            </thead>  <tbody>';
 
             if (is_array($get_result) && count($get_result)) {
                 foreach ($get_result as $loop) {
@@ -256,26 +247,23 @@ if (!empty($sql)) {
                     $id = $loop->id;
                     $created = $loop->created;
 
-                    echo '<tr>';
-                    echo ' <td>' . $period . '</td>';
-                    echo ' <td>' . $department . '</td>';
-                    echo ' <td>' . $unit . '</td>';
-                    echo ' <td>' . $initiative . '</td>';
-                    echo '<td>' . $startdate . '</td>';
-                    echo ' <td>' . $enddate . '</td>';
-                    echo ' <td>' . $account . '</td>';
-                    echo ' <td>' . number_format($total) . '</td>';
-                    echo '<td>' . $by . '</td>';
-                   
-                    echo '</tr>';
-
-                    echo '</tbody>   </table>';
+                  echo  '<tr><td>' . $period . '</td>
+                     <td>' . $department . '</td>
+                    <td>' . $unit . '</td>
+                   <td>' . $initiative . '</td>
+                    <td>' . $startdate . '</td>
+                    <td>' . $enddate . '</td>
+                   <td>' . $account . '</td>
+                   <td>' . number_format($total) . '</td>
+                   <td>' . $by . '</td> <td> </td></tr>
+                  ';
                 }
+              echo ' </tbody>   </table></div>';
             } else {
 
                 echo ' no values ';
             }
         }
     }
-    
+
 }

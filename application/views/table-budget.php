@@ -11,8 +11,7 @@
 
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
-  
-        <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">        
+         <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">        
             <h2 class="page-header">Add new budget</h2>
             <div class="row">
                 <div class="col-md-12">
@@ -145,18 +144,19 @@
                                           
                                                 Price
                                                 <input id="price" name="price" type="text" class="form-control" />
-                                                Quantity
-                                                <input name="qty" id="qty" type="text" class="form-control" placeholder="" />
-                                               
+                                                Persons
+                                                <input id="persons" name="persons" type="text" class="form-control" value="1" />
+                                                Frequency
+                                                <input type="text" name="freq" id="freq" class="form-control" value="1"/>
+                                              
                                             
                                             </div>       
 
                                             <div class="col-xs-4"> 
 
-                                             Persons
-                                                <input id="persons" name="persons" type="text" class="form-control" value="1" />
-                                                Frequency
-                                                <input type="text" name="freq" id="freq" class="form-control" value="1"/>
+                                              Quantity
+                                                <input name="qty" id="qty" type="text" class="form-control" placeholder="" />
+                                               
                                                 Local Price
                                                 <input name="priceL" id="priceL" type="text" class="form-control" placeholder="" />
                                                 Total Price
@@ -259,7 +259,9 @@
 
         </form>
   
-
+<span id="loading"  name ="loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="loading........" /></span><br>
+  
+  
 </section>
 
 
@@ -349,7 +351,7 @@
         $('#loading').hide();
         $("#budget-form").submit(function (e) {
             e.preventDefault();
-            console.log($(this).serializeArray());
+          //  console.log($(this).serializeArray());
             $('#loading').show();
             var posts = $(this).serializeArray();
 
@@ -364,7 +366,7 @@
             console.log(account);
 
             if (posts.length > 0) {
-                console.log("Period of use " + period);
+             //   console.log("Period of use " + period);
 
 
 
@@ -380,7 +382,7 @@
                 }); //end change
             } else {
                 alert("Please insert missing information");
-                console.log("missing information");
+              //  console.log("missing information");
                 $('#loading').hide();
             }
 
@@ -471,9 +473,6 @@
                     });
                     $("#line option").remove();
                     $("#line").append(sc);
-
-
-
                 }
             });
         });

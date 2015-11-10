@@ -11,7 +11,7 @@ class Login extends CI_Controller {
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
-    }
+      }
 	public function index()
 	{
                 $this->session->sess_destroy();
@@ -80,6 +80,7 @@ class Login extends CI_Controller {
                         );
                  
                         $this->session->set_userdata($newdata);                        
+                       
                         $infos = $this->Md->get('name',$res->role, 'role');                        
                        
                         $actions = "";

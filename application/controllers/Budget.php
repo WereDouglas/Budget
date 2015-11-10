@@ -163,7 +163,15 @@ class Budget extends CI_Controller {
         $budget = $this->input->post('budget');
         $total = $this->input->post('total');
    // {posts: posts,period:period,department:department,unit:unit,initiative:initiative,startdate:startdate,enddate:enddate,account:account}
-         
+     
+        
+        if ($account=="") $errors = " account ";
+         if ($total=="") $errors.= " total ";
+          if ($posts=="") $errors.= " multiple fields ";
+           
+      
+        
+        if ($posts!="" && $total!="" && $account!=""){
         $budget = new stdClass();
 
         foreach ($posts as $key => $value) {
@@ -177,20 +185,24 @@ class Budget extends CI_Controller {
         if ($id) {
             if (!$this->session->userdata('session')) {
 
-                echo '<div class="alert alert-info">                                                  
-                                                <strong>Information submitted continue to next section </strong>									
-						</div>';
+                echo '<div class="alert alert-info">   <strong>Information submitted  </strong>	</div>';
 
-              $this->budgets();
+             // $this->budgets();
 
                 return;
             } else {
 
-                echo '<div class="alert alert-error">                                                  
-                                                <strong>Information already submitted continue to next section </strong>									
-						</div>';
+                echo '<div class="alert alert-error"> <strong>Information already submitted continue to next section </strong></div>';
             }
         }
+    }else{
+        
+        
+                echo '<div class="alert alert-error">                                                  
+                                                <strong>Missing field(s): <b>'.$errors.'</b> </strong>									
+						</div>';
+        
+    }
     }
 
     public function budgets() {

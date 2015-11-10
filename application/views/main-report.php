@@ -1,6 +1,7 @@
 <!-- Content Header (Page header) -->
 <link href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   <link href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
     <h1>  Consolidated reports   </h1> 
     <hr>
@@ -101,7 +102,7 @@
         </div>
         <div class="box-body">
             <input type="button" name="exportExcel" id="exportExcel" onclick="ExportToExcel('datatable')" value="Export to Excel">
-            <span id="loading" class="col-lg-12"  name ="loading"><img src="<?= base_url(); ?>images/loading.gif" alt="loading" /></span><br>
+            <span id="loading" class="col-lg-12"  name ="loading"><img src="<?= base_url(); ?>images/loading.gif" alt="loading.........." /></span><br>
 
         </div><!-- /.box-body -->
         <div class="box-footer">
@@ -135,12 +136,7 @@
 <script type="text/javascript">
     $(document).ready(function ()
     {
-        $.post("<?php echo base_url() ?>index.php/consolidate/budgets", {posts: ""}
-        , function (response) {
-            $('#loading').hide();
-            setTimeout(finishAjax('loading', escape(response)), 200);
-
-        }); //end change
+        
 
         $("#generate").on("click", function (e) {
 
