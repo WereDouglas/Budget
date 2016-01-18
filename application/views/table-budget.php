@@ -11,8 +11,13 @@
 
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
+     <h2 class="page-header">Add new budget</h2>
+    <form class="form-horizontal well" action="<?php echo base_url(); ?>index.php/budget/import" method="post" name="upload_excel" enctype="multipart/form-data">
+<input type="file" name="file" id="file" class="input-mini">
+<button type="submit" id="submit" name="Import" class="btn sm btn-primary button-loading">Import</button>
+</form>
          <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">        
-            <h2 class="page-header">Add new budget</h2>
+           
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-solid">                               

@@ -7,7 +7,7 @@ class Budget extends CI_Controller {
     function __construct() {
 
         parent::__construct();
-        // error_reporting(E_PARSE);
+        error_reporting(E_PARSE);
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
@@ -60,7 +60,7 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['accounts'] = $query;
         }
-         $query = $this->Md->query("SELECT * FROM period");
+        $query = $this->Md->query("SELECT * FROM period");
         if ($query) {
             $data['periods'] = $query;
         }
@@ -68,8 +68,124 @@ class Budget extends CI_Controller {
         $this->load->view('add-budget', $data);
     }
 
-    public function tabular() {
+    public function import() {
+
+        if (isset($_POST["Import"])) {
+            $filename = $_FILES["file"]["tmp_name"];
+            // echo $filename;
+            if ($_FILES["file"]["size"] > 0) {
+                $file = fopen($filename, "r");
+
+                $file = 'uploads/BudgetUploads.xlsx';
+                // $file = $filename;
+//load the excel library
+                $this->load->library('excel');
+
+//read file from path
+                $objPHPExcel = PHPExcel_IOFactory::load($file);
+
+                //      Get worksheet dimensions
+                $sheet = $objPHPExcel->getSheet(0);
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
+                // Loop through each row of the worksheet in turn
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    //  Read a row of data into an array
+                    // echo $row;
+                    $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+
+                       // var_dump($rowData);
+
+
+                    for ($d = 0; $d < count($rowData); $d++) {
+                        // var_dump($rowData[$d]);
+                          // echo $rowData[$d][13] . "<br>";
+                        //  echo $rowData[$d][1] . "<br>";
+                        //  echo $rowData[$d][2] . "<br>";
+                        //  echo $rowData[$d][3] . "<br>";
+                        $budget = new stdClass();
+                        $budget->period = $rowData[$d][55];
+                      //  str_replace("world","Peter","Hello world!");
+                        
+                        $budget->department = str_replace("_"," ",$rowData[$d][1]);
+                        $budget->unit = $rowData[$d][2];
+                        $budget->activity = $rowData[$d][3];
+                        $budget->output = $rowData[$d][4];
+                        $budget->outcome = $rowData[$d][5];
+                        $budget->objective = $rowData[$d][6];
+                        $budget->initiative = $rowData[$d][7];
+                        $budget->performance = $rowData[$d][8];
+                        $budget->starts = $rowData[$d][27];
+                        $budget->starts = $rowData[$d][28];
+                        $budget->Procurement_type = $rowData[$d][9];
+                        $budget->category = $rowData[$d][10];
+                        $budget->line = $rowData[$d][11];
+                        $budget->subline = $rowData[$d][12];
+                        $budget->account = $rowData[$d][13];
+                        $budget->funding = $rowData[$d][15];
+                        $budget->account_description = $rowData[$d][14];
+                        //**isssue 
+                        $budget->unit = $rowData[$d][16];
+                        $budget->currency = $rowData[$d][17];
+                        $budget->rate = $rowData[$d][18];
+                        $budget->price = $rowData[$d][19];
+                        $budget->qty = $rowData[$d][20];
+                        $budget->persons = $rowData[$d][21];
+                        $budget->freq = $rowData[$d][22];
+                        $budget->priceL = $rowData[$d][23];
+                        $budget->total = $rowData[$d][24];
+                        //**issue
+                        $budget->flow = $rowData[$d][10];
+                        $budget->totalL = $rowData[$d][23];
+                        $budget->radio = $rowData[$d][24];
+                        $budget->variance = $rowData[$d][25];
+                        //**isssue
+                        $budget->generation = $rowData[$d][10];
+                        $budget->January = $rowData[$d][31];
+                        $budget->February = $rowData[$d][32];
+                        $budget->March = $rowData[$d][33];
+                        $budget->April = $rowData[$d][34];
+                        $budget->May = $rowData[$d][35];
+                        $budget->June = $rowData[$d][36];
+                        $budget->July = $rowData[$d][37];
+                        $budget->August = $rowData[$d][38];
+                        $budget->September = $rowData[$d][39];
+                        $budget->October = $rowData[$d][40];
+                        $budget->November = $rowData[$d][41];
+                        $budget->December = $rowData[$d][42];
+                        $budget->Quarter1 = $rowData[$d][45];
+                        $budget->Quarter2 = $rowData[$d][46];
+                        $budget->Quarter3 = $rowData[$d][47];
+                        $budget->Quarter4 = $rowData[$d][48];
+                        $budget->services = $rowData[$d][54];
+                        ///***issue
+                        $budget->details = $rowData[$d][54];
+                        $budget->Year = $rowData[$d][55];
+
+
+                        $budget = json_encode($budget);
+
+                        $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_"," ",$rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+                        $id = $this->Md->save($instance, 'instance');
+                        
+                       
+                    }
+                }
+                //  Insert row data array into your database of choice here
+            }
+//send the data in an array format
+
+            fclose($file);
+            // redirect('/all');
+        }
         
+        echo '<div class="alert alert-info">   <strong>Information submitted  </strong>	</div>';
+        // $this->load->view('add-budget', $data);
+
+    }
+
+    public function tabular() {
+
         $data['departments'] = array();
         $data['units'] = array();
         $data['categories'] = array();
@@ -103,26 +219,26 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['inits'] = $query;
         }
-       
+
         $query = $this->Md->query("SELECT * FROM reporting");
         if ($query) {
             $data['reports'] = $query;
         }
-      
+
         $query = $this->Md->query("SELECT * FROM subline");
         if ($query) {
             $data['subs'] = $query;
         }
-        
+
         $query = $this->Md->query("SELECT * FROM account");
         if ($query) {
             $data['accounts'] = $query;
         }
-         $query = $this->Md->query("SELECT * FROM period");
+        $query = $this->Md->query("SELECT * FROM period");
         if ($query) {
             $data['periods'] = $query;
         }
-        
+
         $this->load->view('table-budget', $data);
     }
 
@@ -136,6 +252,7 @@ class Budget extends CI_Controller {
         }
         $this->load->view('view-all', $data);
     }
+
     public function summary() {
         $data['budgets'] = array();
 
@@ -148,10 +265,10 @@ class Budget extends CI_Controller {
     }
 
     public function create() {
-       
-       
+
+
         $this->load->helper(array('form', 'url'));
-        
+
         $posts = $this->input->post('posts');
         $period = $this->input->post('period');
         $department = $this->input->post('department');
@@ -162,47 +279,49 @@ class Budget extends CI_Controller {
         $account = $this->input->post('account');
         $budget = $this->input->post('budget');
         $total = $this->input->post('total');
-   // {posts: posts,period:period,department:department,unit:unit,initiative:initiative,startdate:startdate,enddate:enddate,account:account}
-     
-        
-        if ($account=="") $errors = " account ";
-         if ($total=="") $errors.= " total ";
-          if ($posts=="") $errors.= " multiple fields ";
-           
-      
-        
-        if ($posts!="" && $total!="" && $account!=""){
-        $budget = new stdClass();
+        // {posts: posts,period:period,department:department,unit:unit,initiative:initiative,startdate:startdate,enddate:enddate,account:account}
 
-        foreach ($posts as $key => $value) {
 
-            $budget->$value['name'] = $value['value'];
-        }
-        $budget = json_encode($budget);
-        
-        $instance = array('account' =>$account,'total' =>$total,'enddate' =>$enddate,'startdate' => $startdate,'initiative' => $initiative,'unit' => $unit,'department' => $department,'period' => $period,'orgID' => '', 'content' => $budget, 'by' => $this->session -> userdata('email'), 'created' => date('Y-m-d H:i:s'));
-        $id = $this->Md->save($instance, 'instance');
-        if ($id) {
-            if (!$this->session->userdata('session')) {
+        if ($account == "")
+            $errors = " account ";
+        if ($total == "")
+            $errors.= " total ";
+        if ($posts == "")
+            $errors.= " multiple fields ";
 
-                echo '<div class="alert alert-info">   <strong>Information submitted  </strong>	</div>';
 
-             // $this->budgets();
 
-                return;
-            } else {
+        if ($posts != "" && $total != "" && $account != "") {
+            $budget = new stdClass();
 
-                echo '<div class="alert alert-error"> <strong>Information already submitted continue to next section </strong></div>';
+            foreach ($posts as $key => $value) {
+
+                $budget->$value['name'] = $rowData[$d][10];
             }
-        }
-    }else{
-        
-        
-                echo '<div class="alert alert-error">                                                  
-                                                <strong>Missing field(s): <b>'.$errors.'</b> </strong>									
+            $budget = json_encode($budget);
+
+            $instance = array('account' => $account, 'total' => $total, 'enddate' => $enddate, 'startdate' => $startdate, 'initiative' => $initiative, 'unit' => $unit, 'department' => $department, 'period' => $period, 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+            $id = $this->Md->save($instance, 'instance');
+            if ($id) {
+                if (!$this->session->userdata('session')) {
+
+                    echo '<div class="alert alert-info">   <strong>Information submitted  </strong>	</div>';
+
+                    // $this->budgets();
+
+                    return;
+                } else {
+
+                    echo '<div class="alert alert-error"> <strong>Information already submitted continue to next section </strong></div>';
+                }
+            }
+        } else {
+
+
+            echo '<div class="alert alert-error">                                                  
+                                                <strong>Missing field(s): <b>' . $errors . '</b> </strong>									
 						</div>';
-        
-    }
+        }
     }
 
     public function budgets() {
@@ -274,15 +393,14 @@ class Budget extends CI_Controller {
                     $details = $loop->content;
                     $details = json_decode($details);
 
-             echo '<tr>';
+                    echo '<tr>';
                     foreach ($details as $key => $value) {
-                     //   echo "$key:$value\n";
-                         if (is_numeric($value)) {
-         echo ' <td>'.number_format($value).'</td>';
-    } else {
-         echo ' <td>'.$value.'</td>';
-    }
-                      
+                        //   echo "$key:$value\n";
+                        if (is_numeric($value)) {
+                            echo ' <td>' . number_format($value) . '</td>';
+                        } else {
+                            echo ' <td>' . $value . '</td>';
+                        }
                     }
                     echo '</tr>';
                 }

@@ -15,6 +15,11 @@ class Md extends CI_Model {
 		$result = $query->result();
                  return $result;
 	}
+         public function insertCSV($data)
+            {
+                $this->db->insert('instance', $data);
+                return $this->db->insert_id();
+            }
         function delete($id,$table) {             
             
 		$sql = "DELETE FROM $table WHERE id =? ";
