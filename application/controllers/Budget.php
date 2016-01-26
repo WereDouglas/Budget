@@ -76,7 +76,7 @@ class Budget extends CI_Controller {
             if ($_FILES["file"]["size"] > 0) {
                 $file = fopen($filename, "r");
 
-                $file = 'uploads/BudgetUploads.xlsx';
+                $file =   $filename;
                 // $file = $filename;
 //load the excel library
                 $this->load->library('excel');
@@ -89,13 +89,32 @@ class Budget extends CI_Controller {
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
                 // Loop through each row of the worksheet in turn
+                 $budget = new stdClass();
+                
+                  for ($row = 1; $row < 2; $row++) {
+                    //  Read a row of data into an array
+                    // echo $row;
+                    $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+
+                     // var_dump($rowData[0]);
+                     // echo count($rowData[0]);
+                       for($m=0; $m<count($rowData[0]); $m++){
+                          
+                         // echo $rowData[0][$m]."<br> ";
+                          
+                      }
+                    
+                }
+                
+                
                 for ($row = 2; $row <= $highestRow; $row++) {
                     //  Read a row of data into an array
                     // echo $row;
                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
 
-                       // var_dump($rowData);
-
+                     // var_dump($rowData[0]);
+                      
+                      
 
                     for ($d = 0; $d < count($rowData); $d++) {
                         // var_dump($rowData[$d]);
@@ -179,7 +198,7 @@ class Budget extends CI_Controller {
             // redirect('/all');
         }
         
-        echo '<div class="alert alert-info">   <strong>Information submitted  </strong>	</div>';
+        echo '<div class="alert alert-info">   <strong>Information uploaded!  </strong>	</div>';
         // $this->load->view('add-budget', $data);
 
     }
