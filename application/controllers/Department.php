@@ -7,7 +7,7 @@ class Department extends CI_Controller {
     function __construct() {
 
         parent::__construct();
-       // error_reporting(E_PARSE);
+        // error_reporting(E_PARSE);
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
@@ -15,23 +15,25 @@ class Department extends CI_Controller {
     }
 
     public function index() {
-          $data['departments'] = array();
-    
-          $query = $this->Md->query("SELECT * FROM department");
+        $data['departments'] = array();
 
-        if ($query) { $data['departments'] = $query;}       
-    
-        $this->load->view('view-department',$data);
+        $query = $this->Md->query("SELECT * FROM department");
+
+        if ($query) {
+            $data['departments'] = $query;
+        }
+
+        $this->load->view('view-department', $data);
     }
 
     public function create() {
         $this->load->helper(array('form', 'url'));
-    
+
         $name = $this->input->post('name');
-        $details = $this->input->post('details');        
+        $details = $this->input->post('details');
         $created = date('Y-m-d');
-    
-        $department = array( 'name' => $name, 'details' => $details,'created' => date('Y-m-d H:i:s'));
+
+        $department = array('name' => $name, 'details' => $details, 'created' => date('Y-m-d H:i:s'));
         $id = $this->Md->save($department, 'department');
         if ($id) {
             $this->session->set_flashdata('msg', '<div class="alert alert-error">
@@ -40,7 +42,7 @@ class Department extends CI_Controller {
                                                 information submitted	</strong>									
 						</div>');
 
-              redirect('department/', 'refresh');
+            redirect('department/', 'refresh');
             return;
         } else {
             unlink($data['full_path']);
@@ -49,34 +51,71 @@ class Department extends CI_Controller {
                                                 <strong>
                                                Error submitting	</strong>									
 						</div>');
-               redirect('department/', 'refresh');
+            redirect('department/', 'refresh');
             return;
         }
 
         @unlink($_FILES[$file_element_name]);
-         redirect('department/', 'refresh');
+        redirect('department/', 'refresh');
         return;
     }
+
     public function update() {
 
         $this->load->helper(array('form', 'url'));
         $id = $this->input->post('id');
-        $name = $this->input->post('name');       
+        $name = $this->input->post('name');
         $details = $this->input->post('details');
-      
-         $department = array( 'name' => $name, 'details' => $details,'created' => date('Y-m-d H:i:s'));
-        $this->Md->update($id, $department, 'department');
-       
 
+        $department = array('name' => $name, 'details' => $details, 'created' => date('Y-m-d H:i:s'));
+        $this->Md->update($id, $department, 'department');
+    }
+
+    public function sync() {
+
+        $name = $this->input->post('name');
+        $details = $this->input->post('details');
+
+        $created = date('Y-m-d');
+
+
+        if ($_POST["parent_id"] == "") {
+            echo 'F';
+            return;
+        }
+        if ($_POST["action"] == 'create') {
+
+            $result = $this->Md->get('name', $name, 'department');
+            if (count($result) > 0) {
+                echo 'F';
+                return;
+            } else {
+                $department = array('name' => $name, 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'details' => $details, 'created' => date('Y-m-d H:i:s'));
+                $id = $this->Md->save($department, 'department');
+                echo 'T';
+                return;
+            }
+        }
+        if ($_POST["action"] == 'update') {
+            $department = array('name' => $name, 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'details' => $details, 'created' => date('Y-m-d H:i:s'));
+            $id = $this->Md->update_sync($_POST["parent_id"], $department, 'department');
+            echo 'T';
+            return;
+        }
+        if ($_POST["action"] == 'delete') {
+            $query = $this->Md->delete_sync($_POST["parent_id"], 'department');
+            echo 'd';
+            return;
+        }
     }
 
     public function delete() {
         $this->load->helper(array('form', 'url'));
-        $id = $this->uri->segment(3);           
+        $id = $this->uri->segment(3);
         $query = $this->Md->delete($id, 'department');
 
         if ($this->db->affected_rows() > 0) {
-             $this->session->set_flashdata('msg', '<div class="alert alert-error">
+            $this->session->set_flashdata('msg', '<div class="alert alert-error">
                                                    
                                                 <strong>
                                                 information deleted	</strong>									
@@ -88,10 +127,8 @@ class Department extends CI_Controller {
                                                 <strong>
                                                 information deleted	</strong>									
 						</div>');
-             redirect('department', 'refresh');
-            
+            redirect('department', 'refresh');
         }
     }
-  
-  
+
 }

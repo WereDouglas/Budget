@@ -13,173 +13,169 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget-box transparent" id="recent-box">
-                   
-                     
-                        <div class="widget">
-                            <div class="widget-main padding-4">
-
-                                    <?php
-                                    if (is_array($roleID) && count($roleID)) {
-                                        foreach ($roleID as $role) {
-                                            ?>                                    
-
-                                            <form id="edit-form" name="edit-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/Role/update'  method="post">            
-
-                                                <div class="well well-large">
-                                                    <div class="widget-body">
-                                                        <div class="widget-main">
-                                                            <h4 class="header green lighter bigger">
-                                                                Update user role 
-                                                            </h4>
-
-                                                            <fieldset>
 
 
-                                                                <label>
-                                                                    <span class="block input-icon input-icon-right">
-                                                                        <input type="text" class="span12" id="edit_role" name="edit_role" value="<?= $role->name ?>"  />
-                                                                        <input type="hidden" class="span12" id="roleID" name="roleID" value="<?= $role->id ?>" />
-                                                                        <i class="icon-white"></i>
-                                                                    </span>
-                                                                </label>
-                                                                <h4 class="header green lighter bigger">
+                    <div class="widget">
+                        <div class="widget-main padding-4">
 
-                                                                    Please select the user privileges
-                                                                </h4>
-                                                                 <span class="lbl"> Actions</span>
-                                                                         <input type="text" class="span12" id="edit_actions" name="edit_actions" value="<?= $role->actions ?>"  />
-                                                                       
-                                                                 <span class="lbl"> Views</span>
-                                                                  
-                                                                         <input type="text" class="span12" id="edit_views" name="edit_views" value="<?= $role->views ?>"  />
-                                                                  
-                                                                  
-                                                                        
-                                                                    <button type="submit" class="width-10  btn btn-small btn-success">
-                                                                        Update
+                            <?php
+                            if (is_array($roleID) && count($roleID)) {
+                                foreach ($roleID as $role) {
+                                    ?>                                    
 
-                                                                    </button>
-                                                           
-                                                            </fieldset>
+                                    <form id="edit-form" name="edit-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/Role/update'  method="post">            
 
-                                                        </div>
+                                        <div class="well well-large">
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <h4 class="header green lighter bigger">
+                                                        Update user role 
+                                                    </h4>
 
+                                                    <fieldset>
+                                                        <label>
+                                                            <span class="block input-icon input-icon-right">
+                                                                <input type="text" class="span12" id="edit_role" name="edit_role" value="<?= $role->name ?>"  />
+                                                                <input type="hidden" class="span12" id="roleID" name="roleID" value="<?= $role->id ?>" />
+                                                                <i class="icon-white"></i>
+                                                            </span>
+                                                        </label>
+                                                        <h4 class="header green lighter bigger">
 
-                                                    </div><!--/widget-body-->
-                                                </div><!--/signup-box-->
-                                            </form>
+                                                            Please select the user privileges
+                                                        </h4>
+                                                        <span class="lbl"> Actions</span>
+                                                        <input type="text" class="span12" id="edit_actions" name="edit_actions" value="<?= $role->actions ?>"  />
 
-    <?php }
-} else { ?>
+<!--                                                        <span class="lbl"> Views</span>
 
-                                        <form id="role-form" name="role-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/Role/save'  method="post">            
-                                            
-
-                                            <div class="well well-large">
-                                                <div class="widget-body">
-                                                    <div class="widget-main">
-                                                      
-                                                        <fieldset>
-                                                   <?php echo $this->session->flashdata('msg');?>									
-						
-                                                            <label>
-                                                                <span class="block input-icon input-icon-right">
-                                                                   
-                                                                    <i class="icon-white"></i>
-                                                                </span>
-                                                            </label>
-                                                            <h4 class="header green lighter bigger">
-
-                                                                Please select the user privileges
-                                                            </h4>
-                                                         
-                                                               
-                                                                   <input type="text" class="span3" id="role" name="role" required="" placeholder="Role" />
-                                                                    <span id="Loading" name ="Loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span> 
-                                                                 
-                                                                    
-                                                                  <span class="lbl"> Actions</span>
-                                                                    <input type="text" class="span12" id="actions" name="actions"   />
-                                                              
-                                                                       <span class="lbl"> Views</span>  
-                                                                    <input type="text" class="span12" id="views" name="views"   />
-                                                                                                                   
-                                                        
-                                                                <button type="submit" class="width-10  btn btn-small btn-success">
-                                                                    Submit
-
-                                                                </button>
-                                                     
-                                                        </fieldset>
-
-                                                    </div>
+                                                        <input type="text" class="span12" id="edit_views" name="edit_views" value="<?= $role->views ?>"  />-->
 
 
-                                                </div><!--/widget-body-->
-                                            </div><!--/signup-box-->
-                                        </form>
+
+                                                        <button type="submit" class="width-10  btn btn-small btn-success">
+                                                            Update
+
+                                                        </button>
+
+                                                    </fieldset>
+
+                                                </div>
+
+
+                                            </div><!--/widget-body-->
+                                        </div><!--/signup-box-->
+                                    </form>
+
+                                <?php }
+                            } else {
+                                ?>
+
+                                <form id="role-form" name="role-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/Role/save'  method="post">            
+
+
+                                    <div class="well well-large">
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+
+                                                <fieldset>
+    <?php echo $this->session->flashdata('msg'); ?>									
+
+                                                    <label>
+                                                        <span class="block input-icon input-icon-right">
+
+                                                            <i class="icon-white"></i>
+                                                        </span>
+                                                    </label>
+                                                    <h4 class="header green lighter bigger">
+                                                        Please select the user privileges
+                                                    </h4>
+                                                    <input type="text" class="span3" id="role" name="role" required="" placeholder="Role" />
+                                                    <span id="Loading" name ="Loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span> 
+
+
+                                                    <span class="lbl"> Level(1-4)</span>
+                                                    <input type="text" class="span12" id="actions" name="actions"   />
+<!--
+                                                    <span class="lbl"> View level(1-4)</span>  
+                                                    <input type="text" class="span12" id="views" name="views"   />-->
+
+
+                                                    <button type="submit" class="width-10  btn btn-small btn-success">
+                                                        Submit
+
+                                                    </button>
+
+                                                </fieldset>
+
+                                            </div>
+
+
+                                        </div><!--/widget-body-->
+                                    </div><!--/signup-box-->
+                                </form>
 
 <?php } ?>
 
-                                </div>
+                        </div>
 
-                                <div class="hr hr8"></div>
-     <div class="well well-large">
-                                <table id="sample-table-2" class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th class="center">
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </th>
-                                            <th>Role name</th>
-                                            <th>Actions</th>
-                                            <th>Views</th>                                          
-                                                <th class="hidden-480"> </th>
+                        <div class="hr hr8"></div>
+                        <div class="well well-large">
+                            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="center">
+                                            <label>
+                                                <input type="checkbox" />
+                                                <span class="lbl"></span>
+                                            </label>
+                                        </th>
+                                        <th>Role name</th>
+                                        <th>level</th>
+<!--                                        <th>Views level</th>                                          -->
+                                        <th class="hidden-480"> </th>
 
-                                          
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        <?php
-                                        if (is_array($roles) && count($roles)) {
-                                            foreach ($roles as $loop) {
-                                                ?>                                                                
-                                                <tr class="warning">
-                                                    <td><input type="checkbox" />
-                                                        <span class="lbl"></span></td>
-                                                    <td><?= $loop->name ?></td>
-                                                    <td><?= $loop->actions ?></td>
-                                                    <td><?= $loop->views ?></td>                                                  
-                                                    <td> 
-                                                        <a href="<?php echo base_url() . "index.php/Role/edit/" . $loop->id; ?>" class="tooltip-info" data-rel="tooltip" title="View">
-                                                            Edit
-                                                        </a>
-                                                        <a href="<?php echo base_url() . "index.php/Role/delete/" . $loop->id; ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                           Delete
-                                                        </a>
-                                                    </td>
+                                    </tr>
+                                </thead>
 
-                                                    
-                                                   
-                                                </tr>
-                                                <?php
-                                            }
+                                <tbody>
+                                    <?php
+                                    if (is_array($roles) && count($roles)) {
+                                        foreach ($roles as $loop) {
+                                            ?>                                                                
+                                            <tr class="warning">
+                                                <td><input type="checkbox" />
+                                                    <span class="lbl"></span></td>
+                                                <td><?= $loop->name ?></td>
+                                                <td><?= $loop->actions ?></td>
+<!--                                                <td><?= $loop->views ?></td>                                                  -->
+                                                <td> 
+                                                    <a href="<?php echo base_url() . "index.php/Role/edit/" . $loop->id; ?>" class="tooltip-info" data-rel="tooltip" title="View">
+                                                        Edit
+                                                    </a>
+                                                    <a href="<?php echo base_url() . "index.php/Role/delete/" . $loop->id; ?>" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                        Delete
+                                                    </a>
+                                                </td>
+
+
+
+                                            </tr>
+                                            <?php
                                         }
-                                        ?>
-                                    </tbody>
-                                </table>  
-     </div>
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>  
+                        </div>
 
-                                <div class="hr hr-double hr8"></div>
+                        <div class="hr hr-double hr8"></div>
 
 
-                            </div><!--/widget-main-->
-                       
-                  
+                    </div><!--/widget-main-->
+
+
                 </div><!--/span-->
 
             </div><!--/row-->
@@ -209,7 +205,7 @@
 
 <script type="text/javascript">
     $('#Loading').hide();
-    $("#role").blur (function (e) {
+    $("#role").blur(function (e) {
 
         var role = $("#role").val();
 

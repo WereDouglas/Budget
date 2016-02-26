@@ -67,6 +67,7 @@ class Budget extends CI_Controller {
 
         $this->load->view('add-budget', $data);
     }
+
     public function import() {
 
         if (isset($_POST["Import"])) {
@@ -75,7 +76,7 @@ class Budget extends CI_Controller {
             if ($_FILES["file"]["size"] > 0) {
                 $file = fopen($filename, "r");
 
-                $file =   $filename;
+                $file = $filename;
                 // $file = $filename;
 //load the excel library
                 $this->load->library('excel');
@@ -88,44 +89,42 @@ class Budget extends CI_Controller {
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
                 // Loop through each row of the worksheet in turn
-                 $budget = new stdClass();
-                
-                  for ($row = 1; $row < 2; $row++) {
+                $budget = new stdClass();
+
+                for ($row = 1; $row < 2; $row++) {
                     //  Read a row of data into an array
                     // echo $row;
                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
 
-                     // var_dump($rowData[0]);
-                     // echo count($rowData[0]);
-                       for($m=0; $m<count($rowData[0]); $m++){
-                          
-                         // echo $rowData[0][$m]."<br> ";
-                          
-                      }
-                    
+                    // var_dump($rowData[0]);
+                    // echo count($rowData[0]);
+                    for ($m = 0; $m < count($rowData[0]); $m++) {
+
+                        // echo $rowData[0][$m]."<br> ";
+                    }
                 }
-                
-                
+
+
                 for ($row = 2; $row <= $highestRow; $row++) {
                     //  Read a row of data into an array
                     // echo $row;
                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
 
-                     // var_dump($rowData[0]);
-                      
-                      
+                    // var_dump($rowData[0]);
+
+
 
                     for ($d = 0; $d < count($rowData); $d++) {
                         // var_dump($rowData[$d]);
-                          // echo $rowData[$d][13] . "<br>";
+                        // echo $rowData[$d][13] . "<br>";
                         //  echo $rowData[$d][1] . "<br>";
                         //  echo $rowData[$d][2] . "<br>";
                         //  echo $rowData[$d][3] . "<br>";
                         $budget = new stdClass();
                         $budget->period = $rowData[$d][55];
-                      //  str_replace("world","Peter","Hello world!");
-                        
-                        $budget->department = str_replace("_"," ",$rowData[$d][1]);
+                        //  str_replace("world","Peter","Hello world!");
+
+                        $budget->department = str_replace("_", " ", $rowData[$d][1]);
                         $budget->unit = $rowData[$d][2];
                         $budget->activity = $rowData[$d][3];
                         $budget->output = $rowData[$d][4];
@@ -183,10 +182,8 @@ class Budget extends CI_Controller {
 
                         $budget = json_encode($budget);
 
-                        $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_"," ",$rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+                        $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_", " ", $rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
                         $id = $this->Md->save($instance, 'instance');
-                        
-                       
                     }
                 }
                 //  Insert row data array into your database of choice here
@@ -196,95 +193,92 @@ class Budget extends CI_Controller {
             fclose($file);
             // redirect('/all');
         }
-        
+
         echo '<div class="alert alert-info">   <strong>Information uploaded!  </strong>	</div>';
         // $this->load->view('add-budget', $data);
-
     }
-
 
     public function sync() {
 
-        
-            
-                        $budget = new stdClass();
-                        $budget->period = $_POST["period"];
-                         $budget->department = $_POST["department"];
-                        $budget->unit = $_POST["unit"];
-                        $budget->activity = $_POST["activity"];
-                        $budget->output = $_POST["output"];
-                        $budget->outcome = $_POST["outcome"];
-                        $budget->objective = $_POST["objective"];
-                        $budget->initiative = $_POST["initiative"];
-                        $budget->performance = $_POST["performance"];
-                        $budget->starts = $_POST["starts"];
-                       
-                        $budget->Procurement_type = $_POST["procurement_type"];
-                        $budget->category = $_POST["category"];
-                        $budget->line = $_POST["line"];
-                        $budget->subline = $_POST["subline"];
-                        $budget->account = $_POST["account"];
-                        $budget->funding = $_POST["funding"];
-                        $budget->account_description = $_POST["account_description"];
-                        
-                        $budget->unit = $_POST["unit"];
-                        $budget->currency = $_POST["currency"] ;
-						$budget->rate = $_POST["rate"];
-                        $budget->price = $_POST["price"];
-                        $budget->qty = $_POST["qty"];
-                        $budget->persons = $_POST["persone"];
-                        $budget->freq = $_POST["freq"];
-                        $budget->priceL = $_POST["priceL"];
-                        $budget->total = $_POST["total"];
-                    
-                        $budget->flow = $_POST["flow"];
-                        $budget->totalL = $_POST["totalL"];
-                        $budget->radio = " ";
-                        $budget->variance = $_POST["variance"];
-                     
-                        $budget->generation = $_POST["generation"];
-                        $budget->January = $_POST["January"];
-                        $budget->February = $_POST["February"];
-                        $budget->March = $_POST["March"];
-                        $budget->April = $_POST["April"];
-                        $budget->May = $_POST["May"];
-                        $budget->June = $_POST["June"];
-                        $budget->July = $_POST["July"];
-                        $budget->August = $_POST["August"];
-                        $budget->September = $_POST["September"];
-                        $budget->October = $_POST["October"];
-                        $budget->November = $_POST["November"];
-                        $budget->December = $_POST["December"];
-                        $budget->Quarter1 = $_POST["Quarter1"];
-                        $budget->Quarter2 = $_POST["Quarter2"];
-                        $budget->Quarter3 = $_POST["Quarter3"];
-                        $budget->Quarter4 = $_POST["Quarter4"];
-                        $budget->services = $_POST["services"];
-                       
-                        $budget->details = $_POST["details"];
-                        $budget->Year = $_POST["Year"];
 
 
-                        $budget = json_encode($budget);
+        $budget = new stdClass();
+        $budget->period = $_POST["period"];
+        $budget->department = $_POST["department"];
+        $budget->parent_id = $_POST["parent_id"];
+        $budget->unit = $_POST["unit"];
+        $budget->activity = $_POST["activity"];
+        $budget->output = $_POST["output"];
+        $budget->outcome = $_POST["outcome"];
+        $budget->objective = $_POST["objective"];
+        $budget->initiative = $_POST["initiative"];
+        $budget->performance = $_POST["performance"];
+        $budget->starts = $_POST["starts"];
 
-                       
-                        
-                   
-       if ($_POST["period"] == "") {
+        $budget->Procurement_type = $_POST["procurement_type"];
+        $budget->category = $_POST["category"];
+        $budget->line = $_POST["line"];
+        $budget->subline = $_POST["subline"];
+        $budget->account = $_POST["account"];
+        $budget->funding = $_POST["funding"];
+        $budget->account_description = $_POST["account_description"];
+
+        $budget->unit = $_POST["unit"];
+        $budget->currency = $_POST["currency"];
+        $budget->rate = $_POST["rate"];
+        $budget->price = $_POST["price"];
+        $budget->qty = $_POST["qty"];
+        $budget->persons = $_POST["persone"];
+        $budget->freq = $_POST["freq"];
+        $budget->priceL = $_POST["priceL"];
+        $budget->total = $_POST["total"];
+
+        $budget->flow = $_POST["flow"];
+        $budget->totalL = $_POST["totalL"];
+        $budget->radio = " ";
+        $budget->variance = $_POST["variance"];
+
+        $budget->generation = $_POST["generation"];
+        $budget->January = $_POST["January"];
+        $budget->February = $_POST["February"];
+        $budget->March = $_POST["March"];
+        $budget->April = $_POST["April"];
+        $budget->May = $_POST["May"];
+        $budget->June = $_POST["June"];
+        $budget->July = $_POST["July"];
+        $budget->August = $_POST["August"];
+        $budget->September = $_POST["September"];
+        $budget->October = $_POST["October"];
+        $budget->November = $_POST["November"];
+        $budget->December = $_POST["December"];
+        $budget->Quarter1 = $_POST["Quarter1"];
+        $budget->Quarter2 = $_POST["Quarter2"];
+        $budget->Quarter3 = $_POST["Quarter3"];
+        $budget->Quarter4 = $_POST["Quarter4"];
+        $budget->services = $_POST["services"];
+        $budget->details = $_POST["details"];
+        $budget->Year = $_POST["Year"];
+        $budget = json_encode($budget);
+
+
+        if ($_POST["parent_id"] == "") {
             echo 'F';
             return;
         }
-        //echo $date;      
-//        $get_result = $this->Md->check($datetime, 'datetime', 'metar');
-//        if (!$get_result) {
-//                 echo 'T' ;
-//        }        
-        else {
-             $instance = array('account' => $_POST["account"], 'total' => $_POST["total"], 'enddate' => "", 'startdate' => "", 'initiative' => $_POST["initiative"], 'unit' => $_POST["unit"], 'department' => str_replace("_"," ",$_POST["department"]), 'period' => $_POST["period"], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
-             $id = $this->Md->save($instance, 'instance');
+        if ($_POST["action"] == 'create') {
+            $instance = array('account' => $_POST["account"], 'parent_id' => $_POST["parent_id"], 'sync' => $_POST["sync"], 'action' => $_POST["action"], 'total' => $_POST["total"], 'enddate' => "", 'startdate' => "", 'initiative' => $_POST["initiative"], 'unit' => $_POST["unit"], 'department' => str_replace("_", " ", $_POST["department"]), 'period' => $_POST["period"], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+            $id = $this->Md->save($instance, 'instance');
             echo 'T';
         }
-
+        if ($_POST["action"] == 'update') {
+            $instance = array('account' => $_POST["account"], 'parent_id' => $_POST["parent_id"], 'sync' => $_POST["sync"], 'action' => $_POST["action"], 'total' => $_POST["total"], 'enddate' => "", 'startdate' => "", 'initiative' => $_POST["initiative"], 'unit' => $_POST["unit"], 'department' => str_replace("_", " ", $_POST["department"]), 'period' => $_POST["period"], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+            $id = $this->Md->update_sync($_POST["parent_id"], $instance, 'instance');
+            echo 'T';
+        }
+        if ($_POST["action"] == 'delete') {
+            $query = $this->Md->delete_sync($_POST["parent_id"], 'instance');
+            echo 'd';
+        }
     }
 
     public function tabular() {

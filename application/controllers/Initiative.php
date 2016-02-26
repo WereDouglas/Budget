@@ -41,9 +41,47 @@ class Initiative extends CI_Controller {
         $this->load->view('view-initiative', $data);
     }
 
-    public function create() {
-        $this->load->helper(array('form', 'url'));
+    public function sync() {
 
+        $this->load->helper(array('form', 'url'));
+        $objectiveID = $this->input->post('objectiveID');
+        $objectiveName = $this->input->post('objectiveName');
+        $values = $this->input->post('values');
+        $details = $this->input->post('details');
+        $created = date('Y-m-d');
+
+        if ($_POST["parent_id"] == "") {
+            echo 'F';
+            return;
+        }
+        if ($_POST["action"] == 'create') {
+
+            $result = $this->Md->get('values', $values, 'initiative');
+            if (count($result) > 0) {
+                echo 'F';
+                return;
+            } else {
+                $init = array('objectiveID' => $objectiveID, 'values' => $values, 'details' => $details,'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'created' => date('Y-m-d H:i:s'));
+                $id = $this->Md->save($init, 'initiative');
+                echo 'T';
+                return;
+            }
+        }
+        if ($_POST["action"] == 'update') {
+            $init = array('objectiveID' => $objectiveID, 'values' => $values, 'details' => $details,'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'created' => date('Y-m-d H:i:s'));
+             $id = $this->Md->update_sync($_POST["parent_id"], $initiative, 'initiative');
+            echo 'T';
+            return;
+        }
+        if ($_POST["action"] == 'delete') {
+            $query = $this->Md->delete_sync($_POST["parent_id"], 'initiative');
+            echo 'd';
+            return;
+        }
+    }
+    public function create() {
+
+        $this->load->helper(array('form', 'url'));
         $objectiveID = $this->input->post('objectiveID');
         $objectiveName = $this->input->post('objectiveName');
         $values = $this->input->post('values');

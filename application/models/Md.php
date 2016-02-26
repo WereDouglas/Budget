@@ -20,13 +20,20 @@ class Md extends CI_Model {
                 $this->db->insert('instance', $data);
                 return $this->db->insert_id();
             }
-        function delete($id,$table) {             
+        function delete($id,$table) {           
             
 		$sql = "DELETE FROM $table WHERE id =? ";
 		$this -> db -> query($sql, array($id));
 		return $this -> db -> affected_rows();
                 
-	}       
+	}
+         function delete_sync($id,$table) {           
+            
+		$sql = "DELETE FROM $table WHERE parent_id =? ";
+		$this -> db -> query($sql, array($id));
+		return $this -> db -> affected_rows();
+                
+	}  
 	
 	function get($field,$value,$table) {
 		$this -> db -> select('*');
@@ -36,9 +43,13 @@ class Md extends CI_Model {
 		$result = $query -> result();
 		return $result;
                 }       
-  //$this->MD->update($id,$role, 'role');
+       //$this->MD->update($id,$role, 'role');
 	function update($id, $data,$table) {
 		$this -> db -> where('id', $id);
+		$this -> db -> update($table, $data);
+	}
+        function update_sync($id, $data,$table) {
+		$this -> db -> where('parent_id', $id);
 		$this -> db -> update($table, $data);
 	}
         function check($value,$field,$table) {		
