@@ -44,8 +44,14 @@ class Md extends CI_Model {
 		return $result;
                 }       
        //$this->MD->update($id,$role, 'role');
-	function update($id, $data,$table) {
+	function update($id,$data,$table) {
 		$this -> db -> where('id', $id);
+		$this -> db -> update($table, $data);
+	}
+        
+        
+        function update_dynamic($by,$field,$table,$data) {
+		$this -> db -> where($field, $by);
 		$this -> db -> update($table, $data);
 	}
         function update_sync($id, $data,$table) {

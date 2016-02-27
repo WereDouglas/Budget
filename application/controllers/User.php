@@ -141,9 +141,20 @@ class User extends CI_Controller {
                 return;
             }
         }
-        if ($_POST["parent_id"] != "" && $_POST["email"] != "" && $_POST["setid"] != " ") {
-
-            $this->Md->query("UPDATE user SET parent_id='".$_POST["parent_id"]."' WHERE email ='".$_POST["email"]."'");
+        $parent = $_POST["parent_id"];
+        $email = $_POST["email"];
+        
+        if ($_POST["parent_id"] != "" && $_POST["email"] != "" && $_POST["setid"] != "") {
+           // echo "UPDATE user SET parent_id = '".$_POST["parent_id"]."' WHERE email ='".$_POST["email"]."'";
+            // $id =  $this->Md->query("UPDATE user SET parent_id = ".$parent." WHERE email = ".$email." ");
+             
+             //update_dynamic($by,$field,$table,$data)
+             
+             $user = array( 'parent_id' => $_POST["parent_id"]);
+            $id = $this->Md->update_dynamic($_POST["email"], 'email', 'user',$user);
+            echo 'T';
+             return;
+             
         }
         if ($_POST["action"] == 'update') {
             $user = array('email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'false', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"]);
@@ -164,8 +175,7 @@ class User extends CI_Controller {
             $all = array();
             if ($get_result) {
 
-                foreach ($get_result as $loop) {
-                    if ($loop->sync != 'T') {
+                foreach ($get_result as $loop) {                   
                         $user = new stdClass();
                         $user->email = $loop->email;
                         $user->name = $loop->name;
@@ -176,8 +186,7 @@ class User extends CI_Controller {
 
                         array_push($all, $user);
                         $user = array('sync' => 'T', 'created' => date('Y-m-d'));
-                        $this->Md->update($loop->id, $user, 'user');
-                    }
+                        $this->Md->update($loop->id, $user, 'user');                   
                 }
             }
             echo json_encode($all);
