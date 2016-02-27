@@ -62,7 +62,7 @@ class Consolidate extends CI_Controller {
 
     public function graphs() {
 
-        $this->session->sess_destroy();
+     //   $this->session->sess_destroy();
 
         $data['departments'] = array();
         $data['objectives'] = array();

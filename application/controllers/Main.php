@@ -3,21 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	 function __construct() {
+
+        parent::__construct();
+        //  error_reporting(E_PARSE);     
+        $this->load->model('Md');
+        $this->load->library('session');
+        $this->load->library('encrypt');
+    }
 	public function index()
 	{
 		$this->load->view('login');
@@ -28,6 +21,48 @@ class Main extends CI_Controller {
 	}
          public function start()
 	{
-		$this->load->view('start');
+             
+                  $data['departments'] = array();
+        $data['objectives'] = array();
+        $data['categories'] = array();
+        $data['rates'] = array();
+        $data['users'] = array();
+        $data['roles'] = array();
+        $data['budgets'] = array();
+        $data['periods'] = array();
+
+        $query = $this->Md->query("SELECT * FROM department");
+        if ($query) {
+            $data['departments'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM objective");
+        if ($query) {
+            $data['objectives'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM category");
+        if ($query) {
+            $data['categories'] = $query;
+        }
+        $query = $this->Md->query("SELECT * FROM rate");
+        if ($query) {
+            $data['rates'] = $query;
+        }
+        $query = $this->Md->show('user');
+        if ($query) {
+            $data['users'] = $query;
+        }
+        $query = $this->Md->show('role');
+        if ($query) {
+            $data['roles'] = $query;
+        }
+        $query = $this->Md->show('instance');
+        if ($query) {
+            $data['budgets'] = $query;
+        }
+        $query = $this->Md->show('period');
+        if ($query) {
+            $data['periods'] = $query;
+        }
+		$this->load->view('view-graph', $data);
 	}
 }

@@ -59,6 +59,46 @@ class Role extends CI_Controller {
         }
     }
 
+    public function sync() {
+
+        $this->load->helper(array('form', 'url'));
+
+        $role = $this->input->post('role');
+        $actions = $this->input->post('actions');
+        $views = $this->input->post('views');
+        $created = date('Y-m-d');
+
+
+        if ($_POST["action"] == 'create') {
+            
+            if ($_POST["parent_id"] == "") {
+                echo 'F';
+                return;
+            }
+            $result = $this->Md->get('name', $role, 'role');
+            if (count($result) > 0) {
+                echo 'F';
+                return;
+            } else {
+                $role = array('name' => $role, 'actions' => $actions, 'views' => $views, 'status' => 'true', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"]);
+                $this->Md->save($role, 'role');
+                echo 'T';
+                return;
+            }
+        }
+        if ($_POST["action"] == 'update') {
+            $role = array('name' => $role, 'actions' => $actions, 'views' => $views, 'status' => 'true', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"]);
+            $id = $this->Md->update_sync($_POST["parent_id"], $role, 'role');
+            echo 'T';
+            return;
+        }
+        if ($_POST["action"] == 'delete') {
+            $query = $this->Md->delete_sync($_POST["parent_id"], 'role');
+            echo 'd';
+            return;
+        }
+    }
+
     public function edit() {
 
         $this->load->helper(array('form', 'url'));
