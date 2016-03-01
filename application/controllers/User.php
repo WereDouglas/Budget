@@ -119,52 +119,51 @@ class User extends CI_Controller {
             $password = $this->encrypt->encode($password, $key);
             $get_result = $this->Md->check($name, 'name', 'user');
             if ($get_result) {
-                echo 'F';
+                echo 'F:' . "";
                 return;
             }
             if ($_POST["parent_id"] == "") {
-                echo 'F';
+                echo 'F:' . "";
                 return;
             }
             $get_result = $this->Md->check($email, 'email', 'user');
             if ($get_result) {
-                echo 'F';
+                echo 'F:' . "";
                 return;
             }
             if ($email != "") {
                 $user = array('image' => '', 'email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'false', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"]);
-                $this->Md->save($user, 'user');
-                echo 'T';
+                $id = $this->Md->save($user, 'user');
+                echo 'T:' . $id;
                 return;
             } else {
-                echo 'F';
+                echo 'F:' . "";
                 return;
             }
         }
         $parent = $_POST["parent_id"];
         $email = $_POST["email"];
-        
+
         if ($_POST["parent_id"] != "" && $_POST["email"] != "" && $_POST["setid"] != "") {
-           // echo "UPDATE user SET parent_id = '".$_POST["parent_id"]."' WHERE email ='".$_POST["email"]."'";
+            // echo "UPDATE user SET parent_id = '".$_POST["parent_id"]."' WHERE email ='".$_POST["email"]."'";
             // $id =  $this->Md->query("UPDATE user SET parent_id = ".$parent." WHERE email = ".$email." ");
-             
-             //update_dynamic($by,$field,$table,$data)
-             
-             $user = array( 'parent_id' => $_POST["parent_id"]);
-            $id = $this->Md->update_dynamic($_POST["email"], 'email', 'user',$user);
-            echo 'T';
-             return;
-             
+            //update_dynamic($by,$field,$table,$data)
+
+            $user = array('parent_id' => $_POST["parent_id"]);
+            $id = $this->Md->update_dynamic($_POST["email"], 'email', 'user', $user);
+            echo 'T:' . " ";
+            return;
         }
         if ($_POST["action"] == 'update') {
-            $user = array('email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'false', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"]);
-            $id = $this->Md->update_sync($_POST["parent_id"], $user, 'user');
-            echo 'T';
+            $user = array('email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'false', 'created' => date('Y-m-d'), 'parent_id' => $_POST["parent_id"], 'id' => $_POST["oid"], 'sync' => 'T', 'action' => $_POST["action"]);
+
+            $this->Md->update($_POST["oid"], $user, 'user');
+            echo 'T:' . " ";
             return;
         }
         if ($_POST["action"] == 'delete') {
-            $query = $this->Md->delete_sync($_POST["parent_id"], 'user');
-            echo 'd';
+            $query = $this->Md->delete($_POST["oid"], 'user');
+            echo 'd:' . " ";
             return;
         }
         if ($_POST["down"] != " ") {
@@ -175,18 +174,18 @@ class User extends CI_Controller {
             $all = array();
             if ($get_result) {
 
-                foreach ($get_result as $loop) {                   
-                        $user = new stdClass();
-                        $user->email = $loop->email;
-                        $user->name = $loop->name;
-                        $user->contact = $loop->contact;
-                        $user->role = $loop->role;
-                        $user->department = $loop->deparment;
-                        $user->password = $this->encrypt->decode($loop->password, $loop->email);
-
-                        array_push($all, $user);
-                        $user = array('sync' => 'T', 'created' => date('Y-m-d'));
-                        $this->Md->update($loop->id, $user, 'user');                   
+                foreach ($get_result as $loop) {
+                    $user = new stdClass();
+                    $user->oid = $loop->id;
+                    $user->email = $loop->email;
+                    $user->name = $loop->name;
+                    $user->contact = $loop->contact;
+                    $user->role = $loop->role;
+                    $user->department = $loop->department;
+                    $user->password = $this->encrypt->decode($loop->password, $loop->email);
+                    array_push($all, $user);
+                    $user = array('sync' => 'T', 'created' => date('Y-m-d'));
+                    $this->Md->update($loop->id, $user, 'user');
                 }
             }
             echo json_encode($all);

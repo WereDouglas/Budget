@@ -7,7 +7,7 @@ class Department extends CI_Controller {
     function __construct() {
 
         parent::__construct();
-        // error_reporting(E_PARSE);
+         error_reporting(E_PARSE);
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
@@ -75,38 +75,53 @@ class Department extends CI_Controller {
 
         $name = $this->input->post('name');
         $details = $this->input->post('details');
-
         $created = date('Y-m-d');
 
 
-        if ($_POST["parent_id"] == "") {
-            echo 'F';
-            return;
-        }
+        
         if ($_POST["action"] == 'create') {
 
             $result = $this->Md->get('name', $name, 'department');
             if (count($result) > 0) {
-                echo 'F';
+                echo 'F:'." ";
                 return;
             } else {
                 $department = array('name' => $name, 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'details' => $details, 'created' => date('Y-m-d H:i:s'));
                 $id = $this->Md->save($department, 'department');
-                echo 'T';
+                echo 'T:'.$id;
                 return;
             }
+
+            
         }
         if ($_POST["action"] == 'update') {
-            $department = array('name' => $name, 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'details' => $details, 'created' => date('Y-m-d H:i:s'));
-            $id = $this->Md->update_sync($_POST["parent_id"], $department, 'department');
-            echo 'T';
+           $department = array('name' => $name, 'parent_id' => $_POST["parent_id"], 'sync' => 'T', 'action' => $_POST["action"], 'details' => $details, 'created' => date('Y-m-d H:i:s'));
+           $this->Md->update($_POST["oid"], $department, 'department');
+                    
+            echo 'T:'." ";
             return;
         }
         if ($_POST["action"] == 'delete') {
-            $query = $this->Md->delete_sync($_POST["parent_id"], 'department');
-            echo 'd';
+            $query = $this->Md->delete($_POST["oid"], 'department');           
             return;
         }
+        if ($_POST["down"] != " ") {
+                $get_result = $this->Md->show('department');
+                $all = array();
+                if ($get_result) {                    
+                    foreach ($get_result as $loop) {
+                        $department = new stdClass();
+                        $department->oid = $loop->id;
+                        $department->name = $loop->name;
+                        $department->detail = $loop->details;
+                        array_push($all, $department);
+                        $departmente = array('sync' => 'T', 'created' => date('Y-m-d'));
+                        $this->Md->update($loop->id, $departmente, 'department');
+                    }
+                }
+                echo json_encode($all);
+                return;
+            }
     }
 
     public function delete() {

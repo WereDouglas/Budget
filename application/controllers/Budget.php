@@ -261,10 +261,7 @@ class Budget extends CI_Controller {
         $budget = json_encode($budget);
 
 
-        if ($_POST["parent_id"] == "") {
-            echo 'F';
-            return;
-        }
+       
         if ($_POST["action"] == 'create') {
             $instance = array('account' => $_POST["account"], 'parent_id' => $_POST["parent_id"], 'sync' => $_POST["sync"], 'action' => $_POST["action"], 'total' => $_POST["total"], 'enddate' => "", 'startdate' => "", 'initiative' => $_POST["initiative"], 'unit' => $_POST["unit"], 'department' => str_replace("_", " ", $_POST["department"]), 'period' => $_POST["period"], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
             $id = $this->Md->save($instance, 'instance');
@@ -278,6 +275,27 @@ class Budget extends CI_Controller {
         if ($_POST["action"] == 'delete') {
             $query = $this->Md->delete_sync($_POST["parent_id"], 'instance');
             echo 'd';
+        }
+        if ($_POST["down"] != "") {
+            $get_result = $this->Md->show('instance');
+            $all = array();
+            if ($get_result) {
+                foreach ($get_result as $loop) {
+                    
+                    $budget = new stdClass();
+                    $budget->oid = $loop->id;
+                    $details = $loop->content;
+                    $details = json_decode($details);
+                    foreach ($details as $key => $value) {
+                          $budget->$key = $value;
+                    }
+                    array_push($all, $budget);
+                    $budget = array('sync' => 'T', 'created' => date('Y-m-d'));
+                    $this->Md->update($loop->id, $budget, 'instance');
+                }
+            }
+            echo json_encode($all);
+            return;
         }
     }
 
