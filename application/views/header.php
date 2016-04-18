@@ -227,6 +227,15 @@
             <li class="header">MAIN NAVIGATION</li>
             <?php  
              if (allowed ($see,'management')) {  ?>
+             <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/grid"; ?>">
+                <i class="fa fa-th"></i> <span>New Budget</span>              </a>
+              </li>
+                 <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/grid/summary"; ?>">
+                <i class="fa fa-th"></i> <span>Budget Summary</span>              </a>
+              </li>
+            
               <li>
                <a target="frame" href="<?php echo base_url() . "index.php/period"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget Period</span>              </a>

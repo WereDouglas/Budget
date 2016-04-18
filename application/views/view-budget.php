@@ -12,7 +12,8 @@
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
 
-    <!-- Default box -->
+    // <!-- Default box -->
+    // <!-- Default box -->
     <div class="box">
           
        <h2>Departments</h2>

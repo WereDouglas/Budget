@@ -67,6 +67,12 @@ class Budget extends CI_Controller {
 
         $this->load->view('add-budget', $data);
     }
+     public function grid() {
+         
+          $this->load->view('add-grid', $data);
+         
+         
+     }
 
     public function import() {
 
