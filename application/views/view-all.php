@@ -13,7 +13,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="box"  style=" overflow-x:scroll">         
-<input type="button" onclick="ExportToExcel('datatable')" value="Export to Excel">
+        <input type="button" onclick="ExportToExcel('datatable')" value="Export to Excel">
 
         <hr>
 
@@ -27,18 +27,18 @@
                     <th>Activity</th>
                     <th>Output</th>
                     <th>Outcome</th>
-                    
+
                     <th>Objective</th>
                     <th>Strategy/initiatives</th>
                     <th>Performance measure</th>
-                     <th>Starting</th>   
-                      <th>Ending</th>   
+                    <th>Starting</th>   
+                    <th>Ending</th>   
                     <th>Procurement type</th>
                     <th>Budget Categories</th>
                     <th>Reporting line</th>
                     <th>Sub line</th>
                     <th>Account</th>
-                     <th>Funding</th>
+                    <th>Funding</th>
                     <th>Account description</th>                   
                     <th>Unit of measure</th>
                     <th>Currency</th>
@@ -50,10 +50,10 @@
                     <th>Price(Local)</th>
                     <th>Total</th>
                     <th>Cash flow</th>
-                      <th>Total local</th>
-                        <th>Generated</th>
-                         <th>Variance</th>
-                           <th>Cost Generation</th>                   
+                    <th>Total local</th>
+                    <th>Generated</th>
+                    <th>Variance</th>
+                    <th>Cost Generation</th>                   
                     <th>January</th>
                     <th>February</th> 
                     <th>March</th>
@@ -72,12 +72,8 @@
                     <th>QUARTER 4</th>
                     <th>Description of goods/service or works</th>
                     <th>DETAILED DESCRIPTION OF THE ACTIVITY TO BE UNDERTAKEN</th>
-                    <th>Year</th>   
-                    
-                   
-                      
-                        
-                    
+                    <th>Year</th>  
+
                 </tr>
             </thead>   
             <tbody>
@@ -85,20 +81,60 @@
                 <?php
                 if (is_array($budgets) && count($budgets)) {
                     foreach ($budgets as $loop) {
-                        $details = $loop->content;
-                        $details = json_decode($details);
                         ?>  
-                        <tr  class="edit_tr">
-                            <?php
-                            foreach ($details as $key => $value) {
+                     <tr>  
+                            <td><?php echo $loop->period;?></td>   
+                            <td><?php echo $loop->department;?></td>
+                            <td><?php echo $loop->unit;?></td>                                          
+                            <td><?php echo $loop->activity;?></td>
+                            <td><?php echo $loop->output;?></td>
+                            <td><?php echo $loop->outcome;?></td>
 
-                                if (is_numeric($value)) {
-                                    echo ' <td>' . number_format($value) . '</td>';
-                                } else {
-                                    echo ' <td>' . $value . '</td>';
-                                }
-                            }
-                            ?>
+                            <td><?php echo $loop->objective;?></td>
+                            <td><?php echo $loop->initiatives;?></td>
+                            <td><?php echo $loop->performance;?></td>
+                            <td><?php echo $loop->starts;?></td>   
+                            <td></td>   
+                            <td><?php echo $loop->procurement;?></td>
+                            <td><?php echo $loop->category;?></td>
+                            <td><?php echo $loop->line;?></td>
+                            <td><?php echo $loop->subline;?></td>
+                            <td><?php echo $loop->account;?></td>
+                            <td><?php echo $loop->funding;?></td>
+                            <td><?php echo $loop->description;?></td>                   
+                            <td></td>
+                            <td><?php echo $loop->currency;?></td>
+                            <td><?php echo $loop->rate;?></td>
+                            <td><?php echo $loop->priceForeign;?></td>
+                            <td><?php echo $loop->qty;?></td>
+                            <td><?php echo $loop->persons;?></td>
+                            <td><?php echo $loop->freq;?></td>
+                            <td><?php echo $loop->priceLocal;?></td>
+                            <td><?php echo $loop->totalForeign;?></td>
+                            <td><?php echo $loop->flow;?></td>
+                            <td><?php echo $loop->totalLocal;?></td>
+                            <td><?php echo $loop->generation;?></td>
+                            <td><?php echo $loop->variance;?></td>
+                            <td><?php echo $loop->generation;?></td>                   
+                            <td><?php echo $loop->Jan;?></td>
+                            <td><?php echo $loop->Feb;?></td> 
+                            <td><?php echo $loop->Mar;?></td>
+                            <td><?php echo $loop->Apr;?></td>
+                            <td><?php echo $loop->May;?></td> 
+                            <td><?php echo $loop->Jun;?></td>
+                            <td><?php echo $loop->Jul;?></td> 
+                            <td><?php echo $loop->Aug;?></td>
+                            <td><?php echo $loop->Sep;?></td> 
+                            <td><?php echo $loop->Oct;?></td>
+                            <td><?php echo $loop->Nov;?></td>
+                            <td><?php echo $loop->Dec;?></td>
+                            <td><?php echo $loop->Q1;?></td>
+                            <td><?php echo $loop->Q2;?></td>
+                             <td><?php echo $loop->Q3;?></td>
+                             <td><?php echo $loop->Q4;?></td>
+                            <td><?php echo $loop->details;?></td>
+                            <td><?php echo $loop->created;?></td>
+                             <td><?php echo $loop->period;?></td>
                         </tr>
                         <?php
                     }
@@ -119,13 +155,13 @@
 <!-- iCheck -->
 <script src="<?php echo base_url(); ?>plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+            });
 </script>
 </body>
 <script src='<?= base_url(); ?>js/jquery.dataTables.min.js'></script>
@@ -133,15 +169,15 @@
 <script type="text/javascript">
 
 
-    $("#imgfile").change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#preview').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+            $("#imgfile").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
 </script>
 <script src="<?= base_url(); ?>js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="<?= base_url(); ?>js/dataTables.bootstrap.js" type="text/javascript"></script>
@@ -149,10 +185,10 @@
 
 
 <script type="text/javascript">
-    $(function () {
-        $("#datatable").dataTable();
+            $(function () {
+                $("#datatable").dataTable();
 
-    });
+            });
 </script>
 
 
@@ -198,8 +234,7 @@
 
                     }
                 });
-            }
-            else
+            } else
             {
                 alert('Enter something.');
             }
@@ -220,13 +255,13 @@
         });
 
     });
-   
+
 </script>
 <script type="text/javascript">
-function ExportToExcel(datatable){
-       var htmltable= document.getElementById('datatable');
-       var html = htmltable.outerHTML;
-       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+    function ExportToExcel(datatable) {
+        var htmltable = document.getElementById('datatable');
+        var html = htmltable.outerHTML;
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
     }
 </script>
 <!--<script type="text/javascript">

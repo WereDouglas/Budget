@@ -9,10 +9,6 @@
     <input type="file" name="file" id="file" class="input-mini">
     <button type="submit" id="submit" name="Import" class="btn sm btn-primary button-loading">Import</button>
 </form>
-<div class="demo-info" style="margin-bottom:10px">
-    <div class="demo-tip icon-tip">&nbsp;</div>
-    <div>Double click the row to begin editing.</div>
-</div>
 
 
 <table id="dg" title="Budgets" style="width:100%;height:auto"
@@ -58,20 +54,152 @@
                 }">
                 Department
             </th>
-            <th field="unit" id="unit" class="th" editor="{type:'combobox'}">Unit</th>
+            <th field="unit" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.unit; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'unit',
+                textField:'unit',
+                url:'<?php echo base_url() . 'index.php/grid/unit/'; ?>',
+                required:true,
+                onSelect:function(rec){ 
+                var url = '<?php echo base_url() ?>/index.php/grid/unit/'+rec.department; 
+                $('#unit').combobox('reload',url);
+                }   
+                }                 
+                }">
+                Unit
+            </th>
 
             <th field="activity" width="30" editor="{type:'validatebox',options:{required:true}}">Activity</th>
             <th field="output" class="th" editor="text">Output</th>
             <th field="outcome" class="th" editor="text">Outcome</th>
-            <th field="objectives" width="30" editor="{type:'validatebox',options:{required:true}}">Objective</th>
-            <th field="initiatives" width="30" editor="{type:'validatebox',options:{required:true}}">Initiative</th>
-            <th field="performance" width="30" editor="{type:'validatebox',options:{required:true}}">Performance</th>
-            <th field="starts" class="th" editor="{type:'validatebox',options:{required:true}}">Start</th>
+            <th field="objectives" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.objectives; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'title',
+                textField:'title',
+                url:'<?php echo base_url() . 'index.php/grid/obj/'; ?>',
+                required:true
+
+                }                 
+                }">
+                Objective
+            </th>
+            <th field="initiatives" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.initiatives; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'details',
+                textField:'details',
+                url:'<?php echo base_url() . 'index.php/grid/inits/'; ?>',
+                required:true                  
+                }                 
+                }">
+                Initiative
+            </th>
+            <th field="performance" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.performance; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'values',
+                textField:'values',
+                url:'<?php echo base_url() . 'index.php/grid/perf/'; ?>'
+
+                }                 
+                }">
+                Performance
+            </th>
+            <th field="starts" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.starts; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'name',
+                textField:'name',
+                url:'<?php echo base_url() . 'index.php/grid/months/'; ?>'
+
+                }                 
+                }">
+                Start
+            </th>
             <th field="procurement" class="th" editor="{type:'validatebox',options:{required:true}}">Procurement type</th>
-            <th field="category" class="th" editor="{type:'validatebox',options:{required:true}}">Category</th>
-            <th field="line" class="th" editor="{type:'validatebox',options:{required:true}}">Line</th>
-            <th field="subline" class="th" editor="{type:'validatebox',options:{required:true}}">Subline</th>
-            <th field="funding" class="th" editor="{type:'validatebox',options:{required:true}}">Funding</th>
+            <th field="category" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.category; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'name',
+                textField:'name',
+                url:'<?php echo base_url() . 'index.php/grid/category/'; ?>'
+
+                }                 
+                }">
+                Category
+            </th>
+            <th field="line" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.line; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'name',
+                textField:'name',
+                url:'<?php echo base_url() . 'index.php/grid/line/'; ?>'
+
+                }                 
+                }">
+                Reporting Line
+            </th>
+            <th field="subline" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.subline; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'name',
+                textField:'name',
+                url:'<?php echo base_url() . 'index.php/grid/subline/'; ?>'
+
+                }                 
+                }">
+                Sub Line
+            </th>
+
+            <th field="funding" width="80" sortable="true" data-options="
+                formatter : function(value,row) { 
+                return row.funding; 
+                },
+                editor : {
+                type:'combobox',
+                options : {
+                valueField:'name',
+                textField:'name',
+                url:'<?php echo base_url() . 'index.php/grid/fund/'; ?>'
+                }                 
+                }">
+                Funding
+            </th>
+
             <th field="description" width="30" editor="{type:'validatebox',options:{required:true}}">Description</th>
             <th field="currency" class="th" editor="{type:'validatebox',options:{required:true}}">Currency</th>
             <th field="rate" class="th" editor="{type:'numberbox',options:{precision:1}}">Ex.Rate</th>
@@ -115,13 +243,7 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a>
     <div id="tb" style="padding:5px;height:auto">
-        <div style="margin-bottom:5px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
-        </div>
+
         <div>
             Date From: <input class="easyui-datebox" style="width:80px">
             To: <input class="easyui-datebox" style="width:80px">
@@ -136,6 +258,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.6.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.edatagrid.js"></script>
+
 <script type="text/javascript">
         $(function () {
             $('#dg').edatagrid({
@@ -167,6 +290,17 @@
                 })
             }
         });
+        $('#dg').datagrid({
+            rowStyler: function (index, row) {
+                if (row.listprice > 80) {
+                    return 'background-color:#6293BB;color:#fff;'; // return inline style
+                    // the function can return predefined css class and inline style
+                    // return {class:'r1', style:{'color:#fff'}};	
+                }
+            }
+        });
+
+
 //        onSelect: function(rows){
 //            var url = '<?php echo base_url() . 'index.php/grid/account/'; ?>' + rows.family_id;
 //            var tr = $(this).closest('tr.datagrid-row');

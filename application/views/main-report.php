@@ -1,7 +1,10 @@
 <!-- Content Header (Page header) -->
 <link href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-   <link href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/easyui.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/icon.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/demo.css">
 <section class="content-header">
     <h1>  Consolidated reports   </h1> 
     <hr>
@@ -9,74 +12,48 @@
         <div class="col-xs-4">
 
             Budget year/period<br>
-            <select name="period"  id="period" >
-                <option></option>
-                <?php foreach ($periods as $loop) { ?>   
-                    <option><?= $loop->year ?></option>
-                <?php } ?>
-
-            </select><br>
+            <input class="easyui-combobox" style="width:100px" id="period" name="period"  url="<?php echo base_url() . 'index.php/grid/period/'; ?>" valueField="period" textField="period">
+            <br>
             Department<br>
-            <select name="department"  id="department" >
-                <option></option>
-                <?php foreach ($departments as $loop) { ?>   
-                    <option><?= $loop->name ?></option>
-                <?php } ?>
+            <input class="easyui-combobox" style="width:100px" id="department" name="department"  url="<?php echo base_url() . 'index.php/grid/department/'; ?>" valueField="department" textField="department">
 
-            </select>
-            <br>Unit<br><select id="unit"  name="unit" >
-                <option></option>
-            </select>
+            <br>Unit<br> <input class="easyui-combobox" style="width:100px" id="unit" name="unit"  url="<?php echo base_url() . 'index.php/grid/unit/'; ?>" valueField="unit" textField="unit">
+
             <br>   Account<br>
-            <select name="account" id="account" >
-                <option></option>
-                <?php foreach ($budgets as $loop) { ?>   
-                    <option><?= $loop->account ?></option>
-                <?php } ?>
-            </select>
+            <input class="easyui-combobox" id="account" name="account" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/account/'; ?>" valueField="account" textField="account">
+
 
         </div>
+
+
 
 
         <div class="col-xs-4">
 
             Budget Categories<br>
-            <select name="category" id="category" >
-                <option></option>
-                <?php foreach ($categories as $loop) { ?>   
-                    <option><?= $loop->name ?></option>
-                <?php } ?>
-            </select><br>
-            Objective<br> <select name="objective" id="objective" >
-                <option></option>
-                <?php foreach ($objectives as $loop) { ?>   
-                    <option><?= $loop->code ?></option>
-                <?php } ?>
+            <input class="easyui-combobox" id="category" name="category" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/categories/'; ?>" valueField="category" textField="category">
+            <br>
+            Objective<br> 
+            <input class="easyui-combobox" id="objective" name="objective" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/objective/'; ?>" valueField="objective" textField="objective">
 
-            </select><br>
+
+            <br>
             Strategy/Initiatives<br>
-            <select name="initiative" id="initiative" >
-                <option></option>
-            </select>
+            <input class="easyui-combobox" id="initiative" name="initiative" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/initiative/'; ?>" valueField="initiative" textField="initiative">
+
 
             <br>  Users<br>
-            <select name="by" id="by" >                            
-                <option></option>
-                <?php foreach ($budgets as $loop) { ?>   
-                    <option><?= $loop->by ?></option>
-                <?php } ?>
-            </select>                    
-
+            <input class="easyui-combobox" id="by" name="by" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/user/'; ?>" valueField="submitted" textField="submitted">
         </div>   
 
         <div class="col-xs-4"> 
             Reporting line<br>
-            <select name="line" id="line" >
-                <option></option>
-            </select>
+            <input class="easyui-combobox" id="line" name="line" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/lines/'; ?>" valueField="line" textField="line">
+
             <br>
             Sub line<br>
-            <select name="subline" id="subline" ></select>
+            <input class="easyui-combobox" id="subline" name="subline" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/sublines/'; ?>" valueField="subline" textField="subline">
+
 
         </div>
         <div class="col-xs-4">                 
@@ -110,7 +87,7 @@
         </div><!-- /.box-footer-->
     </div><!-- /.box -->
 
-                   
+
 
 </section><!-- /.content -->
 
@@ -122,257 +99,52 @@
 
 </body>
 
-<script src="<?php echo base_url(); ?>js/moment-with-locales.js"></script>
-<script src="<?php echo base_url(); ?>js/bootstrap-datetimepicker.js"></script>
-</head>
+
 <script src='<?= base_url(); ?>js/jquery.dataTables.min.js'></script>
 
 <script src="<?= base_url(); ?>js/jquery.dataTables.js" type="text/javascript"></script>
-<script src="<?= base_url(); ?>plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-<!-- Page script -->
-<link id="base-style-responsive" href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet">
-
-
-<script type="text/javascript">
-    $(document).ready(function ()
-    {
-        
-
-        $("#generate").on("click", function (e) {
-
-            var period = $("#period").val();
-            var department = $("#department").val();
-            var unit = $("#unit").val();
-            var initiative = $("#initiative").val();
-            var account = $("#account").val();
-            var by = encodeURIComponent($("#by").val());
-
-
-            $.post("<?php echo base_url() ?>index.php/consolidate/generate", {period: period, department: department, unit: unit, initiative: initiative, account: account, by: by}
-            , function (response) {
-                $('#loading').hide();
-                setTimeout(finishAjax('loading', escape(response)), 200);
-
-            }); //end change
-
-        })
-        function finishAjax(id, response) {
-            $('#' + id).html(unescape(response));
-            $('#' + id).fadeIn();
-        }
-
-    });
-
-</script>
 <script>
+    $('#loading').hide();
 //Script for getting the dynamic values from database using jQuery and AJAX
-    $(document).ready(function () {
-        $('#department').change(function () {
+                $("#generate").on("click", function (e) {
 
-            var form_data = {
-                name: $('#department').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/unit/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-                    $.each(msg, function (key, val) {
-                        sc += '<option value="' + val.name + '">' + val.name + '</option>';
-                    });
-                    $("#unit option").remove();
-                    $("#unit").append(sc);
-                }
-            });
-        });
-
-        $('#objective').change(function () {
-
-            var form_data = {
-                name: $('#objective').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/initiative/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-                    var pc = '';
-                    $.each(msg, function (key, val) {
-                        sc += '<option value="' + val.details + '">' + val.details + '</option>';
-                        pc = val.values;
-
-                    });
-                    $("#initiative option").remove();
-                    $("#initiative").append(sc);
-                    $("#performance").val("");
-                    $("#performance").val(pc);
-
-                }
-            });
-        });
-
-        $('#category').change(function () {
-
-            var form_data = {
-                name: $('#category').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/reporting/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-
-                    $.each(msg, function (key, val) {
-                        sc += '<option value="' + val.name + '">' + val.name + '</option>';
-
-                    });
-                    $("#line option").remove();
-                    $("#line").append(sc);
+                        var period = $("#period").val();
+                        var department = $("#department").val();
+                        var unit = $("#unit").val();
+                        var initiative = $("#initiative").val();
+                        var account = $("#account").val();
+                        var by = encodeURIComponent($("#by").val());
 
 
+                        $.post("<?php echo base_url() ?>index.php/consolidate/generate", {period: period, department: department, unit: unit, initiative: initiative, account: account, by: by}
+                        , function (response) {
+                            $('#loading').hide();
+                            setTimeout(finishAjax('loading', escape(response)), 200);
 
-                }
-            });
-        });
-        $('#line').change(function () {
+                        }); //end change
 
-            var form_data = {
-                name: $('#line').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/subline/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-
-                    $.each(msg, function (key, val) {
-                        sc += '<option value="' + val.name + '">' + val.name + '</option>';
-
-                    });
-                    $("#subline option").remove();
-                    $("#subline").append(sc);
+                    })
+                    function finishAjax(id, response) {
+                        $('#' + id).html(unescape(response));
+                        $('#' + id).fadeIn();
+                    }
 
 
-
-                }
-            });
-        });
-        $('#subline').change(function () {
-
-            var form_data = {
-                name: $('#subline').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/account/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-
-                    $.each(msg, function (key, val) {
-                        sc += '<option value="' + val.number + '">' + val.name + " " + val.number + '</option>';
-
-                    });
-                    $("#account option").remove();
-                    $("#account").append(sc);
-
-
-
-                }
-            });
-        });
-        $('#currency').change(function () {
-
-            var form_data = {
-                name: $('#currency').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/rate/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var sc = '';
-                    $.each(msg, function (key, val) {
-                        sc = val.rate;
-                    });
-                    console.log(sc);
-                    $("#rate").text("");
-                    $("#rate").val(sc);
-                }
-            });
-        });
-
-        $('#price').blur(function () {
-            var priceL = $("#price").val() * $("#rate").val();
-            $("#priceL").val(priceL);
-
-        });
-
-
-
-        $('#period').change(function () {
-
-            var form_data = {
-                period: $('#period').val()
-            };
-
-            $.ajax({
-                url: "<?php echo base_url() . "index.php/period/where"; ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: form_data,
-                success: function (msg) {
-                    var startp = '';
-                    var endp = '';
-                    $.each(msg, function (key, val) {
-                        startp = val.start;
-                        endp = val.end;
-                    });
-
-                    $("#endp").val(endp);
-                    $("#startp").val(startp);
-                }
-            });
-        });
-
-
-    });
 </script>
 
-<script type="text/javascript">
-    $(function () {
-        $('#start').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
-        $('#end').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
-    });
-</script>
 
 <script type="text/javascript">
-function ExportToExcel(datatable){
-       var htmltable= document.getElementById('datatable');
-       var html = htmltable.outerHTML;
-               window.open('data:application/vnd.ms-excel,'+ ';filename=exportData.xlsx;'+ encodeURIComponent(html));
-     var result = "data:application/vnd.ms-excel,"; this.href = result; this.download = "my-custom-filename.xls"; return true;
+    function ExportToExcel(datatable) {
+        var htmltable = document.getElementById('datatable');
+        var html = htmltable.outerHTML;
+        window.open('data:application/vnd.ms-excel,' + ';filename=exportData.xlsx;' + encodeURIComponent(html));
+        var result = "data:application/vnd.ms-excel,";
+        this.href = result;
+        this.download = "my-custom-filename.xls";
+        return true;
     }
-    
-   
+
+
 </script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.6.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.easyui.min.js"></script>

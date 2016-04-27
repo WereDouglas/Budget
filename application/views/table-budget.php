@@ -8,265 +8,475 @@
 
 <link id="base-style-responsive" href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet">
 
+<style>
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 0px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+    }
+    .table {
+        margin:0px;padding:0px;
+        width:100%;
+        box-shadow: 10px 10px 5px #888888;
+        border:1px solid #ffffff;
+
+        -moz-border-radius-bottomleft:0px;
+        -webkit-border-bottom-left-radius:0px;
+        border-bottom-left-radius:0px;
+
+        -moz-border-radius-bottomright:0px;
+        -webkit-border-bottom-right-radius:0px;
+        border-bottom-right-radius:0px;
+
+        -moz-border-radius-topright:0px;
+        -webkit-border-top-right-radius:0px;
+        border-top-right-radius:0px;
+
+        -moz-border-radius-topleft:0px;
+        -webkit-border-top-left-radius:0px;
+        border-top-left-radius:0px;
+    }.table table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        width:100%;
+        height:100%;
+        margin:0px;padding:0px;
+    }.table tr:last-child td:last-child {
+        -moz-border-radius-bottomright:0px;
+        -webkit-border-bottom-right-radius:0px;
+        border-bottom-right-radius:0px;
+    }
+    .table table tr:first-child td:first-child {
+        -moz-border-radius-topleft:0px;
+        -webkit-border-top-left-radius:0px;
+        border-top-left-radius:0px;
+    }
+    .table table tr:first-child td:last-child {
+        -moz-border-radius-topright:0px;
+        -webkit-border-top-right-radius:0px;
+        border-top-right-radius:0px;
+    }.table tr:last-child td:first-child{
+        -moz-border-radius-bottomleft:0px;
+        -webkit-border-bottom-left-radius:0px;
+        border-bottom-left-radius:0px;
+    }.table tr:hover td{
+        background-color:#cccccc;
+
+
+    }
+    .table td{
+        vertical-align:middle;
+
+        background-color:#f7f8f9;
+
+        border:1px solid #ffffff;
+        border-width:0px 1px 1px 0px;
+        text-align:left;
+        padding:0px;
+        font-size:10px;
+        font-family:Arial;
+        font-weight:bold;
+        color:#000000;
+    }.table tr:last-child td{
+        border-width:0px 1px 0px 0px;
+    }.table tr td:last-child{
+        border-width:0px 0px 1px 0px;
+    }.table tr:last-child td:last-child{
+        border-width:0px 0px 0px 0px;
+    }
+    .table tr:first-child td{
+        background:-o-linear-gradient(bottom, #003366 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003366), color-stop(1, #003f7f) );
+        background:-moz-linear-gradient( center top, #003366 5%, #003f7f 100% );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#003366", endColorstr="#003f7f");	background: -o-linear-gradient(top,#003366,003f7f);
+
+        background-color:#003366;
+        border:0px solid #ffffff;
+        text-align:center;
+        border-width:0px 0px 1px 1px;
+        font-size:14px;
+        font-family:Arial;
+        font-weight:bold;
+        color:#ffffff;
+    }
+    .table tr:first-child:hover td{
+        background:-o-linear-gradient(bottom, #003366 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003366), color-stop(1, #003f7f) );
+        background:-moz-linear-gradient( center top, #003366 5%, #003f7f 100% );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#003366", endColorstr="#003f7f");	background: -o-linear-gradient(top,#003366,003f7f);
+
+        background-color:#003366;
+    }
+    .table tr:first-child td:first-child{
+        border-width:0px 0px 1px 0px;
+    }
+    .table tr:first-child td:last-child{
+        border-width:0px 0px 1px 1px;
+    }
+    button, select,input {
+        text-transform: none;
+        height: 25px;
+    }
+</style>
 
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
-     <h2 class="page-header">Add new budget</h2>
-    <form class="form-horizontal well" action="<?php echo base_url(); ?>index.php/budget/import" method="post" name="upload_excel" enctype="multipart/form-data">
-<input type="file" name="file" id="file" class="input-mini">
-<button type="submit" id="submit" name="Import" class="btn sm btn-primary button-loading">Import</button>
-</form>
-         <form id="budget-form" name="budget-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/create'  method="post">        
-           
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-solid">                               
+    <h2 class="page-header">Add new budget     <a href="#">Vertical View</a></h2>
+    <form action="<?php echo base_url(); ?>index.php/budget/import" method="post" name="upload_excel" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" >
+        <button type="submit" id="submit" name="Import" class="btn sm btn-default">Import</button>
+    </form>
+    
+    <form  enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/save'  method="post">        
+        <div  >
+            <table class="table scroll" >
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                        Period
+                    </td>
+                    <td >
+                        Account
+                    </td>
+                    <td>
+                        Department
+                    </td>
+                    <td>
+                        Unit
+                    </td>
+                    <td>
+                        Activity
+                    </td> <td>
+                        Output
+                    </td> <td>
+                        Outcome
+                    </td> <td>
+                        Objective
+                    </td> 
+                    <td>
+                        Initiative
+                    </td>
+                    <td>
+                        Performance
+                    </td> 
+                    
+                    <td>
+                        Proc.Type
+                    </td> <td>
+                        Category
+                    </td> <td>
+                        Reporting Line
+                    </td>
+                    <td>
+                        Sub Line
+                    </td> <td>
+                        Funding
+                    </td> <td>
+                        Description
+                    </td> <td>
+                        Currency
+                    </td> <td>
+                        Ex.Rate
+                    </td> <td>
+                        Price
+                    </td> <td>
+                        Local Price
+                    </td> 
+                    <td>
+                        Qty
+                    </td> 
+
+                    <td>
+                        Total
+                    </td> <td>
+                        Local Total
+                    </td><td>
+                        Persons
+                    </td> <td>
+                        Freq
+                    </td> <td>
+                        Flow
+                    </td> <td>
+                        Variance
+                    </td> <td>
+                        Generation
+                    </td> 
+                    <td>
+                        Start- End
+                    </td> 
+                   
+                    <td>
+                        Auto
+                    </td>
+                    <td>
+                        January
+                    </td> <td>
+                        February
+                    </td> <td>
+                        March
+                    </td> <td>
+                        April
+                    </td> <td>
+                        May
+                    </td> <td>
+                        June
+                    </td> <td>
+                        July
+                    </td> <td>
+                        August
+                    </td> <td>
+                        September
+                    </td> <td>
+                        October
+                    </td> <td>
+                        November
+                    </td> 
+                    <td>
+                        December
+                    </td>
+                    <td>
+                        Q1
+                    </td>
+                    <td>
+                        Q2
+                    </td>
+                    <td>
+                        Q3
+                    </td>
+                    <td>
+                        Q4
+                    </td>
+                    <td>
+                        Details
+                    </td>
+                    <td>
+                        Submit
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td >
+                        <select name="period" id="period" >
+                            <option>Please select a period</option>
+                            <?php foreach ($periods as $loop) { ?>   
+                                <option><?= $loop->year ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </td>
+                    <td>
+                        <select name="account" id="account" >
+                            <option></option>
+                            <?php foreach ($accounts as $loop) { ?>   
+                                <option value="<?= $loop->number ?>"><?= $loop->name . ' ' . $loop->number ?></option>
+                            <?php } ?>
+
+                        </select>
+
+                    </td>
+                    <td>
+                        <select name="department" id="department" >
+                            <option></option>
+                            <?php foreach ($departments as $loop) { ?>   
+                                <option><?= $loop->name ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </td>
+                    <td>
+                        <select id="unit" name="unit" ></select>
+                    </td>
+                    <td>
+                        <textarea id="activity" name="activity"  rows="1" style="height: 25px;"  placeholder=""></textarea>
+                    </td> <td>
+                        <input name="output" id="output" type="text"  placeholder="Ouput" />
+                    </td> <td>
+                        <input id="outcome" name="outcome" type="text"  placeholder="Outcome" />
+                    </td> <td>
+                        <select name="objective" id="objective" >
+                            <option></option>
+                            <?php foreach ($objectives as $loop) { ?>   
+                                <option><?= $loop->code ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </td> <td>
+                        <select name="initiative" id="initiative" > </select>
+
+                    </td> <td>
+                        <input type="text" id="performance" name="performance"  placeholder="Enter ..." />
+                    </td> 
+                    
                   
-                            <div class="box-group" id="accordion">
-                                <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                                <div class="panel box box-primary">
-                                    <div class="box-header">
-                                        <h4 class="box-title">
-                                            <a data-toggle="collapse" class="btn btn-default btn-flat" data-parent="#accordion" href="#collapseOne">
-                                                New Budget
-                                            </a>
-                                            <a data-toggle="collapse" data-parent="#accordion" class="btn btn-default  btn-flat" href="#collapseTwo">
-                                                View advanced
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="box-body">
-                                            <div class="col-xs-4">
-                                                Budget year/period
-                                                <select name="period" id="period" class="form-control">
-                                                    <option>Please select a period</option>
-                                                    <?php foreach ($periods as $loop) { ?>   
-                                                        <option><?= $loop->year ?></option>
-                                                    <?php } ?>
+                    <td>
+                        <select name="procurement" id="procurement" >
+                            <option>N/A</option>
+                            <option>GOODS</option>
+                            <option>SERVICES</option>
+                            <option>WORKS</option>
+                        </select>  
+                    </td> <td>
+                        <select name="category" id="category" >
+                            <option></option>
+                            <?php foreach ($categories as $loop) { ?>   
+                                <option><?= $loop->name ?></option>
+                            <?php } ?>
+                        </select>
+                    </td> <td>
+                        <select name="line" id="line" >
+                            <option></option>
+                        </select>
+                    </td> <td>
+                        <select name="subline" id="subline" >
+                            <option></option>
+                        </select>
+                    </td> <td>
+                        <select name="funding" id="funding" >                                
+                            <option>Internal</option>
+                            <option>External</option>
+                        </select>
+                    </td> <td>
+                        <input type="text" name="description" id="description"  placeholder="Enter ..." />
+                    </td> <td>
+                        <select name="currency" id="currency" >
+                            <option>Please select a currency</option>
+                            <?php foreach ($rates as $loop) { ?>   
+                                <option><?= $loop->currency ?></option>
+                            <?php } ?>
 
-                                                </select>
-                                                Start <input type="text"  disabled class="form-control" name="startp" id="startp" placeholder="start date" />
-                                                End      <input type="text" disabled class="form-control" name="endp" id="endp" placeholder="End date" /> 
+                        </select>
+                    </td> 
+                    <td>
+                        <input id="rate" name="rate" type="text"   /> 
+                    </td> 
+                    <td>
+                        <input id="price" name="price" type="text"  />
+                    </td> 
+                    <td>
+                        <input name="priceL" id="priceL" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input name="qty" id="qty" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input id="total" name="total" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input id="totalL" name="totalL" type="text"  placeholder="" />
+                    </td> 
+                    <td>
+                        <input id="persons" name="persons" type="text"  value="1" />
+                    </td>
+                    <td>
+                        <input type="text" name="freq" id="freq"  value="1"/>
 
-                                                Department
-                                                <select name="department" id="department" class="form-control">
-                                                    <option></option>
-                                                    <?php foreach ($departments as $loop) { ?>   
-                                                        <option><?= $loop->name ?></option>
-                                                    <?php } ?>
-
-                                                </select>Unit<select id="unit" name="unit" class="form-control">
-                                                </select>
-                                                Activity details
-                                                <textarea id="activity" name="activity" class="form-control" rows="1" placeholder=""></textarea>
-                                              Output
-                                                <input name="output" id="output" type="text" class="form-control" placeholder="Ouput" />
-                                               Outcome
-                                                <input id="outcome" name="outcome" type="text" class="form-control" placeholder="Outcome" />
-                                                Objective <select name="objective" id="objective" class="form-control">
-                                                    <option></option>
-                                                    <?php foreach ($objectives as $loop) { ?>   
-                                                        <option><?= $loop->code ?></option>
-                                                    <?php } ?>
-
-                                                </select>
-                                                Strategy/Initiatives
-                                                <select name="initiative" id="initiative" class="form-control"> </select>
-                                                Performance measure
-                                                <input type="text" id="performance" name="performance" class="form-control" placeholder="Enter ..." />
-                                                Start date
-
-
-                                                <div class='input-group date' id='start'>
-                                                    <input type='text' class="form-control" id="starts" name="starts"/>
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-
-                                                End date
-                                                <div class="form-group">
-
-                                                    <div class='input-group date' id='end'>
-                                                        <input type='text' class="form-control" id="ends" name="ends" />
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>   
-
-                                            </div>
-
-                                            <div class="col-xs-4"> 
-
-                                                Procurement type
-                                                <select name="Procurement type" id="Procurement type" class="form-control">
-                                                    <option>N/A</option>
-                                                    <option>GOODS</option>
-                                                    <option>SERVICES</option>
-                                                    <option>WORKS</option>
-                                                </select>  
-                                                Budget Categories
-                                                <select name="category" id="category" class="form-control">
-                                                    <option></option>
-                                                    <?php foreach ($categories as $loop) { ?>   
-                                                        <option><?= $loop->name ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                                Reporting line
-                                                <select name="line" id="line" class="form-control">
-                                                    <option></option>
-                                                </select>
-                                                Sub line
-                                                <select name="subline" id="subline" class="form-control">
-                                                     <option></option>
-                                                </select>
-                                                Account
-                                                <select name="account" id="account" class="form-control">  <option></option></select>
-                                                Funding
-                                                <select name="funding" id="funding" class="form-control">                                
-                                                    <option>Internal</option>
-                                                    <option>External</option>
-                                                </select>
-
-                                                Accounting description
-                                                <input type="text" name="account description" id="account description" class="form-control" placeholder="Enter ..." />
-                                                Unit of measure
-                                                <input name="unit of measure" id="unit of measure" type="text" class="form-control" placeholder="Enter ..." />
-                                                <div class="form-group">
-                                                    Currency
-                                                    <select name="currency" id="currency" class="form-control">
-                                                        <option>Please select a currency</option>
-                                                        <?php foreach ($rates as $loop) { ?>   
-                                                            <option><?= $loop->currency ?></option>
-                                                        <?php } ?>
-
-                                                    </select>
-                                                </div> 
-                                                Rate
-                                                <input id="rate" name="rate" type="text" class="form-control"  />            
-                                          
-                                                Price
-                                                <input id="price" name="price" type="text" class="form-control" />
-                                                Persons
-                                                <input id="persons" name="persons" type="text" class="form-control" value="1" />
-                                                Frequency
-                                                <input type="text" name="freq" id="freq" class="form-control" value="1"/>
-                                              
-                                            
-                                            </div>       
-
-                                            <div class="col-xs-4"> 
-
-                                              Quantity
-                                                <input name="qty" id="qty" type="text" class="form-control" placeholder="" />
-                                               
-                                                Local Price
-                                                <input name="priceL" id="priceL" type="text" class="form-control" placeholder="" />
-                                                Total Price
-                                                <input id="total" name="total" type="text" class="form-control" placeholder="" />
-                                                Cash Flow
-                                                <input name="cash flow" id="cash flow"  type="text" class="form-control" placeholder="" />
-                                                Total Local
-                                                <input id="totalL" name="totalL" type="text" class="form-control" placeholder="" />
-                                                 Fill Months and Quarters
-                                                <div class="form-group">
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="radio" id="optionsRadios1" value="auto"  />
-                                                            Auto  </label>
-                                                    </div>
-                                                     <a data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo">
-                                                View advanced
-                                            </a>
-
-                                                </div>
-                                                Services
-                                                <input type="text" id="services" name="services" class="form-control" placeholder="" />
-
-                                                Activity details        
-                                                <input type="text" class="form-control" id="activity details" name="activity details" placeholder="" />
-                                             Year
-                                                <input type="text" id="Year" name="Year" class="form-control" placeholder="Enter ..." />
-                                                Variance
-                                                <input id="variance" name="variance" type="text" class="form-control" placeholder="Enter ..." />
-                                                Cost generational
-                                                <input type="text" name="cost generation" id="cost generation" class="form-control" placeholder="Enter ..." />
-                                                <br>
-                                                <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button>
-
-
-
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel box box-danger">
-
-                                    <div id="collapseTwo" class="panel-collapse collapse">
-                                        <div class="box-body">
-
-                                            <div class="col-xs-4">
-
-                                                January
-                                                <input id="January" name="January" type="text" class="form-control" placeholder="" />
-                                                February
-                                                <input id="February" name="February" type="text" class="form-control" placeholder="" /> 
-                                                March
-                                                <input id="March" name="March" type="text" class="form-control" placeholder="" />
-                                                April
-                                                <input id="April" name="April" type="text" class="form-control" placeholder="" />
-                                                May
-                                                <input id="May" name="May" type="text" class="form-control" placeholder="" /> 
-                                                June
-                                                <input id="June" name="June" type="text" class="form-control" placeholder="" /> 
-
-                                            </div>
-                                            <div class="col-xs-4">                                         
-                                                July
-                                                <input id="July" name="July" type="text" class="form-control" placeholder="" /> 
-
-                                                August
-                                                <input id="August" name="August" type="text" class="form-control" placeholder="" />
-                                                September
-                                                <input id="September" name="September" type="text" class="form-control" placeholder="" />                       
-                                                October
-                                                <input id="October" name="October" type="text" class="form-control" placeholder="" />                      
-                                                November
-                                                <input id="November" name="November" type="text" class="form-control" placeholder="" />                       
-                                                December
-                                                <input id="December" name="December" type="text" class="form-control" placeholder="" />
-                                            </div>
-                                            <div class="col-xs-4"> 
-                                                Quarter 1
-                                                <input type="text" id="Quarter1" name="Quarter1" class="form-control" placeholder="" />
-                                                Quarter 2 
-                                                <input type="text" id="Quarter2" name="Quarter2" class="form-control" placeholder="" />
-                                                Quarter 3   
-                                                <input type="text" id="Quarter3" name="Quarter3" class="form-control" placeholder="" />
-                                                Quarter 4 
-                                                <input type="text" id="Quarter4" name="Quarter4" class="form-control" placeholder="" />  
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                    </td> 
+                    <td>
+                        <select name="flow" id="flow" >                                
+                            <option>+</option>
+                            <option>-</option>
+                        </select>
+                    </td> 
+                    <td>
+                        <input id="variance" name="variance" type="text"  placeholder="Enter ..." />
+                    </td> 
+                    <td>
+                        <input type="text" name="generation" id="generation"  placeholder="Enter ..." />
+                    </td>
+                    <td>
+                        <div class='input-group date' id='start'>
+                            <input type='text'  id="starts" name="starts"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        -
+                        <div class='input-group date' id='end'>
+                            <input type='text'  id="ends" name="ends"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </td> 
+                    <td>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radio" id="optionsRadios1" value="auto"  />
+                                   </label>
                             </div>
-                     
-                    </div><!-- /.box -->
-                </div><!-- /.col -->
+                        </div>
+                    </td>
+                    <td>
+                        <input id="January" name="January" type="text"  placeholder="" />
+                    </td> 
+                    <td>
+                        <input id="February" name="February" type="text"  placeholder="" /> 
+                    </td> 
+                    <td>
+                        <input id="March" name="March" type="text"  placeholder="" />
+                    </td> 
+                    <td>
+                        <input id="April" name="April" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input id="May" name="May" type="text"  placeholder="" /> 
+                    </td> 
+                    <td>
+                        <input id="June" name="June" type="text"  placeholder="" /> 
+                    </td> 
+                    <td>
+                        <input id="July" name="July" type="text"  placeholder="" /> 
+                    </td> 
+                    <td>
+                        <input id="August" name="August" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input id="September" name="September" type="text"  placeholder="" /> 
+                    </td>
+                    <td>
+                        <input id="October" name="October" type="text"  placeholder="" />   
+                    </td> 
+                    <td>
+                        <input id="November" name="November" type="text"  placeholder="" />    
+                    </td> 
+                    <td>
+                        <input id="December" name="December" type="text"  placeholder="" />
+                    </td>
+                    <td>
+                        <input type="text" id="Quarter1" name="Quarter1"  placeholder="" />
+                    </td>
+                    <td>
+                        <input type="text" id="Quarter2" name="Quarter2"  placeholder="" />
+                    </td>
+                    <td>
+                        <input type="text" id="Quarter3" name="Quarter3"  placeholder="" />
+                    </td>
+                    <td>
+                        <input type="text" id="Quarter4" name="Quarter4"  placeholder="" />  
+                    </td>
+                    <td>
+                        <input type="text" id="details" name="details"  placeholder="" />  
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button></td>
+                </tr>
 
-            </div><!-- /.row -->
-            <!-- END ACCORDION & CAROUSEL-->
+            </table>
+        </div>
 
-        </form>
-  
-<span id="loading"  name ="loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="loading........" /></span><br>
-  
-  
+
+
+
+    </form>
+
+    <span id="loading"  name ="loading"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="loading........" /></span><br>
+
+
 </section>
 
 
@@ -290,7 +500,7 @@
 
 <script type="text/javascript">
     $(document).ready(function ()
-    {        
+    {
 
 
         $(".editbox").hide();
@@ -332,8 +542,7 @@
 
                     }
                 });
-            }
-            else
+            } else
             {
                 alert('Enter something.');
             }
@@ -356,7 +565,7 @@
         $('#loading').hide();
         $("#budget-form").submit(function (e) {
             e.preventDefault();
-          //  console.log($(this).serializeArray());
+            //  console.log($(this).serializeArray());
             $('#loading').show();
             var posts = $(this).serializeArray();
 
@@ -371,7 +580,7 @@
             console.log(account);
 
             if (posts.length > 0) {
-             //   console.log("Period of use " + period);
+                //   console.log("Period of use " + period);
 
 
 
@@ -387,7 +596,7 @@
                 }); //end change
             } else {
                 alert("Please insert missing information");
-              //  console.log("missing information");
+                //  console.log("missing information");
                 $('#loading').hide();
             }
 
@@ -678,5 +887,27 @@
         $('#end').datetimepicker({
             format: 'YYYY-MM-DD'
         });
+    });
+    $("a").click(function () {
+        $("table").each(function () {
+            var $this = $(this);
+            var newrows = [];
+            $this.find("tr").each(function () {
+                var i = 0;
+                $(this).find("td").each(function () {
+                    i++;
+                    if (newrows[i] === undefined) {
+                        newrows[i] = $("<tr></tr>");
+                    }
+                    newrows[i].append($(this));
+                });
+            });
+            $this.find("tr").remove();
+            $.each(newrows, function () {
+                $this.append(this);
+            });
+        });
+
+        return false;
     });
 </script>

@@ -67,12 +67,11 @@ class Budget extends CI_Controller {
 
         $this->load->view('add-budget', $data);
     }
-     public function grid() {
-         
-          $this->load->view('add-grid', $data);
-         
-         
-     }
+
+    public function grid() {
+
+        $this->load->view('add-grid', $data);
+    }
 
     public function import() {
 
@@ -267,7 +266,7 @@ class Budget extends CI_Controller {
         $budget = json_encode($budget);
 
 
-       
+
         if ($_POST["action"] == 'create') {
             $instance = array('account' => $_POST["account"], 'parent_id' => $_POST["parent_id"], 'sync' => $_POST["sync"], 'action' => $_POST["action"], 'total' => $_POST["total"], 'enddate' => "", 'startdate' => "", 'initiative' => $_POST["initiative"], 'unit' => $_POST["unit"], 'department' => str_replace("_", " ", $_POST["department"]), 'period' => $_POST["period"], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
             $id = $this->Md->save($instance, 'instance');
@@ -287,13 +286,13 @@ class Budget extends CI_Controller {
             $all = array();
             if ($get_result) {
                 foreach ($get_result as $loop) {
-                    
+
                     $budget = new stdClass();
                     $budget->oid = $loop->id;
                     $details = $loop->content;
                     $details = json_decode($details);
                     foreach ($details as $key => $value) {
-                          $budget->$key = $value;
+                        $budget->$key = $value;
                     }
                     array_push($all, $budget);
                     $budget = array('sync' => 'T', 'created' => date('Y-m-d'));
@@ -366,7 +365,7 @@ class Budget extends CI_Controller {
     public function all() {
         $data['budgets'] = array();
 
-        $query = $this->Md->query("SELECT * FROM instance");
+        $query = $this->Md->query("SELECT * FROM budgets");
 
         if ($query) {
             $data['budgets'] = $query;
@@ -383,6 +382,87 @@ class Budget extends CI_Controller {
             $data['budgets'] = $query;
         }
         $this->load->view('view-summary', $data);
+    }
+
+    public function GUID() {
+        if (function_exists('com_create_guid') === true) {
+            return trim(com_create_guid(), '{}');
+        }
+
+        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    }
+
+    public function save() {
+
+        $this->load->helper(array('form', 'url'));
+        $instance = array('id' => $this->GUID(),
+            'account' => $this->input->post('account'),
+            'totalForeign' => $this->input->post('total'),
+            'unit' => $this->input->post('unit'),
+            'department' => str_replace("_", " ", $this->input->post('department')),
+            'period' => $this->input->post('period'),
+            'submitted' => $this->session->userdata('email'),
+            'created' => date('Y-m-d H:i:s'),
+            'activity ' => $this->input->post('activity'),
+            'output' => $this->input->post('output'),
+            'outcome' => $this->input->post('outcome'),
+            'objectives' => $this->input->post('objective'),
+            'initiatives' => $this->input->post('initiative'),
+            'performance' => $this->input->post('performance'),
+            'starts' => $this->input->post('starts'),
+            'procurement' => $this->input->post('procurement'),
+            'category ' => $this->input->post('category'),
+            'line' => $this->input->post('line'),
+            'subline' => $this->input->post('subline'),
+            'funding ' => $this->input->post('funding'),
+            'description' => $this->input->post('description'),
+            //**isssue
+            'currency' => $this->input->post('currency'),
+            'rate' => $this->input->post('rate'),
+            'priceForeign' => $this->input->post('price'),
+            'qty' => $this->input->post('qty'),
+            'persons' => $this->input->post('persons'),
+            'freq' => $this->input->post('freq'),
+            'priceLocal' => $this->input->post('priceL'),
+            'totalForeign' => $this->input->post('total'),
+            //**issue
+            'flow' => $this->input->post('flow'),
+            'totalLocal' => $this->input->post('totalL'),
+            'variance' => $this->input->post('variance'),
+            //**isssue
+            'generation' => $this->input->post('generation'),
+            'Jan' => $this->input->post('January'),
+            'Feb' => $this->input->post('Febuary'),
+            'Mar' => $this->input->post('March'),
+            'Apr' => $this->input->post('April'),
+            'May' => $this->input->post('May'),
+            'Jun' => $this->input->post('June'),
+            'Jul' => $this->input->post('July'),
+            'Aug' => $this->input->post('August'),
+            'Sep' => $this->input->post('September'),
+            'Oct' => $this->input->post('October'),
+            'Nov' => $this->input->post('November'),
+            'Dec' => $this->input->post('December'),
+            'Q1' => $this->input->post('Quarter1'),
+            'Q2' => $this->input->post('Quarter2'),
+            'Q3' => $this->input->post('Quarter3'),
+            'Q4' => $this->input->post('Quarter4'),
+            'other' => "",
+            ///***issue
+            'details ' => "",
+            'Year ' => $this->input->post('year'),
+        );
+
+        //  $budget = json_encode($budget);
+        //  $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_", " ", $rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+        $this->Md->save($instance, 'budgets');
+
+        $this->session->set_flashdata('msg', '<div class="alert alert-info">
+                                                   
+                                                <strong>
+                                               Information Submitted	</strong>									
+						</div>');
+        redirect('budget/tabular', 'refresh');
     }
 
     public function create() {
@@ -409,9 +489,6 @@ class Budget extends CI_Controller {
             $errors.= " total ";
         if ($posts == "")
             $errors.= " multiple fields ";
-
-
-
         if ($posts != "" && $total != "" && $account != "") {
             $budget = new stdClass();
 

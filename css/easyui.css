@@ -559,7 +559,7 @@
   border-radius: 5px 5px 5px 5px;
 }
 .textbox .textbox-text {
-  font-size: 12px;
+  font-size: 14px;
   border: 0;
   margin: 0;
   padding: 4px;
@@ -1465,9 +1465,9 @@
 }
 .datagrid-view .datagrid-editable-input {
   margin: 0;
-  padding: 2px 4px;
+  padding: 1px 1px;
   border: 1px solid #95B8E7;
-  font-size: 12px;
+  font-size: 14px;
   outline-style: none;
   -moz-border-radius: 0 0 0 0;
   -webkit-border-radius: 0 0 0 0;

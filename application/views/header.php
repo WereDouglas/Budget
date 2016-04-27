@@ -228,8 +228,17 @@
             <?php  
              if (allowed ($see,'management')) {  ?>
              <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
+                <i class="fa fa-th"></i> <span>Add Budget</span> 
+              </a>
+            </li>
+            <li>
+               <a target="frame" href="<?php echo base_url() . "index.php/consolidate/"; ?>">
+                <i class="fa fa-th"></i> <span>Consolidated tabular reports</span>              </a>
+            </li>
+             <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/grid"; ?>">
-                <i class="fa fa-th"></i> <span>New Budget</span>              </a>
+                <i class="fa fa-th"></i> <span>*Add Grid</span>              </a>
               </li>
                  <li>
                <a target="frame" href="<?php echo base_url() . "index.php/grid/summary"; ?>">
@@ -280,11 +289,7 @@
 
              <?php } ?>
           
-              <li>
-               <a target="frame" href="<?php echo base_url() . "index.php/budget/tabular"; ?>">
-                <i class="fa fa-th"></i> <span>New Budget(Tabular)</span> 
-              </a>
-            </li>
+           
                <li>
                <a target="frame" href="<?php echo base_url() . "index.php/budget/all"; ?>">
                 <i class="fa fa-th"></i> <span>Budgets (Advanced)</span> 
@@ -299,10 +304,7 @@
                <a target="frame" href="<?php echo base_url() . "index.php/budget/"; ?>">
                 <i class="fa fa-th"></i> <span>New Budget</span>              </a>
             </li>
-            <li>
-               <a target="frame" href="<?php echo base_url() . "index.php/consolidate/"; ?>">
-                <i class="fa fa-th"></i> <span>Consolidated tabular reports</span>              </a>
-            </li>
+            
              <li>
                <a target="frame" href="<?php echo base_url() . "index.php/consolidate/graphs"; ?>">
                 <i class="fa fa-th"></i> <span>Consolidated graphical reports</span>              </a>

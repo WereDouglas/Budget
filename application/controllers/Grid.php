@@ -16,32 +16,160 @@ class Grid extends CI_Controller {
 
     public function index() {
 
-        $this->load->view('add-budget', $data);
+        $this->load->view('add-budget');
     }
 
     public function account() {
         $query = $this->Md->query("SELECT DISTINCT(account) AS account FROM budgets ORDER BY account DESC");
+        // $query = $this->Md->query("SELECT accounts FROM budgets ");
         echo json_encode($query);
     }
-     public function department() {
+
+    public function department() {
         $query = $this->Md->query("SELECT DISTINCT(department) AS department FROM budgets ORDER BY department DESC");
         echo json_encode($query);
     }
-       public function unit() {
+
+    public function period() {
+        $query = $this->Md->query("SELECT DISTINCT(period) AS period FROM budgets ORDER BY period DESC");
+        echo json_encode($query);
+    }
+
+    public function unit() {
         $query = $this->Md->query("SELECT DISTINCT(unit) AS unit FROM budgets ORDER BY unit DESC");
         echo json_encode($query);
+    }
+    public function categories() {
+        $query = $this->Md->query("SELECT DISTINCT(category) AS category FROM budgets ORDER BY category DESC");
+        echo json_encode($query);
+    }
+    public function objective() {
+        $query = $this->Md->query("SELECT DISTINCT(objectives) AS objective FROM budgets ORDER BY objective DESC");
+        echo json_encode($query);
+    }
+     public function initiative() {
+        $query = $this->Md->query("SELECT DISTINCT(initiatives) AS initiative FROM budgets ORDER BY initiative DESC");
+        echo json_encode($query);
+    }
+     public function lines() {
+        $query = $this->Md->query("SELECT DISTINCT(line) AS line FROM budgets ORDER BY line DESC");
+        echo json_encode($query);
+    }
+     public function sublines() {
+        $query = $this->Md->query("SELECT DISTINCT(subline) AS subline FROM budgets ORDER BY subline DESC");
+        echo json_encode($query);
+    }
+    public function user() {
+        $query = $this->Md->query("SELECT DISTINCT(submitted) AS submitted FROM budgets ORDER BY submitted DESC");
+        echo json_encode($query);
+    }
+
+    public function obj() {
+        $query = $this->Md->query("SELECT title  FROM objective ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function inits() {
+        $query = $this->Md->query("SELECT details FROM initiative ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function perf() {
+        $query = $this->Md->query("SELECT * FROM initiative ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function category() {
+        $query = $this->Md->query("SELECT * FROM category ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function line() {
+        $query = $this->Md->query("SELECT * FROM reporting ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function subline() {
+        $query = $this->Md->query("SELECT * FROM subline ORDER BY id DESC");
+        echo json_encode($query);
+    }
+
+    public function months() {
+
+        $months = array();
+
+        for ($x = 1; $x < 13; $x++) {
+            $obj = new stdClass();
+            $obj->id = $x;
+            $obj->name = date('F', mktime(0, 0, 0, $x, 1));
+            array_push($months, $obj);
+        }
+
+        echo json_encode($months);
+    }
+
+    public function fund() {
+
+        $months = array();
+        $obj = new stdClass();
+        
+        $obj->name = "INTERNAL";
+        array_push($months, $obj);
+        
+         $objs = new stdClass();
+        $objs->name = "EXTERNAL";
+        array_push($months, $objs);
+        
+        echo json_encode($months);
     }
 
     public function grid() {
 
-        $this->load->view('add-grid', $data);
+        $this->load->view('add-grid');
     }
 
     public function summary() {
-        $this->load->view('summary-page', $data);
+        $this->load->view('summary-page');
     }
-     public function view() {
-        $query = $this->Md->query("SELECT * FROM budgets ");
+
+    public function view() {
+
+
+        $period = $this->input->post('period');
+        $department = $this->session->userdata('department');
+        $unit = $this->input->post('unit');
+        $account = $this->input->post('account');
+        if ($department != "") {
+
+            unset($sql);
+
+            if ($period) {
+                $sql[] = "period = '$period' ";
+            }
+            if ($department) {
+                $sql[] = " department = '$department' ";
+            }
+            if ($unit) {
+                $sql[] = " unit = '$unit' ";
+            }
+            if ($account) {
+                $sql[] = " account = '$account' ";
+            }
+
+
+            $query = "SELECT * FROM budgets ";
+
+            if (!empty($sql)) {
+                $query .= ' WHERE ' . implode(' AND ', $sql);
+            }
+
+
+            //   $get_result = $this->Md->query($query);
+            $query = $this->Md->query($query . "ORDER BY id desc");
+        } else {
+
+            $query = $this->Md->query("SELECT * FROM budgets ORDER BY id desc limit 1");
+        }
 
         echo json_encode($query);
     }
@@ -63,19 +191,18 @@ class Grid extends CI_Controller {
                     'totalForeign' => $loop->totalForeign,
                     'unit' => $loop->unit,
                     'department' => $loop->department,
-                    'period' => $loop->period,                   
-                    'objectives' => $loop->account,                   
+                    'period' => $loop->period,
+                    'objectives' => $loop->account,
                     'category ' => $loop->category,
                     'line' => $loop->line,
-                    'subline' => $loop->subline,                   
+                    'subline' => $loop->subline,
                     'priceForeign' => $loop->priceForeign,
                     'qty' => $loop->qty,
                     'persons' => $loop->persons,
                     'freq' => $loop->freq,
                     'priceLocal' => $loop->priceLocal,
-                    'totalForeign' =>$loop->totalForeign,                   
+                    'totalForeign' => $loop->totalForeign,
                     'totalLocal' => $loop->totalLocal,
-                 
                 );
             }
         }
@@ -150,8 +277,6 @@ class Grid extends CI_Controller {
         //  $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_", " ", $rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
         $id = $this->Md->save($instance, 'budgets');
     }
-
-   
 
     public function update() {
 

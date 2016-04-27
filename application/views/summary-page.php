@@ -14,9 +14,7 @@
     <button type="submit" id="submit" name="Import" class="btn sm btn-primary button-loading">Import</button>
 </form>
 
-<table id="tt" class="easyui-datagrid" style="width:700px;height:300px"
-			title="Budget summaries"
-			data-options="view:scrollview,rownumbers:true,singleSelect:true,
+<table id="tt" class="easyui-datagrid" style="width:100%;height:750px;"	title="Budget summaries" data-options="view:scrollview,rownumbers:true,singleSelect:true,
 		url:'<?php echo base_url(); ?>index.php/grid/summaries',autoRowHeight:false,pageSize:50">
 
     <thead>
