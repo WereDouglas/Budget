@@ -14,28 +14,28 @@
 
     <!-- Default box -->
     <div class="box">
-          
-       <h2>Budget periods</h2>
-            <div class="btn-toolbar ">
 
-                <a href="#collapseTwo" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+        <h2>Budget periods</h2>
+        <div class="btn-toolbar ">
 
-                    <button class="btn btn-default btn-default">
-                        <i class="icon-save bigger-125"></i>
-                        Add
-                    </button></a>
-                <a href="#collapseThree" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+            <a href="#collapseTwo" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
 
-                    <button class="btn btn-default btn-default">
-                        <i class="icon-list bigger-110"></i>
-                        List
-                    </button>
-                </a>
+                <button class="btn btn-default btn-default">
+                    <i class="icon-save bigger-125"></i>
+                    Add
+                </button></a>
+            <a href="#collapseThree" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+
+                <button class="btn btn-default btn-default">
+                    <i class="icon-list bigger-110"></i>
+                    List
+                </button>
+            </a>
 
 
-            </div>
-       <hr>
-      
+        </div>
+        <hr>
+
 
         <div class="widget-main ">
             <div id="accordion2" class="accordion">              
@@ -45,48 +45,48 @@
                         <div class="accordion-inner">
 
                             <form id="station-form" name="station-form" enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/period/create'  method="post">            
-                             
+
                                 <div class="row">
                                     <div class="col-xs-3">
-                                <div class="form-group has-feedback">
-                                    <input type="text" class="form-control" name="year" id="year" placeholder="Budget year" />                                     
-                                    
-                                </div>
+                                        <div class="form-group has-feedback">
+                                            <input type="text" class="form-control" name="year" id="year" placeholder="Budget year" />                                     
+
+                                        </div>
                                         Start date
-                             <div class="form-group">
+                                        <div class="form-group">
 
-                                <div class='input-group date' id='start'>
-                                    <input type='text' class="form-control" id="start" name="start"/>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            End date
-                               <div class="form-group">
+                                            <div class='input-group date' id='start'>
+                                                <input type='text' class="form-control" id="start" name="start"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        End date
+                                        <div class="form-group">
 
-                                <div class='input-group date' id='end'>
-                                    <input type='text' class="form-control" id="end" name="end" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                                <div class="form-group has-feedback">
-                                    <input type="text" class="form-control" name="details" id="details" placeholder="Details" />                                    
-                                   
-                                    
-                                </div>
-                               
-                            
+                                            <div class='input-group date' id='end'>
+                                                <input type='text' class="form-control" id="end" name="end" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <input type="text" class="form-control" name="details" id="details" placeholder="Details" />                                    
+
+
+                                        </div>
+
+
                                     </div><!-- /.col -->
                                     <div class="col-xs-2"></div><div class="col-xs-2"></div>
                                     <div class="col-xs-2">
                                         <button type="submit" class="btn btn-primary btn-block btn-flat">Save</button>
-                                       
+
                                     </div><!-- /.col -->
                                     <div class="col-xs-2">
-                                      
+
                                         <button type="reset" class="btn btn-danger btn-block btn-flat">Cancel</button>
                                     </div><!-- /.col -->
                                 </div>
@@ -110,12 +110,13 @@
                                 <table class="jobs table table-striped table-bordered bootstrap-datatable datatable" id="datatable">
                                     <thead>
                                         <tr>  
+                                            <th>Active</th>
                                             <th>Year/Period</th>
-                                             <th>Start</th> 
-                                              <th>End</th> 
-                                               <th>Details</th> 
+                                            <th>Start</th> 
+                                            <th>End</th> 
+                                            <th>Details</th> 
                                             <th>Created on:</th>
-                                             <th>Created by:</th>
+                                            <th>Created by:</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>   
@@ -123,46 +124,81 @@
 
                                         <?php
                                         if (is_array($periods) && count($periods)) {
-                                            foreach ($periods as $loop) {                                             
+                                            foreach ($periods as $loop) {
                                                 $year = $loop->year;
-                                                $start = $loop->start; 
-                                                 $end = $loop->end; 
-                                                  $details = $loop->details; 
-                                                $id = $loop->id;                                              
+                                                $start = $loop->start;
+                                                $end = $loop->end;
+                                                $details = $loop->details;
+                                                $id = $loop->id;
                                                 $created = $loop->created;
-                                                 $by = $loop->by; 
+                                                $by = $loop->by;
                                                 ?>  
                                                 <tr id="<?php echo $id; ?>" class="edit_tr">
-                                                   
+
+                                                    <td>
+
+                                                        <?php
+                                                        if ($loop->active == "False") {
+                                                            ?>
+                                                            <div class="btn-group" data-toggle="buttons" data-toggle-default-class="btn-default">
+                                                                <label class="btn btn-xs btn-default" data-toggle-class="btn-success" value="<?= $loop->id; ?>">
+                                                                    <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" />
+                                                                    yes
+                                                                </label>
+                                                                <label class="btn btn-xs btn-danger active" data-toggle-class="btn-danger" value="<?= $loop->id; ?>">
+                                                                    <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" checked />
+                                                                    no
+                                                                </label>
+                                                            </div> 
+                                                        <?php } ?>
+
+                                                        <?php
+                                                        if ($loop->active == "True") {
+                                                            ?>
+                                                            <div class="btn-group" data-toggle="buttons" data-toggle-default-class="btn-default">
+                                                                <label class="btn btn-xs btn-success active" data-toggle-class="btn-success">
+                                                                    <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" checked />
+                                                                    yes
+                                                                </label>
+                                                                <label class="btn btn-xs btn-default " data-toggle-class="btn-danger">
+                                                                    <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>"  />
+                                                                    no
+                                                                </label>
+                                                            </div> 
+                                                        <?php } ?>
+
+                                                    </td>
+
+
                                                     <td class="edit_td">
                                                         <span id="year_<?php echo $id; ?>" class="text"><?php echo $year; ?></span>
                                                         <input type="text" value="<?php echo $year; ?>" class="editbox" id="year_input_<?php echo $id; ?>"
                                                     </td>
-                                                     <td class="edit_td">
+                                                    <td class="edit_td">
                                                         <span id="start_<?php echo $id; ?>" class="text"><?php echo $start; ?></span>
                                                         <input type="text" value="<?php echo $start; ?>" class="editbox" id="start_input_<?php echo $id; ?>"
                                                     </td> 
-                                                     <td class="edit_td">
+                                                    <td class="edit_td">
                                                         <span id="end_<?php echo $id; ?>" class="text"><?php echo $end; ?></span>
                                                         <input type="text" value="<?php echo $end; ?>" class="editbox" id="end_input_<?php echo $id; ?>"
                                                     </td> 
-                                                     <td class="edit_td">
+                                                    <td class="edit_td">
                                                         <span id="details_<?php echo $id; ?>" class="text"><?php echo $details; ?></span>
                                                         <input type="text" value="<?php echo $details; ?>" class="editbox" id="details_input_<?php echo $id; ?>"
                                                     </td> 
-                                                   
+
                                                     <td class="edit_td">
                                                         <span id="created_<?php echo $id; ?>" class="text"><?php echo $created; ?></span>
                                                         <input type="text" value="<?php echo $created; ?>" class="editbox" id="created_input_<?php echo $id; ?>"
                                                     </td> 
-                                                    
+
                                                     <td class="edit_td">
                                                         <span id="by_<?php echo $id; ?>" class="text"><?php echo $by; ?></span>
                                                         <input type="text" value="<?php echo $by; ?>" class="editbox" id="by_input_<?php echo $id; ?>"
                                                     </td> 
 
                                                     <td class="center">
-                                                         <a class="btn btn-danger" href="<?php echo base_url() . "index.php/period/delete/" . $id; ?>">Delete</a>
+                                                        <a class="btn btn-danger" href="<?php echo base_url() . "index.php/period/delete/" . $id; ?>">Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -207,10 +243,10 @@
 
 
 <script type="text/javascript">
-$(function () {
-   $("#datatable").dataTable();
+    $(function () {
+        $("#datatable").dataTable();
 
-});
+    });
 </script>
 <script src="<?php echo base_url(); ?>js/moment-with-locales.js"></script>
 <script src="<?php echo base_url(); ?>js/bootstrap-datetimepicker.js"></script>
@@ -225,33 +261,33 @@ $(function () {
             var ID = $(this).attr('id');
             $("#year" + ID).hide();
             $("#year_input_" + ID).show();
-            
-             $("#start" + ID).hide();
+
+            $("#start" + ID).hide();
             $("#start_input_" + ID).show();
-            
-             $("#end" + ID).hide();
+
+            $("#end" + ID).hide();
             $("#end_input_" + ID).show();
-            
-             $("#details" + ID).hide();
+
+            $("#details" + ID).hide();
             $("#details_input_" + ID).show();
-            
+
 
         }).change(function ()
         {
             var ID = $(this).attr('id');
             var year = $("#year_input_" + ID).val();
-             var start = $("#start_input_" + ID).val();
-              var end = $("#end_input_" + ID).val();
-               var details = $("#details_input_" + ID).val();
-          
-           
-            var dataString = 'id=' + ID + '&year=' + year + '&start=' + start+ '&end=' + end+ '&details=' + details ;
+            var start = $("#start_input_" + ID).val();
+            var end = $("#end_input_" + ID).val();
+            var details = $("#details_input_" + ID).val();
+
+
+            var dataString = 'id=' + ID + '&year=' + year + '&start=' + start + '&end=' + end + '&details=' + details;
             $("#year_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />'); // Loading image
             $("#start_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />'); // Loading image
-             $("#end_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />');
-              $("#details_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />');
-            
-            if (year.length > 0 )
+            $("#end_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />');
+            $("#details_" + ID).html('<img src="<?= base_url(); ?>images/loading.gif" />');
+
+            if (year.length > 0)
             {
                 $.ajax({
                     type: "POST",
@@ -261,14 +297,13 @@ $(function () {
                     success: function (html)
                     {
                         $("#year_" + ID).html(year);
-                         $("#start_" + ID).html(start);
-                           $("#end_" + ID).html(end);
-                             $("#details_" + ID).html(details);
-                          
+                        $("#start_" + ID).html(start);
+                        $("#end_" + ID).html(end);
+                        $("#details_" + ID).html(details);
+
                     }
                 });
-            }
-            else
+            } else
             {
                 alert('Enter something.');
             }
@@ -287,10 +322,10 @@ $(function () {
             $(".editbox").hide();
             $(".text").show();
         });
-        
-        
-        
-        
+
+
+
+
 
     });
 </script>
@@ -303,4 +338,48 @@ $(function () {
             format: 'YYYY-MM-DD'
         });
     });
+</script>
+
+<script>
+
+
+    $('.btn-group[data-toggle=buttons]').each(function (i, e) {
+        var default_class = $(e).data('toggle-default-class') || 'btn-default';
+
+        $(e).find('label')
+                .click(function (event) {
+                    $(e).find('label')
+                            .each(function (i, e) {
+                                if (!(e == event.target)) {
+                                    $(e).removeClass($(e).data('toggle-class'))
+                                            .addClass(default_class);
+
+                                    $(e).find('input').removeAttr('checked');
+                                    console.log($(e).find("input").attr("id"));
+
+
+                                    $.post("<?php echo base_url() ?>index.php/period/activate", {
+                                        id: $(e).find("input").val(),
+                                        actives: $(e).find("input").attr("id")
+
+                                    }, function (response) {
+                                      
+                                       
+                                        alert(response);
+                                       location.reload();
+                                    });
+                                    // alert("active");
+
+                                } else {
+                                    $(e).removeClass(default_class)
+                                            .addClass($(e).data('toggle-class'));
+
+                                    $(e).find('input')
+                                            .attr('checked', 1);
+
+                                }
+                            });
+                });
+    });
+
 </script>

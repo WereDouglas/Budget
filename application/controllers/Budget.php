@@ -70,7 +70,7 @@ class Budget extends CI_Controller {
 
     public function grid() {
 
-        $this->load->view('add-grid', $data);
+        $this->load->view('add-grid');
     }
 
     public function import() {
@@ -108,17 +108,12 @@ class Budget extends CI_Controller {
                         // echo $rowData[0][$m]."<br> ";
                     }
                 }
-
-
                 for ($row = 2; $row <= $highestRow; $row++) {
                     //  Read a row of data into an array
                     // echo $row;
                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
 
                     // var_dump($rowData[0]);
-
-
-
                     for ($d = 0; $d < count($rowData); $d++) {
                         // var_dump($rowData[$d]);
                         // echo $rowData[$d][13] . "<br>";
@@ -126,69 +121,85 @@ class Budget extends CI_Controller {
                         //  echo $rowData[$d][2] . "<br>";
                         //  echo $rowData[$d][3] . "<br>";
                         $budget = new stdClass();
-                        $budget->period = $rowData[$d][55];
-                        //  str_replace("world","Peter","Hello world!");
 
-                        $budget->department = str_replace("_", " ", $rowData[$d][1]);
-                        $budget->unit = $rowData[$d][2];
-                        $budget->activity = $rowData[$d][3];
-                        $budget->output = $rowData[$d][4];
-                        $budget->outcome = $rowData[$d][5];
-                        $budget->objective = $rowData[$d][6];
-                        $budget->initiative = $rowData[$d][7];
-                        $budget->performance = $rowData[$d][8];
-                        $budget->starts = $rowData[$d][27];
-                        $budget->starts = $rowData[$d][28];
-                        $budget->Procurement_type = $rowData[$d][9];
-                        $budget->category = $rowData[$d][10];
-                        $budget->line = $rowData[$d][11];
-                        $budget->subline = $rowData[$d][12];
-                        $budget->account = $rowData[$d][13];
-                        $budget->funding = $rowData[$d][15];
-                        $budget->account_description = $rowData[$d][14];
-                        //**isssue 
-                        $budget->unit = $rowData[$d][16];
-                        $budget->currency = $rowData[$d][17];
-                        $budget->rate = $rowData[$d][18];
-                        $budget->price = $rowData[$d][19];
-                        $budget->qty = $rowData[$d][20];
-                        $budget->persons = $rowData[$d][21];
-                        $budget->freq = $rowData[$d][22];
-                        $budget->priceL = $rowData[$d][23];
-                        $budget->total = $rowData[$d][24];
-                        //**issue
-                        $budget->flow = $rowData[$d][10];
-                        $budget->totalL = $rowData[$d][23];
-                        $budget->radio = $rowData[$d][24];
-                        $budget->variance = $rowData[$d][25];
-                        //**isssue
-                        $budget->generation = $rowData[$d][10];
-                        $budget->January = $rowData[$d][31];
-                        $budget->February = $rowData[$d][32];
-                        $budget->March = $rowData[$d][33];
-                        $budget->April = $rowData[$d][34];
-                        $budget->May = $rowData[$d][35];
-                        $budget->June = $rowData[$d][36];
-                        $budget->July = $rowData[$d][37];
-                        $budget->August = $rowData[$d][38];
-                        $budget->September = $rowData[$d][39];
-                        $budget->October = $rowData[$d][40];
-                        $budget->November = $rowData[$d][41];
-                        $budget->December = $rowData[$d][42];
-                        $budget->Quarter1 = $rowData[$d][45];
-                        $budget->Quarter2 = $rowData[$d][46];
-                        $budget->Quarter3 = $rowData[$d][47];
-                        $budget->Quarter4 = $rowData[$d][48];
-                        $budget->services = $rowData[$d][54];
-                        ///***issue
-                        $budget->details = $rowData[$d][54];
-                        $budget->Year = $rowData[$d][55];
+                        if ($this->session->userdata('department') != "") {
+                            $department = $this->session->userdata('department');
+                        } else {
+                            $department = $str_replace("_", " ", $rowData[$d][1]);
+                        }
+                        if ($this->session->userdata('unit') != "") {
+                            $unit = $this->session->userdata('unit');
+                        } else {
+                            $unit = $rowData[$d][2];
+                        }
+                        if ($this->session->userdata('period') != "" || $this->session->userdata('period') != "none") {
+                            $period = $this->session->userdata('period');
+                        } else {
+                            $period = $$rowData[$d][55];
+                        }
 
+                        $instance = array('id' => $this->GUID(),
+                            'account' => $rowData[$d][13],
+                            'totalForeign' => $rowData[$d][24],
+                            'unit' => $unit,
+                            'department' => $department,
+                            'period' => $period,
+                            'submitted' => $this->session->userdata('email'),
+                            'created' => date('Y-m-d H:i:s'),
+                            'activity ' => $rowData[$d][3],
+                            'output' => $rowData[$d][4],
+                            'outcome' => $rowData[$d][5],
+                            'objectives' => $rowData[$d][6],
+                            'initiatives' => $rowData[$d][7],
+                            'performance' => $rowData[$d][8],
+                            'starts' => $rowData[$d][27],
+                            'starts' => $rowData[$d][28],
+                            'Procurement' => $rowData[$d][9],
+                            'category ' => $rowData[$d][10],
+                            'line' => $rowData[$d][11],
+                            'subline' => $rowData[$d][12],
+                            'funding ' => $rowData[$d][15],
+                            'description' => $rowData[$d][14],
+                            //**isssue
+                            'currency' => $rowData[$d][17],
+                            'rate' => $rowData[$d][18],
+                            'priceForeign' => $rowData[$d][19],
+                            'qty' => $rowData[$d][20],
+                            'persons' => $rowData[$d][21],
+                            'freq' => $rowData[$d][22],
+                            'priceLocal' => $rowData[$d][23],
+                            'totalForeign' => $rowData[$d][24],
+                            //**issue
+                            'flow' => $rowData[$d][10],
+                            'totalLocal' => $rowData[$d][23],
+                            'variance' => $rowData[$d][25],
+                            //**isssue
+                            'generation' => $rowData[$d][10],
+                            'Jan' => $rowData[$d][31],
+                            'Feb' => $rowData[$d][32],
+                            'Mar' => $rowData[$d][33],
+                            'Apr' => $rowData[$d][34],
+                            'May' => $rowData[$d][35],
+                            'Jun' => $rowData[$d][36],
+                            'Jul' => $rowData[$d][37],
+                            'Aug' => $rowData[$d][38],
+                            'Sep' => $rowData[$d][39],
+                            'Oct' => $rowData[$d][40],
+                            'Nov' => $rowData[$d][41],
+                            'Dec' => $rowData[$d][42],
+                            'Q1' => $rowData[$d][45],
+                            'Q2' => $rowData[$d][46],
+                            'Q3' => $rowData[$d][47],
+                            'Q4' => $rowData[$d][48],
+                            'other' => "",
+                            ///***issue
+                            'details ' => $rowData[$d][54],
+                            'Year ' => $rowData[$d][55],
+                        );
 
-                        $budget = json_encode($budget);
-
-                        $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_", " ", $rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
-                        $id = $this->Md->save($instance, 'instance');
+                        //  $budget = json_encode($budget);
+                        //  $instance = array('account' => $rowData[$d][13], 'total' => $rowData[$d][24], 'enddate' => "", 'startdate' => "", 'initiative' => $rowData[$d][7], 'unit' => $rowData[$d][2], 'department' => str_replace("_", " ", $rowData[$d][1]), 'period' => $rowData[$d][55], 'orgID' => '', 'content' => $budget, 'by' => $this->session->userdata('email'), 'created' => date('Y-m-d H:i:s'));
+                        $id = $this->Md->save($instance, 'budgets');
                     }
                 }
                 //  Insert row data array into your database of choice here
@@ -200,12 +211,10 @@ class Budget extends CI_Controller {
         }
 
         echo '<div class="alert alert-info">   <strong>Information uploaded!  </strong>	</div>';
-        // $this->load->view('add-budget', $data);
+        redirect('grid/grid', 'refresh');
     }
 
     public function sync() {
-
-
 
         $budget = new stdClass();
         $budget->period = $_POST["period"];
@@ -315,14 +324,20 @@ class Budget extends CI_Controller {
         $data['subs'] = array();
         $data['accounts'] = array();
         $data['rates'] = array();
+        if ($this->session->userdata('department') == "") {
+            $query = $this->Md->query("SELECT * FROM unit");
+        } else {
+            $id = $this->Md->query_cell("SELECT id FROM department WHERE name ='" . $this->session->userdata('department') . "'", 'id');
+            $query = $this->Md->query("SELECT * FROM unit WHERE departmentID='" . $id . "'");
+        }
+        if ($query) {
+            $data['units'] = $query;
+        }
         $query = $this->Md->query("SELECT * FROM department");
         if ($query) {
             $data['departments'] = $query;
         }
-        $query = $this->Md->query("SELECT * FROM unit");
-        if ($query) {
-            $data['units'] = $query;
-        }
+
         $query = $this->Md->query("SELECT * FROM category");
         if ($query) {
             $data['categories'] = $query;
@@ -358,15 +373,15 @@ class Budget extends CI_Controller {
         if ($query) {
             $data['periods'] = $query;
         }
-
         $this->load->view('table-budget', $data);
     }
 
     public function all() {
         $data['budgets'] = array();
-
-        $query = $this->Md->query("SELECT * FROM budgets");
-
+        $query = $this->Md->query("SELECT * FROM budgets  WHERE department ='" . $this->session->userdata('department') . "' AND unit ='" . $this->session->userdata('unit') . "' ");
+        if ($this->session->userdata('unit') == "") {
+            $query = $this->Md->query("SELECT * FROM budgets  WHERE department ='" . $this->session->userdata('department') . "' ");
+        }
         if ($query) {
             $data['budgets'] = $query;
         }
@@ -376,8 +391,13 @@ class Budget extends CI_Controller {
     public function summary() {
         $data['budgets'] = array();
 
-        $query = $this->Md->query("SELECT * FROM instance");
-
+        $query = $this->Md->query("SELECT * FROM budgets  WHERE department ='" . $this->session->userdata('department') . "' AND unit ='" . $this->session->userdata('unit') . "' ");
+        if ($this->session->userdata('unit') == "") {
+            $query = $this->Md->query("SELECT * FROM budgets  WHERE department ='" . $this->session->userdata('department') . "' ");
+        }
+        if ($this->session->userdata('unit') == "" && $this->session->userdata('department') == "") {
+            $query = $this->Md->query("SELECT * FROM budgets ");
+        }
         if ($query) {
             $data['budgets'] = $query;
         }

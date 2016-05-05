@@ -8,6 +8,24 @@
 
 <link id="base-style-responsive" href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet">
 
+<?php
+if ($this->session->userdata('unit') != "") {
+    $hide2 = "display:none;";
+} else {
+    $hide2 = "display:visible;";
+}
+if ($this->session->userdata('department') != "") {
+    $hide = "display:none;";
+} else {
+    $hide = "display:visible;";
+}
+if ($this->session->userdata('period') != "" ||$this->session->userdata('period') != "none" ) {
+    $hide3 = "display:none;";
+}
+if ($this->session->userdata('period') == "none" ){
+    $hide3 = "display:visible;";
+}
+?> 
 <style>
     .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
         padding: 0px;
@@ -120,12 +138,13 @@
 
 <?php echo $this->session->flashdata('msg'); ?>
 <section class="content">
-    <h2 class="page-header">Add new budget     <a href="#">Vertical View</a></h2>
+    <h2 class="page-header">NEW BUDGET  <a href="#" class="btn btn-default btn-primary">Vertical View</a>  </h2> 
     <form action="<?php echo base_url(); ?>index.php/budget/import" method="post" name="upload_excel" enctype="multipart/form-data">
         <input type="file" name="file" id="file" >
-        <button type="submit" id="submit" name="Import" class="btn sm btn-default">Import</button>
+        <button type="submit" id="submit" name="Import" class="btn btn-primary">Import</button>
     </form>
-    
+    NAME: <?php echo $this->session->userdata('name'); ?> | DEPARTMENT: <?php echo $this->session->userdata('department'); ?>   |  PERIOD: <?php echo $this->session->userdata('period'); ?> | UNIT: <?php echo $this->session->userdata('unit'); ?>
+
     <form  enctype="multipart/form-data"  action='<?= base_url(); ?>index.php/budget/save'  method="post">        
         <div  >
             <table class="table scroll" >
@@ -133,16 +152,14 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td style="<?php echo $hide3; ?>">
                         Period
                     </td>
-                    <td >
-                        Account
-                    </td>
-                    <td>
+
+                    <td style="<?php echo $hide; ?>">
                         Department
                     </td>
-                    <td>
+                    <td style="<?php echo $hide2; ?>">
                         Unit
                     </td>
                     <td>
@@ -160,7 +177,7 @@
                     <td>
                         Performance
                     </td> 
-                    
+
                     <td>
                         Proc.Type
                     </td> <td>
@@ -170,7 +187,11 @@
                     </td>
                     <td>
                         Sub Line
-                    </td> <td>
+                    </td> 
+                    <td >
+                        Account
+                    </td>
+                    <td>
                         Funding
                     </td> <td>
                         Description
@@ -205,7 +226,7 @@
                     <td>
                         Start- End
                     </td> 
-                   
+
                     <td>
                         Auto
                     </td>
@@ -259,37 +280,37 @@
                     <td>
 
                     </td>
-                    <td >
+                    <td style="<?php echo $hide3; ?>" >
                         <select name="period" id="period" >
-                            <option>Please select a period</option>
+                            <!--                            <option>Please select a period</option>-->
                             <?php foreach ($periods as $loop) { ?>   
                                 <option><?= $loop->year ?></option>
                             <?php } ?>
 
                         </select>
                     </td>
-                    <td>
-                        <select name="account" id="account" >
-                            <option></option>
-                            <?php foreach ($accounts as $loop) { ?>   
-                                <option value="<?= $loop->number ?>"><?= $loop->name . ' ' . $loop->number ?></option>
-                            <?php } ?>
 
-                        </select>
-
-                    </td>
-                    <td>
+                    <td style="<?php echo $hide ?>">
                         <select name="department" id="department" >
-                            <option></option>
+                            <option selected="selected"><?= $this->session->userdata('department') ?></option>
                             <?php foreach ($departments as $loop) { ?>   
                                 <option><?= $loop->name ?></option>
                             <?php } ?>
 
                         </select>
                     </td>
-                    <td>
-                        <select id="unit" name="unit" ></select>
+
+
+                    <td style="<?php echo $hide2 ?>">
+                        <select name="unit" id="unit" >
+                            <option selected="selected"><?= $this->session->userdata('unit') ?></option>
+                            <?php foreach ($units as $loop) { ?>   
+                                <option><?= $loop->name ?></option>
+                            <?php } ?>
+
+                        </select>
                     </td>
+
                     <td>
                         <textarea id="activity" name="activity"  rows="1" style="height: 25px;"  placeholder=""></textarea>
                     </td> <td>
@@ -310,8 +331,8 @@
                     </td> <td>
                         <input type="text" id="performance" name="performance"  placeholder="Enter ..." />
                     </td> 
-                    
-                  
+
+
                     <td>
                         <select name="procurement" id="procurement" >
                             <option>N/A</option>
@@ -334,7 +355,19 @@
                         <select name="subline" id="subline" >
                             <option></option>
                         </select>
-                    </td> <td>
+                    </td> 
+                    <td>
+                        <select name="account" id="account" >
+                            <option></option>
+                            <?php foreach ($accounts as $loop) { ?>   
+                                <option value="<?= $loop->number ?>"><?= $loop->name . ' ' . $loop->number ?></option>
+                            <?php } ?>
+
+                        </select>
+
+                    </td>
+
+                    <td>
                         <select name="funding" id="funding" >                                
                             <option>Internal</option>
                             <option>External</option>
@@ -407,7 +440,7 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="radio" id="optionsRadios1" value="auto"  />
-                                   </label>
+                                </label>
                             </div>
                         </div>
                     </td>

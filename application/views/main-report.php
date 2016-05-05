@@ -5,6 +5,25 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/easyui.css">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/icon.css">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/demo.css">
+
+<?php
+if ($this->session->userdata('unit') != "") {
+    $hide2 = "display:none;";
+} else {
+    $hide2 = "display:visible;";
+}
+if ($this->session->userdata('department') != "") {
+    $hide = "display:none;";
+} else {
+    $hide = "display:visible;";
+}
+if ($this->session->userdata('period') != "" || $this->session->userdata('period') != "none") {
+    $hide3 = "display:none;";
+}
+if ($this->session->userdata('period') == "none") {
+    $hide3 = "display:visible;";
+}
+?> 
 <section class="content-header">
     <h1>  Consolidated reports   </h1> 
     <hr>
@@ -21,8 +40,6 @@
 
             <br>   Account<br>
             <input class="easyui-combobox" id="account" name="account" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/account/'; ?>" valueField="account" textField="account">
-
-
         </div>
 
 
@@ -104,30 +121,29 @@
 
 <script src="<?= base_url(); ?>js/jquery.dataTables.js" type="text/javascript"></script>
 <script>
-    $('#loading').hide();
+                $('#loading').hide();
 //Script for getting the dynamic values from database using jQuery and AJAX
                 $("#generate").on("click", function (e) {
 
-                        var period = $("#period").val();
-                        var department = $("#department").val();
-                        var unit = $("#unit").val();
-                        var initiative = $("#initiative").val();
-                        var account = $("#account").val();
-                        var by = encodeURIComponent($("#by").val());
+                    var period = $('input[name$="period"]').val();
+                    var department = $('input[name$="department"]').val();
+                    var unit = $('input[name$="unit"]').val();
+                    var initiative = $('input[name$="initiative"]').val();
+                    var account = $('input[name$="account"]').val();
+                    var by = encodeURIComponent($("#by").val());
 
+                    $.post("<?php echo base_url() ?>index.php/consolidate/generate", {period: period, department: department, unit: unit, initiative: initiative, account: account, by: by}
+                    , function (response) {
+                        $('#loading').hide();
+                        setTimeout(finishAjax('loading', escape(response)), 200);
 
-                        $.post("<?php echo base_url() ?>index.php/consolidate/generate", {period: period, department: department, unit: unit, initiative: initiative, account: account, by: by}
-                        , function (response) {
-                            $('#loading').hide();
-                            setTimeout(finishAjax('loading', escape(response)), 200);
+                    }); //end change
 
-                        }); //end change
-
-                    })
-                    function finishAjax(id, response) {
-                        $('#' + id).html(unescape(response));
-                        $('#' + id).fadeIn();
-                    }
+                })
+                function finishAjax(id, response) {
+                    $('#' + id).html(unescape(response));
+                    $('#' + id).fadeIn();
+                }
 
 
 </script>

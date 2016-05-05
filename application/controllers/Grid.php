@@ -39,26 +39,32 @@ class Grid extends CI_Controller {
         $query = $this->Md->query("SELECT DISTINCT(unit) AS unit FROM budgets ORDER BY unit DESC");
         echo json_encode($query);
     }
+
     public function categories() {
         $query = $this->Md->query("SELECT DISTINCT(category) AS category FROM budgets ORDER BY category DESC");
         echo json_encode($query);
     }
+
     public function objective() {
         $query = $this->Md->query("SELECT DISTINCT(objectives) AS objective FROM budgets ORDER BY objective DESC");
         echo json_encode($query);
     }
-     public function initiative() {
+
+    public function initiative() {
         $query = $this->Md->query("SELECT DISTINCT(initiatives) AS initiative FROM budgets ORDER BY initiative DESC");
         echo json_encode($query);
     }
-     public function lines() {
+
+    public function lines() {
         $query = $this->Md->query("SELECT DISTINCT(line) AS line FROM budgets ORDER BY line DESC");
         echo json_encode($query);
     }
-     public function sublines() {
+
+    public function sublines() {
         $query = $this->Md->query("SELECT DISTINCT(subline) AS subline FROM budgets ORDER BY subline DESC");
         echo json_encode($query);
     }
+
     public function user() {
         $query = $this->Md->query("SELECT DISTINCT(submitted) AS submitted FROM budgets ORDER BY submitted DESC");
         echo json_encode($query);
@@ -112,14 +118,14 @@ class Grid extends CI_Controller {
 
         $months = array();
         $obj = new stdClass();
-        
+
         $obj->name = "INTERNAL";
         array_push($months, $obj);
-        
-         $objs = new stdClass();
+
+        $objs = new stdClass();
         $objs->name = "EXTERNAL";
         array_push($months, $objs);
-        
+
         echo json_encode($months);
     }
 
@@ -137,40 +143,35 @@ class Grid extends CI_Controller {
 
         $period = $this->input->post('period');
         $department = $this->session->userdata('department');
-        $unit = $this->input->post('unit');
-        $account = $this->input->post('account');
-        if ($department != "") {
-
-            unset($sql);
-
-            if ($period) {
-                $sql[] = "period = '$period' ";
-            }
-            if ($department) {
-                $sql[] = " department = '$department' ";
-            }
-            if ($unit) {
-                $sql[] = " unit = '$unit' ";
-            }
-            if ($account) {
-                $sql[] = " account = '$account' ";
-            }
+        $unit = $this->session->userdata('unit');
+        $user = $this->session->userdata('email');
 
 
-            $query = "SELECT * FROM budgets ";
+        unset($sql);
 
-            if (!empty($sql)) {
-                $query .= ' WHERE ' . implode(' AND ', $sql);
-            }
-
-
-            //   $get_result = $this->Md->query($query);
-            $query = $this->Md->query($query . "ORDER BY id desc");
-        } else {
-
-            $query = $this->Md->query("SELECT * FROM budgets ORDER BY id desc limit 1");
+        if ($period) {
+            $sql[] = "period = '$period' ";
+        }
+        if ($department) {
+            $sql[] = " department = '$department' ";
+        }
+        if ($unit!="") {
+            $sql[] = " unit = '$unit' ";
+        }
+        if ($user) {
+            $sql[] = "submitted = '$user' ";
         }
 
+
+        $query = "SELECT * FROM budgets ";
+        $query = $this->Md->query($query . "ORDER BY id desc");
+
+        if (!empty($sql)) {
+            $query .= ' WHERE ' . implode(' AND ', $sql);
+        }
+        if ($this->session->userdata('unit') == "" && $this->session->userdata('department') == "") {
+            $query = $this->Md->query("SELECT * FROM budgets  ");
+        }
         echo json_encode($query);
     }
 

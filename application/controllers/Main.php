@@ -1,9 +1,10 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends CI_Controller {
 
-	 function __construct() {
+    function __construct() {
 
         parent::__construct();
         //  error_reporting(E_PARSE);     
@@ -11,18 +12,18 @@ class Main extends CI_Controller {
         $this->load->library('session');
         $this->load->library('encrypt');
     }
-	public function index()
-	{
-		$this->load->view('login');
-	}
-        public function login()
-	{
-		$this->load->view('main');
-	}
-         public function start()
-	{
-             
-                  $data['departments'] = array();
+
+    public function index() {
+        $this->load->view('login');
+    }
+
+    public function login() {
+        $this->load->view('main');
+    }
+
+    public function start() {
+
+        $data['departments'] = array();
         $data['objectives'] = array();
         $data['categories'] = array();
         $data['rates'] = array();
@@ -55,7 +56,7 @@ class Main extends CI_Controller {
         if ($query) {
             $data['roles'] = $query;
         }
-        $query = $this->Md->show('instance');
+        $query = $this->Md->show('budgets');
         if ($query) {
             $data['budgets'] = $query;
         }
@@ -63,6 +64,16 @@ class Main extends CI_Controller {
         if ($query) {
             $data['periods'] = $query;
         }
-		$this->load->view('view-graph', $data);
-	}
+        if($this->session->userdata('department')!="" && $this->session->userdata('unit')=="" ){
+             $query = $this->Md->query("SELECT * FROM budgets  WHERE department ='" . $this->session->userdata('department') . "' ");            
+        }
+        if($this->session->userdata('unit')!=""){
+             $query = $this->Md->query("SELECT * FROM budgets  WHERE  unit ='" . $this->session->userdata('unit') . "' ");          
+        }       
+        if ($query) {
+            $data['budgeted'] = $query;
+        }
+        $this->load->view('start', $data);
+    }
+
 }

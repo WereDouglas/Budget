@@ -4,14 +4,14 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/demo.css">
 <link href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 
-<h2>Add New Budget</h2>
+<h2>Budgets</h2>
 <form class="form-horizontal well" action="<?php echo base_url(); ?>index.php/grid/import" method="post" name="upload_excel" enctype="multipart/form-data">
     <input type="file" name="file" id="file" class="input-mini">
     <button type="submit" id="submit" name="Import" class="btn sm btn-primary button-loading">Import</button>
 </form>
 
 
-<table id="dg" title="Budgets" style="width:100%;height:auto"
+<table id="dg" title="Budgets" style="width:100%;height:100%"
        toolbar="#toolbar" pagination="true" idField="id"
        rownumbers="true" fitColumns="true" singleSelect="true">
     <thead>
@@ -238,19 +238,12 @@
     </thead>
 </table>
 <div id="toolbar">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">New</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Delete</a>
+     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Delete</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a>
     <div id="tb" style="padding:5px;height:auto">
 
-        <div>
-            Date From: <input class="easyui-datebox" style="width:80px">
-            To: <input class="easyui-datebox" style="width:80px">
-            Account: 
-            <input class="easyui-combobox" style="width:100px"  url="<?php echo base_url() . 'index.php/grid/account/'; ?>" valueField="account" textField="account">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
-        </div>
+        
     </div>
 
 </div>

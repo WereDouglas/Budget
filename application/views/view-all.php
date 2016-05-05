@@ -104,34 +104,34 @@
                             <td><?php echo $loop->description;?></td>                   
                             <td></td>
                             <td><?php echo $loop->currency;?></td>
-                            <td><?php echo $loop->rate;?></td>
-                            <td><?php echo $loop->priceForeign;?></td>
+                            <td><?php echo number_format($loop->rate);?></td>
+                            <td><?php echo number_format($loop->priceForeign);?></td>
                             <td><?php echo $loop->qty;?></td>
                             <td><?php echo $loop->persons;?></td>
                             <td><?php echo $loop->freq;?></td>
-                            <td><?php echo $loop->priceLocal;?></td>
-                            <td><?php echo $loop->totalForeign;?></td>
+                            <td><?php echo number_format($loop->priceLocal);?></td>
+                            <td><?php echo number_format($loop->totalForeign);?></td>
                             <td><?php echo $loop->flow;?></td>
-                            <td><?php echo $loop->totalLocal;?></td>
+                            <td><?php echo number_format($loop->totalLocal);?></td>
                             <td><?php echo $loop->generation;?></td>
                             <td><?php echo $loop->variance;?></td>
                             <td><?php echo $loop->generation;?></td>                   
-                            <td><?php echo $loop->Jan;?></td>
-                            <td><?php echo $loop->Feb;?></td> 
-                            <td><?php echo $loop->Mar;?></td>
-                            <td><?php echo $loop->Apr;?></td>
-                            <td><?php echo $loop->May;?></td> 
-                            <td><?php echo $loop->Jun;?></td>
-                            <td><?php echo $loop->Jul;?></td> 
-                            <td><?php echo $loop->Aug;?></td>
-                            <td><?php echo $loop->Sep;?></td> 
-                            <td><?php echo $loop->Oct;?></td>
-                            <td><?php echo $loop->Nov;?></td>
-                            <td><?php echo $loop->Dec;?></td>
-                            <td><?php echo $loop->Q1;?></td>
-                            <td><?php echo $loop->Q2;?></td>
-                             <td><?php echo $loop->Q3;?></td>
-                             <td><?php echo $loop->Q4;?></td>
+                            <td><?php echo number_format($loop->Jan);?></td>
+                            <td><?php echo number_format($loop->Feb);?></td> 
+                            <td><?php echo number_format($loop->Mar);?></td>
+                            <td><?php echo number_format($loop->Apr);?></td>
+                            <td><?php echo number_format($loop->May);?></td> 
+                            <td><?php echo number_format($loop->Jun);?></td>
+                            <td><?php echo number_format($loop->Jul);?></td> 
+                            <td><?php echo number_format($loop->Aug);?></td>
+                            <td><?php echo number_format( $loop->Sep);?></td> 
+                            <td><?php echo number_format($loop->Oct);?></td>
+                            <td><?php echo number_format($loop->Nov);?></td>
+                            <td><?php echo number_format($loop->Dec);?></td>
+                            <td><?php echo number_format($loop->Q1);?></td>
+                            <td><?php echo number_format($loop->Q2);?></td>
+                             <td><?php echo number_format( $loop->Q3);?></td>
+                             <td><?php echo number_format($loop->Q4);?></td>
                             <td><?php echo $loop->details;?></td>
                             <td><?php echo $loop->created;?></td>
                              <td><?php echo $loop->period;?></td>

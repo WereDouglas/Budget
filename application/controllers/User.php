@@ -36,6 +36,27 @@ class User extends CI_Controller {
         $this->load->view('user', $data);
     }
 
+    public function activate() {
+        $this->load->helper(array('form', 'url'));
+        $id = trim($this->input->post('id'));
+        $actives = trim($this->input->post('actives'));
+
+        if ($actives == "True") {
+            $active = "False";
+        }
+        if ($actives == "False") {
+            $active = "True";
+        }
+        if ($this->session->userdata('administration') == "") {
+
+            $pub = array('active' => $active);
+            $this->Md->update($id, $pub, 'user');
+            echo "user " . $active;
+        } else {
+            echo "You donot have permission to carry out this action";
+        }
+    }
+
     public function save() {
 
         $this->load->helper(array('form', 'url'));
@@ -45,6 +66,7 @@ class User extends CI_Controller {
         $password = $this->input->post('password');
         $role = $this->input->post('role');
         $department = $this->input->post('department');
+        $unit = $this->input->post('unit');
 
         $file_element_name = 'userfile';
 
@@ -82,7 +104,7 @@ class User extends CI_Controller {
             redirect('/User', 'refresh');
         }
         if ($email != "") {
-            $user = array('image' => $file, 'email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'false', 'created' => date('Y-m-d'));
+            $user = array('image' => $file, 'email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'False', 'created' => date('Y-m-d'), 'unit' => $unit);
             $this->Md->save($user, 'user');
             //  $log = array('user' => $this->session -> userdata('name'),'userid'=>$this->session -> userdata('id'),'action' => 'save','details'=>  $name.' user information save ', 'date' => date('Y-m-d H:i:s'),'ip' => $this->input->ip_address(), 'url' =>'');
             // $this->Md->save($log, 'logs'); 
@@ -96,6 +118,72 @@ class User extends CI_Controller {
         } else {
             $this->session->set_flashdata('msg', 'Please input username  ');
             redirect('/user', 'refresh');
+        }
+    }
+
+    public function register() {
+
+        $this->load->helper(array('form', 'url'));
+        $email = $this->input->post('email');
+        $name = $this->input->post('name');
+        $contact = $this->input->post('contact');
+        $password = $this->input->post('password');
+        $role = " ";
+        $department = $this->input->post('department');
+        $unit = $this->input->post('unit');
+
+        $file_element_name = 'userfile';
+
+
+
+        $config['upload_path'] = 'uploads/';
+        // $config['upload_path'] = '/uploads/';
+        $config['allowed_types'] = '*';
+        $config['encrypt_name'] = FALSE;
+
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload($file_element_name)) {
+            $status = 'error';
+            echo $msg = $this->upload->display_errors('', '');
+        }
+
+        $data = $this->upload->data();
+        $file = $data['file_name'];
+        $password = $password;
+        $key = $email;
+
+        $password = $this->encrypt->encode($password, $key);
+        /*         * $msg = 'My secret message';
+          $key = 'super-secret-key';
+          $encrypted_string = $this->encrypt->decode($msg, $key);* */
+
+        $get_result = $this->Md->check($name, 'name', 'user');
+        if ($get_result) {
+            $this->session->set_flashdata('msg', '<div class="alert alert-success"><strong>
+                                              Name already in use</strong>									
+						</div>');
+            redirect('login/register', 'refresh');
+        }
+        $get_result = $this->Md->check($email, 'email', 'user');
+        if ($get_result) {
+            $this->session->set_flashdata('msg', '<div class="alert alert-success"><strong>
+                                              Email is already in use</strong>									
+						</div>');
+            redirect('login/register', 'refresh');
+        }
+        if ($email != "") {
+            $user = array('image' => $file, 'email' => $email, 'name' => $name, 'department' => $department, 'contact' => $contact, 'password' => $password, 'role' => $role, 'active' => 'False', 'created' => date('Y-m-d'), 'unit' => $unit);
+            $this->Md->save($user, 'user');
+            $this->session->set_flashdata('msg', '<div class="alert alert-success"><strong>
+                                             Registation complete continue to login</strong>									
+						</div>');
+            redirect('login/', 'refresh');
+            return;
+        } else {
+            $this->session->set_flashdata('msg', '<div class="alert alert-success"><strong>
+                                             Please input the username</strong>									
+						</div>');
+            redirect('login/register', 'refresh');
         }
     }
 

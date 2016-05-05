@@ -7,14 +7,14 @@ class Consolidate extends CI_Controller {
     function __construct() {
 
         parent::__construct();
-        error_reporting(E_PARSE);     
+       // error_reporting(E_PARSE);
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
     }
 
     public function index() {
-        $this->session->sess_destroy();
+        // $this->session->sess_destroy();
 
         $data['departments'] = array();
         $data['objectives'] = array();
@@ -252,21 +252,25 @@ class Consolidate extends CI_Controller {
 
     public function generate() {
 
-        /**
-         *   var period = $("#period").val();
-          var department = $("#department").val();
-          var unit = $("#unit").val();
-          var initiative = $("#initiative").val();
-          var account = $("#account").val();
-         * * */
+
         $this->load->helper(array('form', 'url'));
-
-        $period = $this->input->post('period');
-        $department = $this->input->post('department');
-        $unit = $this->input->post('unit');
-        $account = $this->input->post('account');
-        $by = urldecode($this->input->post('by'));
-
+        echo $period = $this->input->post('period');
+        echo $department = $this->input->post('department');
+        echo $unit = $this->input->post('unit');
+        echo $by = urldecode($this->input->post('by'));
+        echo $account = $this->input->post('account');
+      
+        if ($this->session->userdata('department') != "") {
+         echo  $department = $this->session->userdata('department');
+        }
+        if ($this->session->userdata('unit') != "") {
+         echo  $unit = $this->session->userdata('unit');
+        }
+        if ($this->session->userdata('period') != "") {
+         echo  $period = $this->session->userdata('period');
+        }
+  
+        $sql[] = NULL;
         unset($sql);
 
         if ($period) {

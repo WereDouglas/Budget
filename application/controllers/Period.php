@@ -7,7 +7,7 @@ class Period extends CI_Controller {
     function __construct() {
 
         parent::__construct();
-        // error_reporting(E_PARSE);
+        error_reporting(E_PARSE);
         $this->load->model('Md');
         $this->load->library('session');
         $this->load->library('encrypt');
@@ -25,6 +25,34 @@ class Period extends CI_Controller {
         }
 
         $this->load->view('view-period', $data);
+    }
+
+    public function activate() {
+        $this->load->helper(array('form', 'url'));
+        $id = trim($this->input->post('id'));
+        $actives = trim($this->input->post('actives'));
+        $period = "none";
+        // $id = "6";
+        //$actives = "False";
+        if ($actives == "True") {
+            $active = "False";
+            $period = "none";
+            $this->Md->update_all($period, 'user', 'period');
+        }
+        if ($actives == "False") {
+            $active = "True";
+            $period = $this->Md->query_cell("SELECT year FROM period WHERE id ='" . $id . "'", 'year');
+            $this->Md->update_all($period, 'user', 'period');
+            //$this->Md->update_all($period, 'user', 'period');
+        }
+        if ($this->session->userdata('administration') == "") {
+
+            $pub = array('active' => $active);
+            $this->Md->update($id, $pub, 'period');
+            echo "active period " . $period;
+        } else {
+            echo "You donot have permission to carry out this action";
+        }
     }
 
     public function create() {
@@ -49,8 +77,9 @@ class Period extends CI_Controller {
         $details = $this->input->post('details');
         $created = date('Y-m-d');
         $by = $this->input->post('by');
+        $active = "True";
 
-        $period = array('year' => $year, 'start' => $start, 'end' => $end, 'details' => $details, 'created' => date('Y-m-d H:i:s'), 'by' => $this->session->userdata('email'));
+        $period = array('year' => $year, 'start' => $start, 'end' => $end, 'details' => $details, 'created' => date('Y-m-d H:i:s'), 'by' => $this->session->userdata('email'), 'active' => $active);
         $id = $this->Md->save($period, 'period');
         if ($id) {
             $this->session->set_flashdata('msg', '<div class="alert alert-error">

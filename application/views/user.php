@@ -1,4 +1,6 @@
-
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/easyui.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/icon.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/demo.css">
 <link href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <!-- Font Awesome Icons -->
 <link href="<?php echo base_url(); ?>css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -8,6 +10,7 @@
 <link href="<?php echo base_url(); ?>plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
 
 <link id="base-style-responsive" href="<?php echo base_url(); ?>css/mine.css" rel="stylesheet">
+
 
 <div>
     <?php
@@ -73,23 +76,18 @@
                                             <option value="<?= $loop->name ?>" /><?= $loop->name ?>
 
 
-                                        <?php }
-                                    } ?>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select></span>
 
                             <span class="block input-icon input-icon-right">
-                                <select id="department" name="department">
-                                    <option value="<?= $user->department ?>" /><?= $user->department ?>
-                                    <?php
-                                    if (is_array($departments) && count($departments)) {
-                                        foreach ($departments as $loop) {
-                                            ?>                        
-                                            <option value="<?= $loop->name ?>" /><?= $loop->name ?>
+                                Department<br>
+                                <input class="easyui-combobox" style="width:100px" id="department" name="department"  url="<?php echo base_url() . 'index.php/grid/department/'; ?>" valueField="department" textField="department">
 
-
-                                        <?php }
-                                    } ?>
-                                </select></span>
+                                <br>Unit<br> <input class="easyui-combobox" style="width:100px" id="unit" name="unit"  url="<?php echo base_url() . 'index.php/grid/unit/'; ?>" valueField="unit" textField="unit">
+                            </span>
 
                         </label>
                         <div class="clearfix">
@@ -107,7 +105,7 @@
 
 
 
-        <?php
+            <?php
         }
     } else {
         ?>
@@ -129,12 +127,12 @@
 
                                     </div>
                                     <div class="col-xs-4">
-                                           <label>
-                                        <span class="block input-icon input-icon-right">
-                                            <input type="email" name="email" id="email" class="span12" placeholder="Email" />
-                                            <span id="Loading_email" name ="Loading_email"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span>
+                                        <label>
+                                            <span class="block input-icon input-icon-right">
+                                                <input type="email" name="email" id="email" class="span12" placeholder="Email" />
+                                                <span id="Loading_email" name ="Loading_email"><img src="<?= base_url(); ?>images/ajax-loader.gif" alt="Ajax Indicator" /></span>
 
-                                        </span> </label>                              
+                                            </span> </label>                              
                                         <label>
                                             <span class="block input-icon input-icon-right">
                                                 <input type="text" name="name" id="name" class="span12" placeholder="name" />
@@ -174,35 +172,31 @@
                                                         <option value="<?= $loop->name ?>" /><?= $loop->name ?>
 
 
-        <?php }
-    } ?>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
                                             </select></span>
 
                                         <br>
-                                        Select the department 
-                                        <select id="department" name="department">
-                                            <?php
-                                            if (is_array($departments) && count($departments)) {
-                                                foreach ($departments as $loop) {
-                                                    ?>                        
-                                                    <option value="<?= $loop->name ?>" /><?= $loop->name ?>
+                                        Department<br>
+                                        *don't fill if not applicable
+                                        <input class="easyui-combobox" style="width:100px" id="department" name="department"  url="<?php echo base_url() . 'index.php/grid/department/'; ?>" valueField="department" textField="department">
 
+                                        <br>Unit<br> <input class="easyui-combobox" style="width:100px" id="unit" name="unit"  url="<?php echo base_url() . 'index.php/grid/unit/'; ?>" valueField="unit" textField="unit">
 
-        <?php }
-    } ?>
-                                        </select>
-<hr>
+                                        <hr>
                                         <label>
-                                        <div class="clearfix">
-                                            <button type="reset" class="width-10 pull-right btn btn-small btn-success" >
-                                                <i class="icon-refresh"></i>
-                                                Reset
-                                            </button>
+                                            <div class="clearfix">
+                                                <button type="reset" class="width-10 pull-right btn btn-small btn-success" >
+                                                    <i class="icon-refresh"></i>
+                                                    Reset
+                                                </button>
 
-                                            <button class="width-10 btn btn-small"  >
-                                                Submit
-                                            </button>
-                                        </div>
+                                                <button class="width-10 btn btn-small"  >
+                                                    Submit
+                                                </button>
+                                            </div>
                                         </label>
                                     </div>
                                 </fieldset>
@@ -213,7 +207,7 @@
             </div>
 
         </div>
-<?php } ?>
+    <?php } ?>
 
 
     <div class="span11">
@@ -234,33 +228,70 @@
                         <thead>
                             <tr>
                                 <th class="center">
-                                    <label>
-                                        <input type="checkbox" />
-                                        <span class="lbl"></span>
-                                    </label>
-                                </th>
-                                <th>Name</th>
-                                <th>E-mail</th>
-                                <th class="hidden-480">Contact</th>
+                                <th>#</th>
+                        <label>
+                            <input type="checkbox" />
+                            <span class="lbl"></span>
+                        </label>
+                        </th>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th class="hidden-480">Contact</th>
 
-                                <th class="hidden-480">Role</th>
-                                <th class="hidden-480">Department</th>
-                                <th class="hidden-phone">                                              
-                                    Last Updated
-                                </th>
-                                <th class="hidden-480">Actions</th>
+                        <th class="hidden-480">Role</th>
+                        <th class="hidden-480">Department</th>
+                        <th class="hidden-480">Unit</th>
+                        <th class="hidden-phone">                                              
+                            Last Updated
+                        </th>
+                        <th class="hidden-480">Actions</th>
 
-                                <th>Active</th>
-                            </tr>
+                        <th>Active</th>
+                        </tr>
                         </thead>
 
                         <tbody>
-<?php
-if (is_array($users) && count($users)) {
-    foreach ($users as $loop) {
-        ?>  
+                            <?php
+                            if (is_array($users) && count($users)) {
+                                foreach ($users as $loop) {
+                                    ?>  
 
                                     <tr>
+
+                                        <td>
+
+                                            <?php
+                                            if ($loop->active == "False") {
+                                                ?>
+                                                <div class="btn-group" data-toggle="buttons" data-toggle-default-class="btn-default">
+                                                    <label class="btn btn-xs btn-default" data-toggle-class="btn-success" value="<?= $loop->id; ?>">
+                                                        <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" />
+                                                        yes
+                                                    </label>
+                                                    <label class="btn btn-xs btn-danger active" data-toggle-class="btn-danger" value="<?= $loop->id; ?>">
+                                                        <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" checked />
+                                                        no
+                                                    </label>
+                                                </div> 
+                                            <?php } ?>
+
+                                            <?php
+                                            if ($loop->active == "True") {
+                                                ?>
+                                                <div class="btn-group" data-toggle="buttons" data-toggle-default-class="btn-default">
+                                                    <label class="btn btn-xs btn-success active" data-toggle-class="btn-success">
+                                                        <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>" checked />
+                                                        yes
+                                                    </label>
+                                                    <label class="btn btn-xs btn-default " data-toggle-class="btn-danger">
+                                                        <input type="radio" name="status" id="<?= $loop->active; ?>" value="<?= $loop->id; ?>"  />
+                                                        no
+                                                    </label>
+                                                </div> 
+                                            <?php } ?>
+
+                                        </td>
+
                                         <td class="center">
                                             <label>
                                                 <input type="checkbox" />
@@ -268,14 +299,15 @@ if (is_array($users) && count($users)) {
                                             </label>
                                         </td>
 
+
                                         <td>
-        <?php if ($loop->image == "") { ?>                                                    
+                                            <?php if ($loop->image == "") { ?>                                                    
                                                 <img class="avatar" alt="image" height="60px" width="60px" src="<?= base_url(); ?>images/placeholder.jpg">
 
-        <?php } else { ?>
+                                            <?php } else { ?>
 
                                                 <img class="avatar" alt="image" height="60px" width="60px" src="<?php echo base_url(); ?>uploads/<?php echo $loop->image ?>">
-        <?php } ?>	
+                                            <?php } ?>	
                                             <a href="#"><?= $loop->name ?></a>
                                         </td>
                                         <td><?= $loop->email ?></td>
@@ -287,6 +319,9 @@ if (is_array($users) && count($users)) {
                                         </td>
                                         <td class="hidden-480">
                                             <span class="label label-info"><?= $loop->department ?></span>
+                                        </td>
+                                        <td class="hidden-480">
+                                            <span class="label label-info"><?= $loop->unit ?></span>
                                         </td>
                                         <td class="hidden-480">
                                             <span ><?= $loop->created ?></span>
@@ -308,8 +343,10 @@ if (is_array($users) && count($users)) {
                                             </label></td>
                                     </tr>
 
-    <?php }
-} ?>
+                                    <?php
+                                }
+                            }
+                            ?>
 
                         </tbody>
                     </table>    
@@ -403,4 +440,49 @@ if (is_array($users) && count($users)) {
             reader.readAsDataURL(this.files[0]);
         }
     });
+</script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.6.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.easyui.min.js"></script>
+<script>
+
+
+    $('.btn-group[data-toggle=buttons]').each(function (i, e) {
+        var default_class = $(e).data('toggle-default-class') || 'btn-default';
+
+        $(e).find('label')
+                .click(function (event) {
+                    $(e).find('label')
+                            .each(function (i, e) {
+                                if (!(e == event.target)) {
+                                    $(e).removeClass($(e).data('toggle-class'))
+                                            .addClass(default_class);
+
+                                    $(e).find('input').removeAttr('checked');
+                                    console.log($(e).find("input").attr("id"));
+
+
+                                    $.post("<?php echo base_url() ?>index.php/user/activate", {
+                                        id: $(e).find("input").val(),
+                                        actives: $(e).find("input").attr("id")
+
+                                    }, function (response) {
+                                      
+                                       
+                                        alert(response);
+                                       location.reload();
+                                    });
+                                    // alert("active");
+
+                                } else {
+                                    $(e).removeClass(default_class)
+                                            .addClass($(e).data('toggle-class'));
+
+                                    $(e).find('input')
+                                            .attr('checked', 1);
+
+                                }
+                            });
+                });
+    });
+
 </script>
